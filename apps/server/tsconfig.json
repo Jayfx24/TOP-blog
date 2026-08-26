@@ -17,7 +17,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     // Recommended Options
-    "rewriteRelativeImportExtensions": true,
+    // "rewriteRelativeImportExtensions": true,
     "erasableSyntaxOnly": true,
     "strict": true,
     "verbatimModuleSyntax": true,
@@ -26,6 +26,6 @@
     "moduleDetection": "force",
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "src/generated"],
+  "include": ["src/**/*"],
   "exclude": ["dist"]
 }
