@@ -20,6 +20,9 @@ const logger = pinoHttp({
     return req.headers["x-request-id"] || randomUUID();
   },
 });
+app.use(express.urlencoded({ extended: true })); 
+app.use(express.json())
+
 
 app.use(logger);
 app.use(router);

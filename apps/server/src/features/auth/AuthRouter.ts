@@ -3,6 +3,7 @@ import { AuthController } from "./controllers/AuthController.js";
 import passport from "passport";
 import validateSchema from "./validateSchema.js";
 import { UserRegistrationSchema } from "./schema.js";
+
 const authRouter = Router();
 
 authRouter.get(
@@ -15,3 +16,5 @@ authRouter.post(
   validateSchema(UserRegistrationSchema),
   AuthController.register,
 );
+
+export default authRouter

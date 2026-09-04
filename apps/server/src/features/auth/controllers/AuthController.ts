@@ -27,15 +27,16 @@ export class AuthController {
             res.send(err);
           }
 
-          const token = generateJwt(user);
+          const token = generateJwt(user.id);
 
-          return res.json({ user, token });
+          return res.json({ token });
         });
       },
     );
   }
   static async register(req: Request, res: Response) {
-    const { pwd, ...body } = req.body;
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    const { pwd, cPwd: _, ...body } = req.body;
 
     const passwordHash = await genHash(pwd);
     const data = { ...body, passwordHash };
@@ -43,10 +44,9 @@ export class AuthController {
     const user = await UserService.createUser(data);
 
     // generate jwt and send
-    const token = generateJwt(user);
+    const token = generateJwt(user.id);
 
     return res.json({ token });
-
   }
   static async logout(req: Request, res: Response, next: NextFunction) {
     req.logout((err) => {

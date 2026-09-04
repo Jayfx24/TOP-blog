@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint .",
-    "dev": "npx tsx src/app | npx pino-pretty"
+    "dev": "tsx src/app | pino-pretty"
   },
   "keywords": [],
   "type": "module",
@@ -39,6 +39,7 @@
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "pg": "^8.23.0",
     "pino-http": "^11.0.0",

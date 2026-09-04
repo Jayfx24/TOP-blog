@@ -8,15 +8,13 @@ export default function validateSchema<T extends z.ZodType>(schema: T) {
   });
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const result = schema.parseAsync(req.body);
+        
+      const result = await schema.parseAsync(req.body);
       req.body = result;
-      req.log.info(`Success: ,${result}`);
-
       return next();
     } catch (error) {
       if (error instanceof z.ZodError) {
         const validationError = fromError(error);
-
         req.log.warn(validationError.toString());
         return next(validationError);
       }

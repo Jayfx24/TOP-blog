@@ -8,7 +8,7 @@ if (!secret) {
   throw new Error("JWT_SECRET not defined");
 }
 
-export const generateJwt = (user: User) =>
-  jwt.sign(user, secret, {
-    expiresIn: "1hr",
+export const generateJwt = (sub: number) =>
+  jwt.sign({ sub }, secret, {
+    expiresIn: "1h",
   });

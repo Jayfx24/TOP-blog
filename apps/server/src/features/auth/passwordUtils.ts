@@ -1,4 +1,4 @@
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 
 export async function genHash(string: string): Promise<string> {
   return await bcrypt.hash(string, 12);
