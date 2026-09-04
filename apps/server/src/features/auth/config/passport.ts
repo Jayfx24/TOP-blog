@@ -2,7 +2,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { isValidPwd } from "#features/auth/passwordUtils.js";
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
-import AuthService from "#features/auth/service/AuthService.js";
+import UserService from "#features/user/UserService.js";
 
 const localConfig = {
   usernameField: "username",
@@ -11,7 +11,7 @@ const localConfig = {
 };
 const local = new LocalStrategy(localConfig, async (username, pwd, done) => {
   try {
-    const user = await AuthService.findUserByUsername(username);
+    const user = await UserService.findUserByUsername(username);
 
     if (!user) {
       return done(null, false, { message: "user does not exists" });
@@ -36,7 +36,7 @@ const jwtConfig = {
 
 const jwt = new JwtStrategy(jwtConfig, async (payload, done) => {
   try {
-    const user = await AuthService.findUserById(payload.id);
+    const user = await UserService.findUserById(payload.id);
 
     if (!user) {
       return done(null, false, { message: "user does not exists" });

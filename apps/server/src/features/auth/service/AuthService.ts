@@ -1,23 +1,20 @@
-import { db } from "#lib/prisma.js";
+// import { db } from "#lib/prisma.js";
 
-class AuthService {
-  constructor() {}
+// class AuthService {
+//   constructor() {}
 
-  static async findUserByUsername(username: string) {
-    return await db.user.findUnique({
-      where: {
-        username,
-      },
-    });
-  }
+//   static async validateUser(username: string, passsword: string) {
+    
+//   }
 
-  static async findUserById(id: number) {
-    return await db.user.findUnique({
-      where: {
-        id,
-      },
-    });
-  }
-}
+//   static async findUserById(id: number) {
+//     return await db.user.findUnique({
+//       where: {
+//         id,
+//       },
+      
+//     });
+//   }
+// }
 
-export default AuthService;
+// export default AuthService;
