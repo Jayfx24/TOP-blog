@@ -6,9 +6,8 @@ import { UserRegistrationSchema } from "./schema.js";
 
 const authRouter = Router();
 
-authRouter.get(
+authRouter.post(
   "/login",
-  passport.authenticate("jwt", { session: false }),
   AuthController.login,
 );
 authRouter.post(

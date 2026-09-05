@@ -12,13 +12,16 @@ const localConfig = {
 const local = new LocalStrategy(localConfig, async (username, pwd, done) => {
   try {
     const user = await UserService.findUserByUsername(username);
-
+    
     if (!user) {
       return done(null, false, { message: "user does not exists" });
     }
-    if (!isValidPwd(pwd, user.passwordHash)) {
+    const isValid = await isValidPwd(pwd, user.passwordHash);
+    
+    if (!isValid) {
       return done(null, false, { message: "Incorrect username or password" });
     }
+    
     return done(null, user);
   } catch (err) {
     done(err);

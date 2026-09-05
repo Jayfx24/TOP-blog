@@ -24,6 +24,9 @@ class UserService {
   static async createUser(data: UserCreateInput) {
     return await db.user.create({
       data,
+      omit: {
+        passwordHash: true,
+      },
     });
   }
 }

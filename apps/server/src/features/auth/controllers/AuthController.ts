@@ -12,7 +12,8 @@ export class AuthController {
       { session: false },
 
       /* eslint-disable @typescript-eslint/no-explicit-any */
-      ({ err, user, info }: { err: any; user?: User; info: any }) => {
+      (err: any, user: User | false, info: any) => {
+       
         if (err) {
           return next(err);
         }
@@ -22,19 +23,18 @@ export class AuthController {
             message: info ? info?.message : "Login failed",
           });
         }
-        req.login(user, { session: false }, (err) => {
-          if (err) {
-            res.send(err);
-          }
+        /* eslint-disable @typescript-eslint/no-unused-vars */
+        const { passwordHash: _, ...data } = user;
 
-          const token = generateJwt(user.id);
+        
 
-          return res.json({ token });
-        });
+        const token = generateJwt(user.id);
+
+        return res.json({ data, token });
       },
-    );
+    )(req, res, next);
   }
-  static async register(req: Request, res: Response) {
+  static async register(req: Request, res: Response, next: NextFunction) {
     /* eslint-disable @typescript-eslint/no-unused-vars */
     const { pwd, cPwd: _, ...body } = req.body;
 
@@ -46,17 +46,20 @@ export class AuthController {
     // generate jwt and send
     const token = generateJwt(user.id);
 
-    return res.json({ token });
+    // login user
+
+    return res.json({ data: user, token });
   }
+
   static async logout(req: Request, res: Response, next: NextFunction) {
-    req.logout((err) => {
-      if (err) {
-        return next(err);
-      }
-      return res.status(400).json({
-        success: true,
-        message: "Logout success ",
-      });
-    });
+    // req.logout((err) => {
+    //   if (err) {
+    //     return next(err);
+    //   }
+    //   return res.status(400).json({
+    //     success: true,
+    //     message: "Logout success ",
+    //   });
+    // });
   }
 }
