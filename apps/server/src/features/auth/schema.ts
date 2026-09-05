@@ -1,5 +1,12 @@
+
 import { z } from "zod";
 
+/**
+ * Pending -
+ * 
+ * Check if username or email already exists
+ * Need to make db request from server + debounce
+ */
 export const UserRegistrationSchema = z
   .object({
     firstName: z.string().trim().toLowerCase().min(3).max(20),
@@ -12,7 +19,7 @@ export const UserRegistrationSchema = z
   })
   .refine((data) => data.pwd === data.cPwd, {
     error: "Passwords don't match",
-    path: ["cPwd"], // path of error
+    path: ["cPwd"], 
   });
 
 export type UserRegistrationValues = z.infer<typeof UserRegistrationSchema>
