@@ -1,8 +1,10 @@
 import { db } from "#lib/prisma.js";
-import type { Comment } from "#generated/prisma/client.js";
+import type {
+  CommentBase,
+  CommentCreateInput,
+  CommentUpdateInput,
+} from "./commentSchemas.js";
 
-type CommentCreateInput = Omit<Comment, "id" | "createdAt" | "updatedAt">;
-type CommentUpdateInput = Pick<Comment, "id" | "content">;
 export default class CommentService {
   static async createComment(data: CommentCreateInput) {
     return await db.comment.create({
@@ -27,7 +29,7 @@ export default class CommentService {
       },
     });
   }
-  static async getComment(id: number) {
+  static async getComment(id: number): Promise<CommentBase | null> {
     /**
      * Returns single comment
      */
@@ -37,7 +39,7 @@ export default class CommentService {
       },
     });
   }
-  static async getAllComments(cursor?: number) {
+  static async getAllComments(cursor?: number): Promise<CommentBase[]> {
     /**
      * Does not include comments
      */
@@ -53,7 +55,24 @@ export default class CommentService {
       },
     });
   }
-  static async getUserComments(authorId: number) {
+
+  //   static async getPostComments(cursor?: number) {
+  //   /**
+  //    * Does not include comments
+  //    */
+
+  //   return await db.comment.findMany({
+  //     take: 10,
+  //     skip: cursor ? 1 : undefined,
+  //     cursor: {
+  //       id: cursor,
+  //     },
+  //     orderBy: {
+  //       createdAt: "asc",
+  //     },
+  //   });
+  // }
+  static async getUserComments(authorId: number): Promise<CommentBase[]> {
     /**
      * Does not include comments
      */

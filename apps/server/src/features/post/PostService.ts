@@ -1,11 +1,12 @@
 import { db } from "#lib/prisma.js";
-import type { Post } from "#generated/prisma/client.js";
-
-type CreatePost = Omit<Post, "createdAt" | "updatedAt" | "id">;
-type UpdatedPost = Partial<Omit<CreatePost, "authorId">> & { id: number };
+import type {
+  PostBase,
+  PostCreateInput,
+  PostUpdateInput,
+} from "./postSchemas.js";
 
 export default class PostService {
-  static async createPost(data: CreatePost) {
+  static async createPost(data: PostCreateInput) {
     /**
      * Check for published - its is not optional
      */
@@ -14,7 +15,7 @@ export default class PostService {
     });
   }
 
-  static async updatePost({ id, ...data }: UpdatedPost) {
+  static async updatePost({ id, ...data }: PostUpdateInput) {
     return await db.post.update({
       where: {
         id,
@@ -44,7 +45,7 @@ export default class PostService {
       },
     });
   }
-  static async getAllPosts(cursor?: number) {
+  static async getAllPosts(cursor?: number): Promise<PostBase[]> {
     /**
      * Does not include comments
      */
