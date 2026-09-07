@@ -1,0 +1,49 @@
+.base {
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    background-color: var(--bg--brand);
+    cursor: pointer;
+
+}
+
+.primary {
+    color: var(--bg--inverted);
+}
+
+.primary:hover {
+    background-color: var(--bg--brand--hover);
+
+}
+
+.primary:focus {
+    box-shadow: var(--focus-shadow);
+}
+
+
+.secondary {
+    color: var(--bg--inverted);
+}
+
+.secondary:hover {
+    background-color: var(--bg-brand--hover);
+
+}
+
+.secondary:focus {
+    box-shadow: var(--focus-shadow);
+}
+
+.minimal {
+    color: var(--bg--inverted);
+}
+
+.minimal:hover {
+    background-color: var(--bg-brand--hover);
+
+}
+
+.minimal:focus {
+    box-shadow: var(--focus-shadow);
+}
+
+

@@ -1,5 +1,9 @@
 import type { ReactNode } from "react";
 
-export default function Layout(children: ReactNode) {
+interface ILayout {
+  children: ReactNode
+}
+
+export default function Layout({children}: ILayout) {
   return <section className="layout">{children}</section>;
 }

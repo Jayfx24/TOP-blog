@@ -1,33 +1,40 @@
 :root {
+  color-scheme: light dark;
   /* Color styles */
-  --light--bg--emphasis: var(--core--gray--200);
-  --light--bg--default: var(--core--white);
-  --light--bg--subtle: var(--core--gray--100);
-  --light--bg--muted: var(--core--gray--50);
-  --light--bg--inverted: var(--core--gray--900);
-  ;
-  --light--bg--info--muted: var(--core--blue--100);
-  --light--bg--success--emphasis: var(--core--green--400);
-  --light--bg--success--muted: var(--core--green-100);
-  --light--bg--attention--emphasis: var(--core--orange--400);
-  --light--bg--attention--muted: var(--core--orange--100);
-  --light--bg--error--emphasis: var(--core--red--400);
-  --light--bg--error--muted: var(--core--gray--50);
-  --light--border--focus: var(--core--black);
-  --light--border--emphasis: var(--core--gray--400);
-  --light--border--default: var(--brand--50);
-  --light--border--subtle: var(--brand--50);
-  --light--border--muted: var(--core--gray--100);
-  --light--border--error: var(--core--red--400);
-  --light--content--emphasis: var(--core--gray--900);
-  --light--content--default: var(--core--gray--700);
-  --light--content--subtle: var(--core--gray--500);
-  --light--content--muted: var(--core--gray--400);
-  --light--content--inverted: var(--core--gray--50);
-  --light--content--info: var(--core--blue--900);
-  --light--content--success: var(--core--green--900);
-  --light--content--attention: var(--core--orange--900);
-  --light--content--error: var(--core--red--900);
+
+  --bg--emphasis: light-dark(var(--core--gray--200), var(--dark--bg--emphasis));
+  --bg--default: light-dark(var(--core--white), var(--dark--bg--default));
+  --bg--subtle: light-dark(var(--core--gray--100), var(--bg--subtle));
+  --bg--muted: light-dark(var(--core--gray--50), var(--dark--bg--muted));
+  --bg--inverted: light-dark(var(--content--inverted), var(--dark--bg--inverted));
+
+  --bg--info--muted: var(--core--blue--100);
+  --bg--success--emphasis: var(--core--green--400);
+  --bg--success--muted: var(--core--green-100);
+  --bg--attention--emphasis: var(--core--orange--400);
+  --bg--attention--muted: var(--core--orange--100);
+  --bg--error--emphasis: var(--core--red--400);
+  --bg--error--muted: var(--core--gray--50);
+
+  --bg--brand: light-dark(var(--brand--500), var(--core--stone--100));
+  --bg--brand--hover: light-dark(var(--brand--400), var(--core--stone--300));
+
+  --border--focus: light-dark(var(--core--black), var(--dark--border--focus));
+  --border--emphasis: light-dark(var(--core--gray--400), var(--dark--bg--emphasis));
+  --border--default: light-dark(var(--brand--50), var(--dark--border--default));
+  --border--subtle: light-dark(var(--brand--50), var(--dark--border--subtle));
+  --border--muted: light-dark(var(--core--gray--100), var(--dark--border--muted));
+  --border--error: var(--core--red--400);
+
+  --content--emphasis: (var(--core--gray--900), var(--dark--content--emphasis));
+  --content--default: (var(--core--gray--700), var(--dark--content--default));
+  --content--subtle: light-dark(var(--core--gray--500), var(--dark--content--emphasis));
+  --content--muted: light-dark(var(--core--gray--400), var(--dark--content--muted));
+  --content--inverted: light-dark(var(--core--gray--50), var(--dark--content--inverted));
+  --content--info: light-dark(var(--core--blue--900), var(--dark--content--info));
+  --content--success: light-dark(var(--core--green--900), var(--dark--content--success));
+  --content--attention: light-dark(var(--core--orange--900), var(--dark--content--attention));
+  --content--error: light-dark(var(--core--red--900), var(--dark--content--error));
 
   --dark--bg--emphasis: rgba(82, 82, 82, 1);
   --dark--bg--default: var(--core--black);
@@ -43,6 +50,7 @@
   --dark--border--default: var(--core--stone--600);
   --dark--border--subtle: rgba(56, 56, 56, 1);
   --dark--border--muted: var(--core--stone--800);
+
   --dark--content--emphasis: var(--core--stone--50);
   --dark--content--default: var(--core--stone--300);
   --dark--content--subtle: var(--core--stone--400);
@@ -52,6 +60,7 @@
   --dark--content--success: var(--core--green-100);
   --dark--content--attention: var(--core--orange--100);
   --dark--content--error: var(--core--red--100);
+
   --core--white: rgba(255, 255, 255, 1);
   --core--black: rgba(26, 26, 26, 1);
   --core--gray--50: rgba(249, 250, 251, 1);
