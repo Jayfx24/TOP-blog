@@ -1,15 +1,19 @@
 // import { useState } from 'react'
-import Layout from './components/layout'
-import './App.css'
-import { Button } from './components/Button/button'
-function App() {
- 
+import Layout from "./components/Layout/layout";
+import "./App.css";
+import { Button } from "@blog/ui";
+import { Editor } from "@/features/editor/components/editor";
 
+
+
+
+function App() {
   return (
-   <Layout>
-    <Button>This is a test</Button>
-   </Layout>
-  )
+    <Layout>
+      <div className=""><Button variant={"destruction"}>This is a test</Button></div>
+      <Editor/>
+    </Layout>
+  );
 }
 
-export default App
+export default App;
