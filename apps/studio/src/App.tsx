@@ -3,14 +3,14 @@ import Layout from "./components/Layout/layout";
 import "./App.css";
 import { Button } from "@blog/ui";
 import { Editor } from "@/features/editor/components/editor";
-
+import { SideBar } from "./features/side-bar/sideBar";
 
 
 
 function App() {
   return (
     <Layout>
-      <div className=""><Button variant={"destruction"}>This is a test</Button></div>
+      <SideBar avatar="https://placehold.co/600x400" fullName="Jay Nicely" />
       <Editor/>
     </Layout>
   );

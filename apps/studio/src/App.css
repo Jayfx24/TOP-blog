@@ -1,5 +1,5 @@
 :root {
-  color-cheme: light dark;
+  color-scheme: light dark;
   /* Color styles */
 
   --bg-emphasis: light-dark(var(--core--gray-200), var(--dark--bg-emphasis));
@@ -136,27 +136,27 @@
   --core--stone-900: rgba(31, 31, 31, 1);
 
   /* Text-size styles */
-  --text-base-regular: 1rem;
+ 
   --text-lg-semibold: 1.13rem;
   --text-base-regular: 1rem;
   --text-base-medium: 1rem;
   --text-base-semibold: 1rem;
-  --text-sm-normal: 0.88rem;
+  --text-sm: 0.88rem;
   --text-sm-medium: 0.88rem;
   --text-sm-semibold: 0.88rem;
   --text-sm-mono: 0.88rem;
-  --text-xs-normal: 0.75rem;
+  --text-xs: 0.75rem;
   --text-xs-medium: 0.75rem;
   --text-xs-semibold: 0.75rem;
   --text-xs-uppercase: 0.75rem;
   --text-xxs-regular: 0.63rem;
   --text-xxs-semibold: 0.63rem;
-  --text-base-normal: 1rem;
+  --text-base: 1rem;
   --text-base-medium: 1rem;
   --text-base-semibold: 1rem;
-  --text-sm-normal: 0.88rem;
+  --text-sm: 0.88rem;
   --text-sm-medium: 0.88rem;
-  --text-xs-normal: 0.75rem;
+  --text-xs: 0.75rem;
   --text-xs-mono: 0.63rem;
   --text-xs-medium: 0.75rem;
   --text-sm-medium: 0.88rem;
