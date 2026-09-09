@@ -175,3 +175,9 @@
   --error-focus: 0px 0px 0px 2px rgba(240, 63, 63, 0.3);
 
 }
+
+.icon {
+  width: 1em;
+  height: 1em;
+  color: var(--content-subtle);
+}
