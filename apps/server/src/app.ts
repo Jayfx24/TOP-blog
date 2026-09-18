@@ -2,8 +2,10 @@ import express, { type Express } from "express";
 import { pinoHttp } from "pino-http";
 import "dotenv/config";
 import router from "#routes/routes.js";
-import logErrors from "#errors/logErrors.js";
+import logErrors from "#middleware/logErrors.js";
 import { randomUUID } from "node:crypto";
+import methodOverride from 'method-override';
+import errorHandler from "#middleware/errorHandler.js";
 
 const PORT = process.env.PORT || 3000;
 const app: Express = express();
@@ -20,8 +22,10 @@ const logger = pinoHttp({
     return req.headers["x-request-id"] || randomUUID();
   },
 });
+
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json())
+app.use(methodOverride()) //use to over-ride client verbs
 
 
 app.use(logger);
@@ -35,3 +39,4 @@ app.listen(PORT, (err) => {
 });
 
 app.use(logErrors);
+app.use(errorHandler)

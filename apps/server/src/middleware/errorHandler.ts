@@ -1,14 +1,12 @@
-import AppError from "./AppError.js";
 import { type Request, type Response, type NextFunction } from "express";
+import AppError from "../errors/AppError.js";
 
-export default function logErrors(
+export default function errorHandler(
   err: Error,
   req: Request,
   res: Response,
   next: NextFunction,
 ) {
-  console.error(err.stack);
-  next(err);
   if (err instanceof AppError) {
     return res
       .status(err.statusCode || 500)
