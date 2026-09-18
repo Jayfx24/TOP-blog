@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { AuthController } from "./controllers/AuthController.js";
-import passport from "passport";
 import validateSchema from "./validateSchema.js";
 import { UserRegistrationSchema } from "./schema.js";
 
