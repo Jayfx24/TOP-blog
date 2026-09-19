@@ -3,9 +3,9 @@ import AppError from "../errors/AppError.js";
 
 export default function errorHandler(
   err: Error,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction,
+  _next: NextFunction,
 ) {
   if (err instanceof AppError) {
     return res
