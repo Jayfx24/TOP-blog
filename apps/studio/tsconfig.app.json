@@ -24,6 +24,8 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+
+    "rewriteRelativeImportExtensions": true
   },
   "include": ["src"]
   

@@ -7,7 +7,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { EditorContent, EditorContext, useEditor } from "@tiptap/react";
+import {
+  EditorContent,
+  EditorContext,
+  useEditor,
+  type Content,
+} from "@tiptap/react";
 
 // --- Tiptap Core Extensions ---
 import { StarterKit } from "@tiptap/starter-kit";
@@ -84,7 +89,6 @@ import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
 // --- Styles ---
 import "@/components/tiptap-templates/simple/simple-editor.scss";
 
-import content from "@/components/tiptap-templates/simple/data/content.json";
 
 const SEARCH_AND_REPLACE_SCROLL_OPTIONS: ScrollIntoViewOptions = {
   block: "center",
@@ -210,7 +214,15 @@ const MobileToolbarContent = ({
   </>
 );
 
-export function SimpleEditor() {
+interface ISimpleEditor {
+  content: Content;
+}
+
+/**
+ * save to draft btn
+ * review then publish
+ */
+export function SimpleEditor({ content = "" }: ISimpleEditor) {
   const isMobile = useIsBreakpoint();
   const { height } = useWindowSize();
   const [mobileView, setMobileView] = useState<"main" | "highlighter" | "link">(
@@ -227,7 +239,7 @@ export function SimpleEditor() {
     const updateHeight = () => {
       setToolBarHeight(toolbarRef.current?.getBoundingClientRect().height ?? 0);
     };
-    updateHeight()
+    updateHeight();
   }, []);
   const editor = useEditor({
     immediatelyRender: false,

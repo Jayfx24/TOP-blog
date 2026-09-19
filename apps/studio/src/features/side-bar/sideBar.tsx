@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import styles from "./sideBar.module.css";
 import { Pen, Globe, FilePen, Archive } from "lucide-react";
 
@@ -9,24 +10,29 @@ interface ISideBar {
 const sideBarNav = [
   {
     label: "New Post",
-    icon: <Pen className="icon"/>,
+    icon: <Pen className="icon" />,
+    path: "new",
   },
 
   {
     label: "Dashboard",
-    icon: <Globe className="icon"/>,
+    icon: <Globe className="icon" />,
+    path: "/",
   },
   {
     label: "Published",
-    icon: <Globe className="icon"/>,
+    icon: <Globe className="icon" />,
+    path: "published",
   },
   {
     label: "Drafts",
-    icon: <FilePen className="icon"/>,
+    icon: <FilePen className="icon" />,
+    path: "drafts",
   },
   {
     label: "Archived",
-    icon: <Archive className="icon"/>,
+    icon: <Archive className="icon" />,
+    path: "archived",
   },
 ];
 export function SideBar({ avatar, fullName }: ISideBar) {
@@ -40,11 +46,13 @@ export function SideBar({ avatar, fullName }: ISideBar) {
       </div>
       <div className={styles.list}>
         <ul>
-          {sideBarNav.map(({ label, icon }) => (
-            <li className={styles.item}>
+          {sideBarNav.map(({ label, icon, path }) => (
+            <li >
+              <Link to={path} className={styles.item}>
+                {icon}
+                <span className={styles.label}>{label}</span>
+              </Link>
               {/*  */}
-              {icon}
-              <span className={styles.label}>{label}</span>
             </li>
           ))}
         </ul>
