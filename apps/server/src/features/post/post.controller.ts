@@ -1,23 +1,23 @@
 import { type Request, type Response } from "express";
 import PostService from "./post.service.js";
-import type { PostBase, PostCreateInput } from "./post.schemas.js";
 
-async function createPost(
-  req: Request<PostCreateInput>,
-  res: Response<PostBase>,
-) {
-  const newPost = await PostService.createPost(req.body);
+async function createPost(req: Request, res: Response) {
+  const payload = {
+    ...req.body,
+    authorId: req.user?.id,
+  };
+  const response = await PostService.createPost(payload);
   return res.status(201).json({
-    ...newPost,
+    ...response,
   });
 }
 
 async function updatePost(req: Request, res: Response) {
-  const data = {
+  const payload = {
     id: Number(req.params?.id),
     ...req.body,
   };
-  const newPost = await PostService.updatePost(data);
+  const newPost = await PostService.updatePost(payload);
   return res.status(201).json({
     data: newPost,
   });

@@ -1,11 +1,13 @@
 import { db } from "#lib/prisma.js";
 import type {
-  PostBase,
-  PostCreateInput,
-  PostUpdateInput,
-} from "./post.schemas.js";
+  PostCreatePayload,
+  PostUpdatePayload,
+  PostResponsePayload,
+} from "@blog/lib";
 
-async function createPost(data: PostCreateInput) {
+async function createPost(
+  data: PostCreatePayload,
+): Promise<PostResponsePayload> {
   /**
    * Check for published - its is not optional
    */
@@ -14,7 +16,10 @@ async function createPost(data: PostCreateInput) {
   });
 }
 
-async function updatePost({ id, ...data }: PostUpdateInput) {
+async function updatePost({
+  id,
+  ...data
+}: PostUpdatePayload): Promise<PostResponsePayload> {
   return await db.post.update({
     where: {
       id,
@@ -44,7 +49,7 @@ async function getPost(id: number) {
     },
   });
 }
-async function getAllPosts(cursor?: number): Promise<PostBase[]> {
+async function getAllPosts(cursor?: number): Promise<PostResponsePayload[]> {
   /**
    * Does not include comments
    */
