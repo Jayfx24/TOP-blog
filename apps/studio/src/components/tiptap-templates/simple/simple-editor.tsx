@@ -89,7 +89,6 @@ import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
 // --- Styles ---
 import "@/components/tiptap-templates/simple/simple-editor.scss";
 
-
 const SEARCH_AND_REPLACE_SCROLL_OPTIONS: ScrollIntoViewOptions = {
   block: "center",
 };
@@ -216,6 +215,7 @@ const MobileToolbarContent = ({
 
 interface ISimpleEditor {
   content: Content;
+  
 }
 
 /**
@@ -225,6 +225,7 @@ interface ISimpleEditor {
 export function SimpleEditor({ content = "" }: ISimpleEditor) {
   const isMobile = useIsBreakpoint();
   const { height } = useWindowSize();
+
   const [mobileView, setMobileView] = useState<"main" | "highlighter" | "link">(
     "main",
   );
@@ -284,7 +285,8 @@ export function SimpleEditor({ content = "" }: ISimpleEditor) {
     ],
     content,
   });
-  console.log(editor?.getJSON()); //get data + content on useEditor to set data
+  console.log(editor?.getJSON());
+  //get data + content on useEditor to set data
 
   const rect = useCursorVisibility({
     editor,
@@ -347,6 +349,32 @@ export function SimpleEditor({ content = "" }: ISimpleEditor) {
               onBack={() => setMobileView("main")}
             />
           )}
+          <div className="">
+            <Button
+              type="submit"
+              name="status"
+              value={"draft"}
+              // onClick={(e) => editor && handleSubmit(e, editor.getJSON(), false)}
+            >
+              {" "}
+              Save to Draft
+            </Button>
+            <Button
+              type="submit"
+              name="status"
+              value={"publish"}
+
+              // onClick={(e) => editor && handleSubmit(e, editor.getJSON(), true)}
+            >
+              {" "}
+              Publish
+            </Button>
+            <input
+              type="hidden"
+              value={JSON.stringify(editor?.getJSON())}
+              name="content"
+            />
+          </div>
         </Toolbar>
 
         <SearchAndReplace

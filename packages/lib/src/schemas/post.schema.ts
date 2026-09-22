@@ -1,18 +1,18 @@
 import z from "zod";
 
-const Post = z.object({
+export const Post = z.object({
   id: z.number(),
-  title: z.string(),
-  content: z.string(),
+  title: z.string().min(10),
+  content: z.string().min(10),
   authorId: z.number(),
   published: z.boolean(),
 });
 
-const PostCreatePayload = Post.omit({ id: true });
-export type PostCreatePayload = z.infer<typeof PostCreatePayload>;
+export const PostCreatePayload = Post.omit({ id: true , authorId: true});
+export type PostCreatePayloadT = z.infer<typeof PostCreatePayload>;
 
 
-const PostUpdatePayload = PostCreatePayload.partial().and(
+export const PostUpdatePayload = PostCreatePayload.partial().and(
   Post.pick({ id: true }),
 );
 export type PostUpdatePayload = z.infer<typeof PostUpdatePayload>;
