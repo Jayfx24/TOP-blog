@@ -40,6 +40,7 @@ export function EditorForm() {
     console.log(typeof content, content);
     console.log(title, handler?.value);
     console.log("submit..ing");
+    setFormError(null)
   };
 
   return (

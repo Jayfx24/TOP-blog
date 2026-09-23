@@ -1,0 +1,14 @@
+.base {
+    font-size: var(--text-sm)
+}
+
+.info {
+    color: var(--content-muted)
+}
+
+.warning {}
+
+.error {
+    color: var(--content-error)
+}
+
