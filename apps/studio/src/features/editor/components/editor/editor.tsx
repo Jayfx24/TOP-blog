@@ -3,7 +3,7 @@
 // import { z } from "zod";
 // import { Field } from "@/components/Field/field";
 // import { Info } from "lucide-react";
-import { PostCreatePayload } from "@blog/lib";
+import { ZPostCreatePayload } from "@blog/lib";
 import content from "@/components/tiptap-templates/simple/data/content.json";
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
 import styles from "./editor.module.css";
@@ -22,13 +22,15 @@ import { Selection } from "@tiptap/extensions";
 import { ImageUploadNode } from "@/components/tiptap-node/image-upload-node";
 import { useEditor } from "@tiptap/react";
 import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
+import EditorService from "../../EditorService";
+import { redirect } from "react-router";
 // import { api } from "@/config/axios.config";
 
 // TODO: UPDATE LOGIC
 
 export function EditorForm() {
   // const [formError, setFormError] =
-  //   useState<z.core.$ZodFlattenedError<PostCreatePayloadT> | null>(null);
+  //   useState<z.core.$ZodFlattenedError<ZPostCreatePayloadT> | null>(null);
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -89,7 +91,7 @@ export function EditorForm() {
   //   const content = formData.get("content");
   //   const published = handler?.value.trim() === "publish";
 
-  //   const result = PostCreatePayload.safeParse({ title, content, published });
+  //   const result = ZPostCreatePayload.safeParse({ title, content, published });
 
   //   if (!result.success) {
   //     const errMap = result.error;
@@ -109,11 +111,11 @@ export function EditorForm() {
   const handleCreate = ()=> {}
   const handleUpdate = ()=> {}
 
-  const handlePublish = (published: boolean = false) => {
+  const handlePublish = async(published: boolean = false) => {
     const $firstHeading = editor.$node("heading", { level: 1 });
     const title = $firstHeading?.textContent;
 
-    const result = PostCreatePayload.safeParse({ title, content, published});
+    const result = ZPostCreatePayload.safeParse({ title, content: editor.getJSON(), published});
 
     console.log($firstHeading?.textContent);
     console.log(editor.getJSON());
@@ -126,6 +128,9 @@ export function EditorForm() {
     }
     // api.post("cr")
 
+    const data = await EditorService.createPost(result.data)
+
+    redirect(`/${data.id}`)
     console.log(result)
 
     // call the db and send

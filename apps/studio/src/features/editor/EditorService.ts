@@ -3,6 +3,7 @@ import type {
   PostCreatePayload,
   PostUpdatePayload,
   PostResponsePayload,
+  
 } from "@blog/lib";
 
 
@@ -19,6 +20,8 @@ async function getPost(id: number) {
 async function createPost(payload: PostCreatePayload) {
   const { data } = await api.post<PostResponsePayload>("posts/create", payload);
   return data;
+
+
 }
 
 async function updatePost(payload: PostUpdatePayload) {

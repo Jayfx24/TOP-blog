@@ -14,19 +14,6 @@ import {
   // useEditor,
   // type Content,
 } from "@tiptap/react";
-
-// --- Tiptap Core Extensions ---
-// import { StarterKit } from "@tiptap/starter-kit";
-// import { Image } from "@tiptap/extension-image";
-// import { TaskItem, TaskList } from "@tiptap/extension-list";
-// import { TextAlign } from "@tiptap/extension-text-align";
-// import { Typography } from "@tiptap/extension-typography";
-// import { Highlight } from "@tiptap/extension-highlight";
-// import { Subscript } from "@tiptap/extension-subscript";
-// import { Superscript } from "@tiptap/extension-superscript";
-// import { FindAndReplace } from "@tiptap/extension-find-and-replace";
-// import { Selection } from "@tiptap/extensions";
-
 // --- UI Primitives ---
 import { Button } from "@/components/tiptap-ui-primitive/button";
 import { Spacer } from "@/components/tiptap-ui-primitive/spacer";
@@ -237,56 +224,6 @@ export function SimpleEditor({ editor, handlePublish }: ISimpleEditor) {
     };
     updateHeight();
   }, []);
-
-  //   const editor = useEditor({
-  //   immediatelyRender: false,
-  //   editorProps: {
-  //     attributes: {
-  //       autocomplete: "off",
-  //       autocorrect: "off",
-  //       autocapitalize: "off",
-  //       "aria-label": "Main content area, start typing to enter text.",
-  //       class: "simple-editor",
-  //     },
-  //   },
-  //   extensions: [
-  //     StarterKit.configure({
-  //       horizontalRule: false,
-  //       link: {
-  //         openOnClick: false,
-  //         enableClickSelection: true,
-  //       },
-  //     }),
-  //     Image.configure({}),
-  //     HorizontalRule,
-  //     TextAlign.configure({ types: ["heading", "paragraph"] }),
-  //     TaskList,
-  //     TaskItem.configure({ nested: true }),
-  //     Highlight.configure({ multicolor: true }),
-  //     Typography,
-  //     Superscript,
-  //     Subscript,
-  //     Selection,
-  //     FindAndReplace.configure({
-  //       searchDebounceMs: 500,
-  //       injectCSS: false,
-  //     }),
-  //     ImageUploadNode.configure({
-  //       accept: "image/*",
-  //       maxSize: MAX_FILE_SIZE,
-  //       limit: 3,
-  //       upload: handleImageUpload,
-  //       onError: (error) => console.error("Upload failed:", error),
-  //     }),
-  //   ],
-  //   content,
-  // });
-
-  const $firstHeading = editor?.$node("heading", { level: 1 });
-
-  console.log($firstHeading);
-  console.log(editor?.getJSON());
-  //get data + content on useEditor to set data
 
   const rect = useCursorVisibility({
     editor,

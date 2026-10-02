@@ -3,9 +3,7 @@ import Layout from "./components/Layout/layout";
 import "./App.css";
 
 import { SideBar } from "./features/side-bar/sideBar";
-import { EditorPage } from "./features/editor/editorPage";
-
-
+import { EditorPage } from "./pages/editor-page";
 
 function App() {
   return (
