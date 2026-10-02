@@ -2,10 +2,10 @@ import z from "zod";
 
 export const Post = z.object({
   id: z.number(),
-  title: z.string().min(10),
-  content: z.string().min(10),
+  title: z.string().min(10, "Title must be at least 10 chars"),
+  content: z.json(),
   authorId: z.number(),
-  published: z.boolean(),
+  published: z.coerce.boolean(),
 });
 
 export const PostCreatePayload = Post.omit({ id: true , authorId: true});
