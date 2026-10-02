@@ -1,5 +1,8 @@
 .base {
-    font-size: var(--text-sm)
+    display: flex;
+    gap: 0.25rem;
+    font-size: var(--text-sm);
+    align-items: center;
 }
 
 .info {
@@ -11,4 +14,3 @@
 .error {
     color: var(--content-error)
 }
-

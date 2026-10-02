@@ -17,13 +17,16 @@ const field = cva(styles.base, {
 
 export interface FieldProps
   extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof field> {
-  label: string;
+  label: string[];
   icon?: LucideIcon;
 }
 
 export const Field: React.FC<FieldProps> = ({ label, icon: Icon, variant }) => {
-  <div className={field({ variant })}>
-    {Icon && <Icon size={12} />}
-    <span>{label}</span>
-  </div>;
+
+  return (
+    <div className={field({ variant })}>
+      {Icon && <Icon size={12} />}
+      <span>{label}</span>
+    </div>
+  );
 };

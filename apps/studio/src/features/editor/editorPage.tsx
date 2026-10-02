@@ -1,4 +1,4 @@
-import { EditorForm } from "./components/editorForm/editorForm";
+import { EditorForm } from "./components/editor/editor";
 
 // interface IEditorForm {
 //   e: React.MouseEvent<HTMLFormElement>;

@@ -4,8 +4,10 @@
     border-radius: var(--radius-2);
     color: inherit;
     outline: none;
-    font-size: var(--text-sm)
+    font-size: var(--text-sm);
+    height: 2rem;
 }
+
 
 .base:hover {
     border-color: var(--border-emphasis);
@@ -26,4 +28,12 @@ base:disabled {
 
 .error {
     border-color: var(--core--red-700)
+}
+
+.fixed{
+    max-width: 400px;
+}
+
+.flexible{
+    width: 100%;
 }

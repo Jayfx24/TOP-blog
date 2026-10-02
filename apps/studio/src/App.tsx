@@ -1,8 +1,7 @@
 // import { useState } from 'react'
 import Layout from "./components/Layout/layout";
 import "./App.css";
-import { Button } from "@blog/ui";
-import { Editor } from "@/features/editor/editor";
+
 import { SideBar } from "./features/side-bar/sideBar";
 import { EditorPage } from "./features/editor/editorPage";
 

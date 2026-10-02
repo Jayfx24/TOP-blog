@@ -8,23 +8,24 @@ import {
   useState,
 } from "react";
 import {
+  Editor,
   EditorContent,
   EditorContext,
-  useEditor,
-  type Content,
+  // useEditor,
+  // type Content,
 } from "@tiptap/react";
 
 // --- Tiptap Core Extensions ---
-import { StarterKit } from "@tiptap/starter-kit";
-import { Image } from "@tiptap/extension-image";
-import { TaskItem, TaskList } from "@tiptap/extension-list";
-import { TextAlign } from "@tiptap/extension-text-align";
-import { Typography } from "@tiptap/extension-typography";
-import { Highlight } from "@tiptap/extension-highlight";
-import { Subscript } from "@tiptap/extension-subscript";
-import { Superscript } from "@tiptap/extension-superscript";
-import { FindAndReplace } from "@tiptap/extension-find-and-replace";
-import { Selection } from "@tiptap/extensions";
+// import { StarterKit } from "@tiptap/starter-kit";
+// import { Image } from "@tiptap/extension-image";
+// import { TaskItem, TaskList } from "@tiptap/extension-list";
+// import { TextAlign } from "@tiptap/extension-text-align";
+// import { Typography } from "@tiptap/extension-typography";
+// import { Highlight } from "@tiptap/extension-highlight";
+// import { Subscript } from "@tiptap/extension-subscript";
+// import { Superscript } from "@tiptap/extension-superscript";
+// import { FindAndReplace } from "@tiptap/extension-find-and-replace";
+// import { Selection } from "@tiptap/extensions";
 
 // --- UI Primitives ---
 import { Button } from "@/components/tiptap-ui-primitive/button";
@@ -36,8 +37,8 @@ import {
 } from "@/components/tiptap-ui-primitive/toolbar";
 
 // --- Tiptap Node ---
-import { ImageUploadNode } from "@/components/tiptap-node/image-upload-node/image-upload-node-extension";
-import { HorizontalRule } from "@/components/tiptap-node/horizontal-rule-node/horizontal-rule-node-extension";
+// import { ImageUploadNode } from "@/components/tiptap-node/image-upload-node/image-upload-node-extension";
+// import { HorizontalRule } from "@/components/tiptap-node/horizontal-rule-node/horizontal-rule-node-extension";
 import "@/components/tiptap-node/blockquote-node/blockquote-node.scss";
 import "@/components/tiptap-node/code-block-node/code-block-node.scss";
 import "@/components/tiptap-node/horizontal-rule-node/horizontal-rule-node.scss";
@@ -81,10 +82,10 @@ import { useWindowSize } from "@/hooks/use-window-size";
 import { useCursorVisibility } from "@/hooks/use-cursor-visibility";
 
 // --- Components ---
-import { ThemeToggle } from "@/components/tiptap-templates/simple/theme-toggle";
+// import { ThemeToggle } from "@/components/tiptap-templates/simple/theme-toggle";
 
 // --- Lib ---
-import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
+// import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
 
 // --- Styles ---
 import "@/components/tiptap-templates/simple/simple-editor.scss";
@@ -147,11 +148,6 @@ const MainToolbarContent = ({
 
       <ToolbarSeparator />
 
-      <ToolbarGroup>
-        <MarkButton type="superscript" />
-        <MarkButton type="subscript" />
-      </ToolbarGroup>
-
       <ToolbarSeparator />
 
       <ToolbarGroup>
@@ -167,8 +163,6 @@ const MainToolbarContent = ({
         <ImageUploadButton text="Add" />
       </ToolbarGroup>
 
-      <Spacer />
-
       {isMobile && <ToolbarSeparator />}
 
       <ToolbarGroup>
@@ -178,8 +172,9 @@ const MainToolbarContent = ({
           data-active-state={isSearchAndReplaceOpen ? "on" : "off"}
           onClick={onSearchAndReplaceClick}
         />
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
       </ToolbarGroup>
+      <Spacer />
     </>
   );
 };
@@ -214,15 +209,15 @@ const MobileToolbarContent = ({
 );
 
 interface ISimpleEditor {
-  content: Content;
-  
+  editor: Editor;
+  handlePublish: (publish: boolean) => void;
 }
 
 /**
  * save to draft btn
  * review then publish
  */
-export function SimpleEditor({ content = "" }: ISimpleEditor) {
+export function SimpleEditor({ editor, handlePublish }: ISimpleEditor) {
   const isMobile = useIsBreakpoint();
   const { height } = useWindowSize();
 
@@ -242,49 +237,54 @@ export function SimpleEditor({ content = "" }: ISimpleEditor) {
     };
     updateHeight();
   }, []);
-  const editor = useEditor({
-    immediatelyRender: false,
-    editorProps: {
-      attributes: {
-        autocomplete: "off",
-        autocorrect: "off",
-        autocapitalize: "off",
-        "aria-label": "Main content area, start typing to enter text.",
-        class: "simple-editor",
-      },
-    },
-    extensions: [
-      StarterKit.configure({
-        horizontalRule: false,
-        link: {
-          openOnClick: false,
-          enableClickSelection: true,
-        },
-      }),
-      Image.configure({}),
-      HorizontalRule,
-      TextAlign.configure({ types: ["heading", "paragraph"] }),
-      TaskList,
-      TaskItem.configure({ nested: true }),
-      Highlight.configure({ multicolor: true }),
-      Typography,
-      Superscript,
-      Subscript,
-      Selection,
-      FindAndReplace.configure({
-        searchDebounceMs: 500,
-        injectCSS: false,
-      }),
-      ImageUploadNode.configure({
-        accept: "image/*",
-        maxSize: MAX_FILE_SIZE,
-        limit: 3,
-        upload: handleImageUpload,
-        onError: (error) => console.error("Upload failed:", error),
-      }),
-    ],
-    content,
-  });
+
+  //   const editor = useEditor({
+  //   immediatelyRender: false,
+  //   editorProps: {
+  //     attributes: {
+  //       autocomplete: "off",
+  //       autocorrect: "off",
+  //       autocapitalize: "off",
+  //       "aria-label": "Main content area, start typing to enter text.",
+  //       class: "simple-editor",
+  //     },
+  //   },
+  //   extensions: [
+  //     StarterKit.configure({
+  //       horizontalRule: false,
+  //       link: {
+  //         openOnClick: false,
+  //         enableClickSelection: true,
+  //       },
+  //     }),
+  //     Image.configure({}),
+  //     HorizontalRule,
+  //     TextAlign.configure({ types: ["heading", "paragraph"] }),
+  //     TaskList,
+  //     TaskItem.configure({ nested: true }),
+  //     Highlight.configure({ multicolor: true }),
+  //     Typography,
+  //     Superscript,
+  //     Subscript,
+  //     Selection,
+  //     FindAndReplace.configure({
+  //       searchDebounceMs: 500,
+  //       injectCSS: false,
+  //     }),
+  //     ImageUploadNode.configure({
+  //       accept: "image/*",
+  //       maxSize: MAX_FILE_SIZE,
+  //       limit: 3,
+  //       upload: handleImageUpload,
+  //       onError: (error) => console.error("Upload failed:", error),
+  //     }),
+  //   ],
+  //   content,
+  // });
+
+  const $firstHeading = editor?.$node("heading", { level: 1 });
+
+  console.log($firstHeading);
   console.log(editor?.getJSON());
   //get data + content on useEditor to set data
 
@@ -349,32 +349,20 @@ export function SimpleEditor({ content = "" }: ISimpleEditor) {
               onBack={() => setMobileView("main")}
             />
           )}
-          <div className="">
-            <Button
-              type="submit"
-              name="status"
-              value={"draft"}
-              // onClick={(e) => editor && handleSubmit(e, editor.getJSON(), false)}
-            >
-              {" "}
-              Save to Draft
-            </Button>
-            <Button
-              type="submit"
-              name="status"
-              value={"publish"}
-
-              // onClick={(e) => editor && handleSubmit(e, editor.getJSON(), true)}
-            >
-              {" "}
-              Publish
-            </Button>
-            <input
+          <ToolbarGroup>
+            <Button onClick={() => handlePublish(false)}> Save to Draft</Button>
+            <Button onClick={() => handlePublish(true)}> Publish</Button>
+            {/* <input
               type="hidden"
               value={JSON.stringify(editor?.getJSON())}
               name="content"
             />
-          </div>
+            <input
+              type="hidden"
+              value={$firstHeading?.textContent}
+              name="content"
+            /> */}
+          </ToolbarGroup>
         </Toolbar>
 
         <SearchAndReplace

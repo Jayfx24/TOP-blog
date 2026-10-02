@@ -185,9 +185,13 @@
   color: var(--content-subtle);
 }
 
-.form-group{
+.form-group {
   display: flex;
   gap: 0.5rem;
   flex-direction: column;
   text-align: start;
+}
+
+.label {
+  font-size: var(--text-sm-medium);
 }
