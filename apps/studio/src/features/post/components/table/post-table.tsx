@@ -19,13 +19,16 @@
  */
 import styles from "./post-table.module.css"
 import type { PostResponsePayload } from "@blog/lib";
+import  { Input } from "@blog/ui";
+import { Checkbox } from "../Checkbox/checkbox";
+
 
 type PostTable = {
   posts: Array<PostResponsePayload>;
 };
 
 export function PostTable({ posts }: PostTable) {
-  const headers = ["title", "Last updated", "status", "holder", "holder"];
+  const headers = ["","title", "Last updated", "status", "holder", "holder"];
 
   // const handleSelectRow = () =>{}
   // const filterRow = ()=>{}
@@ -44,6 +47,9 @@ export function PostTable({ posts }: PostTable) {
         <tbody>
           {posts.map((post) => (
             <tr key={post.id}>
+              <td className={styles.td}>
+                {<Checkbox />}
+              </td>
               <td className={styles.td}>{post.title}</td>
               <td className={styles.td}>{post.updatedAt?.toDateString()}</td>
               <td className={styles.td}>{post.published ? "active" : "not-active"}</td>
