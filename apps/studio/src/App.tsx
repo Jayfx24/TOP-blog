@@ -3,14 +3,18 @@ import Layout from "./components/Layout/layout";
 import "./App.css";
 
 import { SideBar } from "./features/side-bar/sideBar";
-import { EditorPage } from "./pages/editor-page";
+// import { EditorPage } from "./features/editor/editor-page";
+import { PostsPage } from "./features/post/posts-page";
 
 function App() {
   return (
     <Layout>
       <SideBar avatar="https://placehold.co/600x400" fullName="Jay Nicely" />
       {/* <Editor/> */}
-      <EditorPage />
+      {/* <EditorPage /> */}
+      <div className="container">
+        <PostsPage />
+      </div>
     </Layout>
   );
 }

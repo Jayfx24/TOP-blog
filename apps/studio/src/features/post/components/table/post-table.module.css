@@ -1,0 +1,30 @@
+.tw {
+    overflow: hidden;
+    border-radius: var(--radius-2);
+    border: 1px solid var(--border-default)
+}
+
+.base {
+    text-align: left;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+
+
+tr:not(tbody tr:last-child) {
+    border-bottom: 1px solid var(--border-default);
+}
+
+tr:hover{
+    background-color: var(--bg-muted)
+}
+th {
+    font-weight: 100;
+    padding: .5rem;
+    text-transform: capitalize;
+}
+
+td {
+    padding: 0.5rem;
+}

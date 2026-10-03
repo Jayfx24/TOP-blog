@@ -178,7 +178,11 @@
   --radius-2: 8px;
 }
 
-
+.container{
+  /* display: flex; */
+  justify-content: center;
+  padding: 2rem;
+}
 .icon {
   width: 1em;
   height: 1em;

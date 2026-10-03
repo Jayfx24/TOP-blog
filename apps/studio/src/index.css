@@ -106,3 +106,7 @@ a{
   text-decoration: none;
   color: inherit;
 }
+
+table,a{
+  cursor: pointer;
+}
