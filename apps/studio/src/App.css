@@ -6,7 +6,7 @@
   --bg-default: light-dark(var(--core--white), var(--dark--bg-default));
   --bg-subtle: light-dark(var(--core--gray-100), var(--bg-subtle));
   --bg-muted: light-dark(var(--core--gray-50), var(--dark--bg-muted));
-  --bg-inverted: light-dark(var(--content-inverted), var(--dark--bg-inverted));
+  --bg-inverted: light-dark(var(--core--gray-900), var(--core--gray-50));
 
   --bg-info-muted: var(--core--blue-100);
   --bg-success-emphasis: var(--core--green-400);
@@ -26,8 +26,8 @@
   --border-muted: light-dark(var(--core--gray-100), var(--dark--border-muted));
   --border-error: var(--core--red-400);
 
-  --content-emphasis: (var(--core--gray-900), var(--dark--content-emphasis));
-  --content-default: (var(--core--gray-700), var(--dark--content-default));
+  --content-emphasis: light-dark(var(--core--gray-900), var(--dark--content-emphasis));
+  --content-default: light-dark(var(--core--gray-700), var(--dark--content-default));
   --content-subtle: light-dark(var(--core--gray-500), var(--dark--content-emphasis));
   --content-muted: light-dark(var(--core--gray-400), var(--dark--content-muted));
   --content-inverted: light-dark(var(--core--gray-50), var(--dark--content-inverted));
@@ -176,6 +176,7 @@
   --outside-border: 0px 0px 0px 1px var(--border-default);
   /* border radius*/
   --radius-2: 8px;
+  --radius: 4px;
 }
 
 .container{
