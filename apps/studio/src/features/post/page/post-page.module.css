@@ -1,0 +1,15 @@
+.page {
+
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.btnGroup {
+    display: flex;
+    justify-content: right;
+    gap: .5rem;
+}

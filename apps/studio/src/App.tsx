@@ -4,7 +4,7 @@ import "./App.css";
 
 import { SideBar } from "./features/side-bar/sideBar";
 // import { EditorPage } from "./features/editor/editor-page";
-import { PostsPage } from "./features/post/posts-page";
+import { PostsPage } from "./features/post/page/posts-page";
 
 function App() {
   return (

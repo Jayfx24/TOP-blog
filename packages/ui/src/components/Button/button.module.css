@@ -21,7 +21,7 @@
 
 .primary {
     background-color: var(--bg-brand);
-    color: var(--bg-inverted);
+    color: var(--content-inverted);
 
 }
 
@@ -80,4 +80,9 @@ padding: 0.5rem 0.75rem;
 .sm{
     padding: 0.5rem 0.375rem;
 
+}
+
+.base:disabled{
+    opacity: 60%;
+    cursor: not-allowed;
 }
