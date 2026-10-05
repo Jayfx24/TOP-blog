@@ -1,0 +1,39 @@
+.base {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-2);
+    color: inherit;
+    outline: none;
+    font-size: var(--text-sm);
+    height: 2rem;
+}
+
+
+.base:hover {
+    border-color: var(--border-emphasis);
+}
+
+.base:focus-visible {
+
+    box-shadow: var(--focus-shadow);
+}
+
+
+base:disabled {
+    background-color: var(--bg-subtle);
+    cursor: not-allowed;
+    color: var(--content-muted);
+    box-shadow: var(--outside-border)
+}
+
+.error {
+    border-color: var(--core--red-700)
+}
+
+.fixed{
+    max-width: 400px;
+}
+
+.flexible{
+    width: 100%;
+}

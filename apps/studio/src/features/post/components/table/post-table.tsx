@@ -19,8 +19,8 @@
  */
 import styles from "./post-table.module.css"
 import type { PostResponsePayload } from "@blog/lib";
-import  { Input } from "@blog/ui";
-import { Checkbox } from "../Checkbox/checkbox";
+import  { Checkbox } from "@blog/ui";
+// import { Checkbox } from "../Checkbox/checkbox";
 
 
 type PostTable = {
