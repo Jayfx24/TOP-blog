@@ -1,4 +1,6 @@
 import App from "@/App";
+import { EditorPage } from "@/features/editor/editor-page";
+import { PostsPage } from "@/features/post/page/posts-page";
 import { createBrowserRouter } from "react-router";
 
 const router = createBrowserRouter([
@@ -14,8 +16,17 @@ const router = createBrowserRouter([
           { path: "register", element: "Register" },
         ],
       },
+      {
+        path: "posts",
+        Component: PostsPage,
+      },
+      {
+        path: "new",
+        Component: EditorPage,
+      },
     ],
   },
+  // but in protected routes
 ]);
 
 export default router;

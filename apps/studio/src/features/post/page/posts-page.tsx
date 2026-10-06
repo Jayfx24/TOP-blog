@@ -8,6 +8,7 @@ import { Button } from "@blog/ui";
 import { faker } from "@faker-js/faker";
 import { useState } from "react";
 import styles from "./post-page.module.css";
+import clsx from "clsx";
 
 const posts: Array<PostResponsePayload> = Array.from(
   { length: 100 },
@@ -31,7 +32,7 @@ export function PostsPage() {
     currentPage * pageCount,
   );
   return (
-    <div className={styles.wrapper}>
+    <div className={clsx(styles.wrapper,"container")}>
       <PostTable posts={currentPosts} />
       <div className={styles.btnGroup}>
         <Button

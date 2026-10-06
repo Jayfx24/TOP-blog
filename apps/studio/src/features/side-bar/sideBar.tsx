@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import styles from "./sideBar.module.css";
-import { Pen, Globe, FilePen, Archive } from "lucide-react";
+import { Pen, Globe,  } from "lucide-react";
 
 interface ISideBar {
   avatar?: string;
@@ -20,20 +20,11 @@ const sideBarNav = [
     path: "/",
   },
   {
-    label: "Published",
+    label: "Posts",
     icon: <Globe className="icon" />,
-    path: "published",
+    path: "posts",
   },
-  {
-    label: "Drafts",
-    icon: <FilePen className="icon" />,
-    path: "drafts",
-  },
-  {
-    label: "Archived",
-    icon: <Archive className="icon" />,
-    path: "archived",
-  },
+ 
 ];
 export function SideBar({ avatar, fullName }: ISideBar) {
   return (

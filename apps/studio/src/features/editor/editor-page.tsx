@@ -1,4 +1,4 @@
-import { EditorForm } from "../features/editor/components/editor/editor";
+import { EditorForm } from "./components/editor/editor";
 
 export function EditorPage() {
   return (

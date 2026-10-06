@@ -8,8 +8,28 @@
     text-align: left;
     border-collapse: collapse;
     width: 100%;
+    /* table-layout: fixed; */
 }
 
+/* .checkbox{
+    width: 10%;
+}
+
+.title {
+    width: 60%;
+}
+
+.updated {
+    width: 15%;
+}
+
+.status {
+    width: 15%;
+}
+
+.action {
+    width: 10%;
+} */
 
 
 tr:not(tbody tr:last-child) {

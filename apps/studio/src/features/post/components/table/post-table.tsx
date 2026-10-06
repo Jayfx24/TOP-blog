@@ -26,6 +26,7 @@ import { EllipsisVertical } from "lucide-react";
 import { useState } from "react";
 import { Dropdown } from "../Dropdown/dropdown";
 import { IconButton } from "../IconButton/icon-button";
+import clsx from "clsx";
 // import { Checkbox } from "../Checkbox/checkbox";
 
 type PostTable = {
@@ -46,7 +47,7 @@ export function PostTable({ posts }: PostTable) {
         <thead>
           <tr>
             {headers.map((header) => (
-              <th className={styles.th} key={header}>
+              <th className={clsx(styles.th)} key={header}>
                 {header}
               </th>
             ))}
