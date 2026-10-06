@@ -17,10 +17,15 @@
   sortFns: { alphanumeric: sortFn_alphanumeric, text: sortFn_text },
 
  */
+import { Button } from "@blog/ui";
+
 import styles from "./post-table.module.css";
 import type { PostResponsePayload } from "@blog/lib";
 import { Checkbox } from "@blog/ui";
+import { EllipsisVertical } from "lucide-react";
 import { useState } from "react";
+import { Dropdown } from "../Dropdown/dropdown";
+import { IconButton } from "../IconButton/icon-button";
 // import { Checkbox } from "../Checkbox/checkbox";
 
 type PostTable = {
@@ -30,7 +35,7 @@ type PostTable = {
 export function PostTable({ posts }: PostTable) {
   const [selected, setSelected] = useState<PostResponsePayload[]>([]);
 
-  const headers = ["", "title", "Last updated", "status", "holder", "holder"];
+  const headers = ["", "title", "updated", "status", "actions"];
   // const handleSelectRow = () =>{} done
   // const filterRow = ()=>{}
   // const paginateRows = ()=>{}
@@ -72,8 +77,16 @@ export function PostTable({ posts }: PostTable) {
               <td className={styles.td}>
                 {post.published ? "active" : "not-active"}
               </td>
-              <td className={styles.td}>action btn</td>
-              <td className={styles.td}>action btn</td>
+
+              <td className={styles.td}>
+                <Dropdown>
+                  {/* <a href="">edit</a> */}
+                 
+                 <Button variant={"minimal"}>Edit</Button>
+                 <Button variant={"destruction"}>Delete</Button>
+                </Dropdown>
+                {/* <EllipsisVertical size={14} /> */}
+              </td>
             </tr>
           ))}
         </tbody>

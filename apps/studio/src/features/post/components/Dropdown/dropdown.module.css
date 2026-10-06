@@ -1,0 +1,34 @@
+.base {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.content {
+    display: none;
+    position: absolute;
+    background-color: var(--bg-default);
+    min-width: 160px;
+    right: 5px;
+    /* max-width: 180px; */
+    z-index: 1;
+    border-radius: var(--radius);
+    /* border: 1px solid var(--border-subtle); */
+    box-shadow: var(--outside-border);
+    padding: .25rem;
+}
+
+
+.base:hover .content{
+    display: grid;
+}
+
+.content > *{
+    padding: .5rem .75rem;
+    box-shadow: none;
+}
+
+.content > *:hover {
+    background-color: var(--bg-emphasis);
+    border-radius: var(--radius-2)
+}

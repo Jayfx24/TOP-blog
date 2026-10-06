@@ -2,7 +2,6 @@ import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import styles from "./button.module.css";
 
-
 const button = cva(styles.base, {
   variants: {
     variant: {
@@ -11,16 +10,15 @@ const button = cva(styles.base, {
       minimal: styles.minimal,
       destruction: styles.destruction,
     },
-    size:{
-      default:styles.size,
-      sm: styles.sm
-    }
-
+    size: {
+      default: styles.size,
+      sm: styles.sm,
+    },
   },
   defaultVariants: {
     variant: "primary",
-    size: "default"
-  }
+    size: "default",
+  },
 });
 
 export interface ButtonProps
@@ -34,5 +32,9 @@ export const Button: React.FC<ButtonProps> = ({
   size,
   ...props
 }) => (
-  <button className={button({ className, variant,size })} disabled={undefined} {...props} />
+  <button
+    className={button({ className, variant, size })}
+    disabled={undefined}
+    {...props}
+  />
 );

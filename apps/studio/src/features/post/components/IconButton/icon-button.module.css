@@ -1,0 +1,21 @@
+.base{
+    background-color: var(--bg-default);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-2);
+    color: var(--content-emphasis);
+    margin-inline: auto;
+    cursor: pointer;
+    padding: .5rem;
+}
+
+
+.minimal {
+    background-color: inherit;
+    border-color: transparent;
+}
+
+
+.base svg{
+    width: 1rem;
+    height: 1rem;
+}
