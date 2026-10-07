@@ -18,7 +18,11 @@ const router = createBrowserRouter([
       },
       {
         path: "posts",
-        Component: PostsPage,
+
+        children: [
+          { index: true, Component: PostsPage },
+          { path: ":id/edit", Component: EditorPage },
+        ],
       },
       {
         path: "new",

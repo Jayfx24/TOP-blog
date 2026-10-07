@@ -32,10 +32,16 @@ async function updatePost(payload: PostUpdatePayload) {
   return data;
 } //
 
-const EditorService = {
+async function deletePost(id: number) {
+  const { data } = await api.delete<PostResponsePayload>(`posts/${id}/delete`);
+  return data;
+}
+
+const StudioService = {
   createPost,
   getPost,
   getAll,
   updatePost,
+  deletePost
 };
-export default EditorService;
+export default StudioService;

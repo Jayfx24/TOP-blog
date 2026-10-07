@@ -3,8 +3,8 @@
 // import { z } from "zod";
 // import { Field } from "@/components/Field/field";
 // import { Info } from "lucide-react";
-import { ZPostCreatePayload } from "@blog/lib";
-import content from "@/components/tiptap-templates/simple/data/content.json";
+import { ZPostCreatePayload, type PostResponsePayload } from "@blog/lib";
+// import content from "@/components/tiptap-templates/simple/data/content.json";
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
 import styles from "./editor.module.css";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
@@ -20,15 +20,19 @@ import { Superscript } from "@tiptap/extension-superscript";
 import { FindAndReplace } from "@tiptap/extension-find-and-replace";
 import { Selection } from "@tiptap/extensions";
 import { ImageUploadNode } from "@/components/tiptap-node/image-upload-node";
-import { useEditor } from "@tiptap/react";
+import { useEditor, type Content } from "@tiptap/react";
 import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
-import EditorService from "../../EditorService";
+import StudioService from "@/StudioService";
 import { redirect } from "react-router";
 // import { api } from "@/config/axios.config";
 
 // TODO: UPDATE LOGIC
+type IEditor = {
+  // post : PostResponsePayload,
+  content: Content
+}
 
-export function EditorForm() {
+export function EditorForm({content}:IEditor) {
   // const [formError, setFormError] =
   //   useState<z.core.$ZodFlattenedError<ZPostCreatePayloadT> | null>(null);
 
@@ -77,45 +81,19 @@ export function EditorForm() {
   });
 
   if (!editor) return;
-  //  const handleSubmit = (
-  //   e: React.SubmitEvent<HTMLFormElement>,
-  //   // content: Content,
-  // ) => {
-  //   e.preventDefault();
-  //   const target = e.currentTarget;
-  //   if (!target) return;
-  //   const handler = e.nativeEvent.submitter as HTMLButtonElement;
-  //   const formData = new FormData(target);
 
-  //   const title = formData.get("title");
-  //   const content = formData.get("content");
-  //   const published = handler?.value.trim() === "publish";
+  const handleCreate = () => {};
+  const handleUpdate = () => {};
 
-  //   const result = ZPostCreatePayload.safeParse({ title, content, published });
-
-  //   if (!result.success) {
-  //     const errMap = result.error;
-  //     setFormError(z.flattenError(result.error));
-  //     return console.error(errMap.issues);
-  //   }
-
-  //   console.log("is publishing", published);
-  //   console.log(typeof content, content);
-  //   console.log(title, handler?.value);
-  //   console.log("submit..ing");
-  //   setFormError(null);
-  // };
-
-  // const content: Content =
-
-  const handleCreate = ()=> {}
-  const handleUpdate = ()=> {}
-
-  const handlePublish = async(published: boolean = false) => {
+  const handlePublish = async (published: boolean = false) => {
     const $firstHeading = editor.$node("heading", { level: 1 });
     const title = $firstHeading?.textContent;
 
-    const result = ZPostCreatePayload.safeParse({ title, content: editor.getJSON(), published});
+    const result = ZPostCreatePayload.safeParse({
+      title,
+      content: editor.getJSON(),
+      published,
+    });
 
     console.log($firstHeading?.textContent);
     console.log(editor.getJSON());
@@ -128,10 +106,10 @@ export function EditorForm() {
     }
     // api.post("cr")
 
-    const data = await EditorService.createPost(result.data)
+    const data = await StudioService.createPost(result.data);
 
-    redirect(`/${data.id}`)
-    console.log(result)
+    redirect(`/${data.id}`);
+    console.log(result);
 
     // call the db and send
   };

@@ -9,8 +9,8 @@ import { faker } from "@faker-js/faker";
 import { useState } from "react";
 import styles from "./post-page.module.css";
 import clsx from "clsx";
-
-const posts: Array<PostResponsePayload> = Array.from(
+import StudioService from "@/StudioService";
+const tempPosts: Array<PostResponsePayload> = Array.from(
   { length: 100 },
   (_, index) => ({
     id: index,
@@ -24,6 +24,7 @@ const posts: Array<PostResponsePayload> = Array.from(
 );
 
 export function PostsPage() {
+  const [posts, setPosts] = useState<PostResponsePayload[]>(tempPosts);
   const [currentPage, setCurrentPage] = useState(1);
   const pageCount = 10;
   const totalPage = Math.ceil(posts.length / pageCount);
@@ -31,9 +32,33 @@ export function PostsPage() {
     (currentPage - 1) * pageCount,
     currentPage * pageCount,
   );
+
+  const handlePublish = async (
+    id: PostResponsePayload["id"],
+    currentStatus: boolean,
+  ) => {
+    const publishing = !currentStatus;
+    const updated = await StudioService.updatePost({
+      id,
+      published: publishing,
+    });
+
+    setPosts((prev) => prev.map((p) => (updated.id === p.id ? updated : p)));
+  };
+
+  const handleDelete = async (id: PostResponsePayload["id"]) => {
+    const updated = await StudioService.deletePost(id);
+
+    setPosts((prev) => prev.filter((p) => updated.id !== p.id));
+  };
+
   return (
-    <div className={clsx(styles.wrapper,"container")}>
-      <PostTable posts={currentPosts} />
+    <div className={clsx(styles.wrapper, "container")}>
+      <PostTable
+        posts={currentPosts}
+        handlePublish={handlePublish}
+        handleDelete={handleDelete}
+      />
       <div className={styles.btnGroup}>
         <Button
           disabled={currentPage <= 1}

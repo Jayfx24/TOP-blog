@@ -21,28 +21,47 @@ import { Button } from "@blog/ui";
 
 import styles from "./post-table.module.css";
 import type { PostResponsePayload } from "@blog/lib";
-import { Checkbox } from "@blog/ui";
-import { EllipsisVertical } from "lucide-react";
-import { useState } from "react";
+// import { Checkbox } from "@blog/ui";
+import { Pen, Send, X } from "lucide-react";
+// import { useState } from "react";
 import { Dropdown } from "../Dropdown/dropdown";
-import { IconButton } from "../IconButton/icon-button";
+// import { IconButton } from "../IconButton/icon-button";
 import clsx from "clsx";
+import { Link } from "react-router";
 // import { Checkbox } from "../Checkbox/checkbox";
 
+/**
+ * Post table
+ *
+ * Input:
+ *  posts
+ *
+ * DESIGN:
+ *
+ *  title,
+ *  updated
+ *  status
+ *  actions - edit, preview : get from client / ui, publish/unpublish, delete
+ *
+ *
+ *
+ */
 type PostTable = {
   posts: Array<PostResponsePayload>;
+  handlePublish: (
+    id: PostResponsePayload["id"],
+    currentStatus: boolean,
+  ) => void;
+  handleDelete: (id: PostResponsePayload["id"]) => void;
 };
 
-export function PostTable({ posts }: PostTable) {
-  const [selected, setSelected] = useState<PostResponsePayload[]>([]);
+export function PostTable({ posts, handlePublish, handleDelete }: PostTable) {
 
-  const headers = ["", "title", "updated", "status", "actions"];
-  // const handleSelectRow = () =>{} done
-  // const filterRow = ()=>{}
-  // const paginateRows = ()=>{}
-  console.log(selected);
+
+  const headers = ["title", "updated", "status", "actions"];
+
   return (
-    <div className={styles.tw}>
+    <article className={styles.tw}>
       <table className={styles.base}>
         <thead>
           <tr>
@@ -56,7 +75,7 @@ export function PostTable({ posts }: PostTable) {
         <tbody>
           {posts.map((post) => (
             <tr key={post.id}>
-              <td className={styles.td}>
+              {/* <td className={styles.td}>
                 {
                   <Checkbox
                     onClick={(e) => {
@@ -72,7 +91,7 @@ export function PostTable({ posts }: PostTable) {
                     }}
                   />
                 }
-              </td>
+              </td> */}
               <td className={styles.td}>{post.title}</td>
               <td className={styles.td}>{post.updatedAt?.toDateString()}</td>
               <td className={styles.td}>
@@ -82,9 +101,31 @@ export function PostTable({ posts }: PostTable) {
               <td className={styles.td}>
                 <Dropdown>
                   {/* <a href="">edit</a> */}
-                 
-                 <Button variant={"minimal"}>Edit</Button>
-                 <Button variant={"destruction"}>Delete</Button>
+                  <Link
+                    to={`${post.id}/edit`}
+                    state={{  post }}
+                    className="row"
+                  >
+                    <Pen size={16} />
+                    Edit
+                  </Link>
+                  <Button
+                    variant={"minimal"}
+                    className="row"
+                    onClick={() => handlePublish(post.id, post.published)}
+                  >
+                    <Send size={16} />
+                    {post.published ? "Unpublish": "Publish"}
+                  </Button>
+
+                  <Button
+                    variant={"destruction"}
+                    className="row"
+                    onClick={() => handleDelete(post.id)}
+                  >
+                    <X size={16} />
+                    Delete
+                  </Button>
                 </Dropdown>
                 {/* <EllipsisVertical size={14} /> */}
               </td>
@@ -92,6 +133,6 @@ export function PostTable({ posts }: PostTable) {
           ))}
         </tbody>
       </table>
-    </div>
+    </article>
   );
 }
