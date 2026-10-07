@@ -1,13 +1,15 @@
-
 import { Router } from "express";
-import PostController  from "./post.controller.js";
+import PostController from "./post.controller.js";
 
-const postRouter = Router();
+const studioRouter = Router();
+const viewRouter = Router();
 
-postRouter.post("/post", PostController.createPost);
-postRouter.get("/:postId", PostController.getPost);
+studioRouter.post("/post", PostController.createPost);
+studioRouter.get("/posts/:postId", PostController.getPost);
+studioRouter.delete("/posts/:userId/:postId", PostController.deletePost);
+
+viewRouter.get("/:postId", PostController.getPost);
+viewRouter.get("/", PostController.getAllPosts);
 
 // postRouter.get("/post/:userId", PostController.getPost);
-postRouter.delete("/:userId/:postId", PostController.getPost);
-
-postRouter.get("/", PostController.getAllPosts);
+export { studioRouter, viewRouter };
