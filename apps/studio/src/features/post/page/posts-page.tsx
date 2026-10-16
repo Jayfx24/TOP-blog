@@ -10,12 +10,13 @@ import { useState } from "react";
 import styles from "./post-page.module.css";
 import clsx from "clsx";
 import StudioService from "@/StudioService";
+
 const tempPosts: Array<PostResponsePayload> = Array.from(
   { length: 100 },
-  (_, index) => ({
-    id: index,
+  (_, _index) => ({
+    id: crypto.randomUUID(),
     title: faker.book.title(),
-    content: JSON.stringify({ 1: "hello" }),
+    content: "<h1>Hello</h1>",
     authorId: 2,
     published: false,
     createdAt: faker.date.past({ years: 1 }),

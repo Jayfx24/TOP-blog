@@ -4,9 +4,14 @@ import PostController from "./post.controller.js";
 const studioRouter = Router();
 const viewRouter = Router();
 
-studioRouter.post("/post", PostController.createPost);
-studioRouter.get("/posts/:postId", PostController.getPost);
-studioRouter.delete("/posts/:userId/:postId", PostController.deletePost);
+studioRouter.post("/new", PostController.createPost);
+
+// get user posts
+studioRouter.get("/:postId", PostController.getUserPost);
+studioRouter.delete("/:userId/:postId", PostController.deletePost); //TODO: confirm user with authorization
+
+
+studioRouter.get("/", PostController.getUserPosts);
 
 viewRouter.get("/:postId", PostController.getPost);
 viewRouter.get("/", PostController.getAllPosts);

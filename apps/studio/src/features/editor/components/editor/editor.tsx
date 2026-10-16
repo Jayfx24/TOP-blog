@@ -91,7 +91,7 @@ export function EditorForm({content}:IEditor) {
 
     const result = ZPostCreatePayload.safeParse({
       title,
-      content: editor.getJSON(),
+      content: editor.getHTML(),
       published,
     });
 

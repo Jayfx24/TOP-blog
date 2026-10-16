@@ -1,6 +1,7 @@
 import { db } from "#lib/prisma.js";
 import type {
   PostCreatePayload,
+  Post,
   PostUpdatePayload,
   PostResponsePayload,
 } from "@blog/lib";
@@ -28,7 +29,7 @@ async function updatePost({
   });
 }
 
-async function deletePost(authorId: number, id: number) {
+async function deletePost(authorId: Post["authorId"], id: Post["id"]) {
   return await db.post.delete({
     where: {
       authorId,
@@ -36,7 +37,7 @@ async function deletePost(authorId: number, id: number) {
     },
   });
 }
-async function getPost(id: number) {
+async function getPost(id: Post["id"]) {
   /**
    * Returns single post
    */
@@ -49,7 +50,9 @@ async function getPost(id: number) {
     },
   });
 }
-async function getAllPosts(cursor?: number): Promise<PostResponsePayload[]> {
+async function getAllPosts(
+  cursor?: Post["id"],
+): Promise<PostResponsePayload[]> {
   /**
    * Does not include comments
    */
@@ -65,12 +68,26 @@ async function getAllPosts(cursor?: number): Promise<PostResponsePayload[]> {
     },
   });
 }
-async function getUserPosts(authorId: number) {
+async function getUserPosts(authorId: Post["authorId"]) {
   /**
    * Does not include comments
    */
   return await db.post.findMany({
     where: {
+      authorId,
+    },
+    include: {
+      comments: true,
+    },
+  });
+}
+async function getUserPost(authorId: Post["authorId"], id: Post["id"]) {
+  /**
+   * Returns single post for user
+   */
+  return await db.post.findUnique({
+    where: {
+      id,
       authorId,
     },
     include: {
@@ -84,6 +101,7 @@ const PostService = {
   deletePost,
   getPost,
   getAllPosts,
+  getUserPost,
   getUserPosts,
 };
 

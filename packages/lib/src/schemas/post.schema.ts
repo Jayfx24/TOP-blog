@@ -1,14 +1,16 @@
 import z from "zod";
 
 export const ZPost = z.object({
-  id: z.number(),
+  id: z.uuid(),
   title: z.string().min(10, "Title must be at least 10 chars"),
-  content: z.json(),
+  content:z.string(),
   authorId: z.number(),
   published: z.coerce.boolean(),
 });
 
-export const ZPostCreatePayload = ZPost.omit({ id: true , authorId: true});
+export type Post = z.infer<typeof ZPost>;
+
+export const ZPostCreatePayload = ZPost.omit({ id: true });
 export type PostCreatePayload = z.infer<typeof ZPostCreatePayload>;
 
 

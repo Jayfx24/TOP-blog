@@ -8,12 +8,12 @@ import type {
 
 
 
-async function getAll() {
-  const { data } = await api.get<PostResponsePayload[]>("posts");
+async function getUserPosts() {
+  const { data } = await api.get<PostResponsePayload[]>("posts"); //?
   return data;
 }
 
-async function getPost(id: number) {
+async function getPost(id: PostResponsePayload["id"]) {
   const { data } = await api.get<PostResponsePayload>(`posts/${id}`);
   return data;
 }
@@ -32,7 +32,7 @@ async function updatePost(payload: PostUpdatePayload) {
   return data;
 } //
 
-async function deletePost(id: number) {
+async function deletePost(id: PostResponsePayload["id"]) {
   const { data } = await api.delete<PostResponsePayload>(`posts/${id}/delete`);
   return data;
 }
@@ -40,7 +40,7 @@ async function deletePost(id: number) {
 const StudioService = {
   createPost,
   getPost,
-  getAll,
+  getUserPosts,
   updatePost,
   deletePost
 };
