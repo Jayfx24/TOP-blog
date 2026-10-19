@@ -2,6 +2,10 @@ import App from "@/App";
 import { EditorPage } from "@/features/editor/editor-page";
 import { PostsPage } from "@/features/post/page/posts-page";
 import { createBrowserRouter } from "react-router";
+import ProtectedRoutes from "./protectedRoutes";
+import AuthLayout from "@/layouts/Auth/AuthLayout";
+import LoginForm from "@/components/Auth/LoginForm/loginForm";
+import MainLayout from "@/layouts/MainLayout/mainLayout";
 
 const router = createBrowserRouter([
   {
@@ -9,28 +13,38 @@ const router = createBrowserRouter([
     Component: App,
     children: [
       {
+        Component: AuthLayout, //use components
         path: "auth",
-        element: "AuthLayout", //use components
         children: [
-          { path: "login", element: "Login" },
+          { path: "login", Component: LoginForm },
           { path: "register", element: "Register" },
         ],
       },
       {
-        path: "posts",
-
+        Component: ProtectedRoutes, //use components
         children: [
-          { index: true, Component: PostsPage },
-          { path: ":id/edit", Component: EditorPage },
+          {
+            Component: MainLayout,
+
+            children: [
+              { index: true, Component: PostsPage },
+              {
+                path: "posts",
+                children: [
+                  { index: true, Component: PostsPage },
+                  { path: ":id/edit", Component: EditorPage },
+                ],
+              },
+              {
+                path: "new",
+                Component: EditorPage,
+              },
+            ],
+          },
         ],
-      },
-      {
-        path: "new",
-        Component: EditorPage,
       },
     ],
   },
-  // but in protected routes
 ]);
 
 export default router;

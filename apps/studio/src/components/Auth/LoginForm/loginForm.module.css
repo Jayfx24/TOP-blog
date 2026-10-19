@@ -1,0 +1,11 @@
+.base{
+    width: var(--container-sm);
+    padding-block: 1.5rem;    
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border: 1px solid var(--border-muted);
+    border-radius: var(--radius-2);
+    box-shadow: var(--shadow-sm)
+
+}

@@ -1,15 +1,15 @@
 import axios from "axios";
-
+// import "dotenv/config";
 // MOVE TO PACKAGES SHARED
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
+  baseURL: "http://localhost:3000/studio",
+  // headers: {
+  //   "Content-Type": "application/json",
+  // },
   timeout: 10000,
 });
-// add token 
+// add token
 
 api.interceptors.response.use(
   (response) => response,

@@ -177,13 +177,26 @@
   /* border radius*/
   --radius-2: 8px;
   --radius: 4px;
+
+  /* container */
+  --container-xs: 20rem;
+  --container-sm: 24rem;
+  --container-md: 28rem;
+  --container-lg: 32rem;
+  --container-xl: 36rem;
+  --container-2xl: 42rem;
+  --container-3xl: 48rem;
+  --container-4xl: 56rem;
+  --container-5xl: 64rem;
 }
 
-.container{
+.container {
   /* display: flex; */
   /* justify-content: center; */
   padding: 2rem;
+  height: 100svh;
 }
+
 .icon {
   width: 1em;
   height: 1em;
@@ -192,7 +205,7 @@
 
 .form-group {
   display: flex;
-  gap: 0.5rem;
+  gap: 1rem;
   flex-direction: column;
   text-align: start;
 }
@@ -201,8 +214,38 @@
   font-size: var(--text-sm-medium);
 }
 
-.row{
+.row {
   display: flex;
   align-items: center;
   gap: 0.25rem;
+}
+
+
+.field {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+  padding-inline: 1.5rem;
+}
+
+.form-header {
+  padding-inline: 1.5rem;
+  text-align: left;
+
+}
+
+.form-title {
+  font-size: var(--text-lg-semibold);
+  line-height: 1.8;
+  font-weight: 500;
+}
+
+.form-description {
+  font-size: var(--text-sm);
+  color: var(--content-muted);
+  line-height: 1.2;
+}
+
+.label{
+  font-size: var(--text-sm-medium);
 }

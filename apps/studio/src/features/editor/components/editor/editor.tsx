@@ -1,8 +1,5 @@
 // import { Input } from "../input/input";
-// import { useState } from "react";
-// import { z } from "zod";
-// import { Field } from "@/components/Field/field";
-// import { Info } from "lucide-react";
+
 import { ZPostCreatePayload, type PostResponsePayload } from "@blog/lib";
 // import content from "@/components/tiptap-templates/simple/data/content.json";
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";

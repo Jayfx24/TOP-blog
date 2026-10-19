@@ -1,4 +1,4 @@
-import { api } from "@/config/axios.config";
+import { api } from"@/config/axios.config";
 import type {
   PostCreatePayload,
   PostUpdatePayload,
@@ -7,6 +7,7 @@ import type {
 } from "@blog/lib";
 
 
+// remove { data }
 
 async function getUserPosts() {
   const { data } = await api.get<PostResponsePayload[]>("posts"); //?
