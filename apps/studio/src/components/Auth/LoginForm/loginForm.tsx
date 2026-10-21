@@ -1,27 +1,58 @@
 import { Button, Input } from "@blog/ui";
 import { Link } from "react-router";
-import styles from "./loginForm.module.css"
+import styles from "./loginForm.module.css";
+import { useAuth } from "@/features/auth/AuthContext";
+import { ZLoginUser, type TLoginUser } from "@blog/lib";
+
 
 export default function LoginForm() {
+  const { login } = useAuth();
+
+  // generic handleSubmit
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+
+    // get data
+
+    const data = Object.fromEntries(formData.entries()) as TLoginUser;
+
+    // validate with zod
+    const result = ZLoginUser.safeParse(data);
+
+    if (!result.success) {
+      return console.error(result.error);
+    }
+    console.log("is successful: ", result);
+    console.log("sending data:",result.data)
+    // send req
+    await login(result.data);
+  };
   return (
-    <div className={styles.base}>
+    <form className={styles.base} onSubmit={handleSubmit}>
       <div className="form-header">
         <h1 className="form-title">Login to your account</h1>
-        <p className="form-description">Enter your username below to login to your account</p>
+        <p className="form-description">
+          Enter your username below to login to your account
+        </p>
       </div>
 
       <div className="form-group">
         <div className="field">
-          <label className={"label"} htmlFor="username">Username</label>
+          <label className={"label"} htmlFor="username">
+            Username
+          </label>
 
           <Input type="text" id="username" name="username" />
         </div>
         <div className="field">
-          <label className={"label"} htmlFor="password">Password</label>
-          <Input type="password" id="password" name="password" />
+          <label className={"label"} htmlFor="pwd">
+            Password
+          </label>
+          <Input type="password" id="pwd" name="pwd" />
         </div>
         <div className="field">
-          <Button>Login</Button>
+          <Button type="submit">Login</Button>
         </div>
       </div>
       <div className="field">
@@ -29,6 +60,6 @@ export default function LoginForm() {
           Don't have an account? <Link to={"auth/register"}> Sign up</Link>
         </span>
       </div>
-    </div>
+    </form>
   );
 }

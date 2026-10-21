@@ -16,7 +16,7 @@ async function login(req: Request, res: Response, next: NextFunction) {
         return next(err);
       }
       if (!user) {
-        return res.status(400).json({
+        return res.status(401).json({
           success: false,
           message: info ? info?.message : "Login failed",
         });
@@ -26,19 +26,17 @@ async function login(req: Request, res: Response, next: NextFunction) {
 
       const token = generateJwt(user.id);
 
-      return res.json({ data, token });
+      return res.json({ user: data, token: token });
     },
   )(req, res, next);
 }
 async function register(req: Request, res: Response) {
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const { pwd, cPwd: _, ...body } = req.body;
-
   const passwordHash = await genHash(pwd);
   const data = { ...body, passwordHash };
 
   const user = await UserService.createUser(data);
-
   // generate jwt and send
   const token = generateJwt(user.id);
 

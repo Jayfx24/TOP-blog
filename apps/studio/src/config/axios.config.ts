@@ -3,7 +3,7 @@ import axios from "axios";
 // MOVE TO PACKAGES SHARED
 
 export const api = axios.create({
-  baseURL: "http://localhost:3000/studio",
+  baseURL: "/",
   // headers: {
   //   "Content-Type": "application/json",
   // },

@@ -1,11 +1,11 @@
-import type { TUser } from "@blog/lib";
+import type { TLoginUser, TUser } from "@blog/lib";
 import { createContext, useContext } from "react";
-import type { TLogin } from "./types";
+
 
 interface IAuthContext {
   user: TUser | null;
   accessToken: string;
-  login: (data: TLogin) => void;
+  login: (data: TLoginUser) => void;
   logout: () => void;
 }
 

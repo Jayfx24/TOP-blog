@@ -18,7 +18,7 @@
     "noUnusedParameters": true,
     // Recommended Options
     // "rewriteRelativeImportExtensions": true,
-    "erasableSyntaxOnly": true,
+    // "erasableSyntaxOnly": true,
     "strict": true,
     "verbatimModuleSyntax": true,
     "isolatedModules": true,

@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.use("/posts",viewRouter)
 router.use("/studio",studioRouter) //validate user as proper authorization
-router.use("/",authRouter)
+router.use("/auth",authRouter)
 router.get("/", (_req: Request, res: Response) => {
   return res.json("At the home page");
 });

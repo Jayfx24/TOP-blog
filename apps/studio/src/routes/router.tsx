@@ -6,15 +6,15 @@ import ProtectedRoutes from "./protectedRoutes";
 import AuthLayout from "@/layouts/Auth/AuthLayout";
 import LoginForm from "@/components/Auth/LoginForm/loginForm";
 import MainLayout from "@/layouts/MainLayout/mainLayout";
+import AuthProvider from "@/features/auth/AuthProvider";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    Component: App,
+    Component: AuthProvider,
     children: [
       {
         Component: AuthLayout, //use components
-        path: "auth",
+        // path: "auth",
         children: [
           { path: "login", Component: LoginForm },
           { path: "register", element: "Register" },

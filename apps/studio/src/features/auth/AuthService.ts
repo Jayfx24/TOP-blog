@@ -3,12 +3,12 @@ import type { TUser } from "@blog/lib";
 
 async function login({
   username,
-  password,
+  pwd,
 }: {
   username: string;
-  password: string;
+  pwd: string;
 }): Promise<{ user: TUser | null; token: string }> {
-  const { data } = await api.post("/auth/login", { username, password });
+  const { data } = await api.post("auth/login", { username, pwd });
   return data;
 }
 

@@ -1,38 +1,37 @@
-import type { TUser } from "@blog/lib";
-import {  useState, type ReactNode } from "react";
+import type { TLoginUser, TUser } from "@blog/lib";
+import { useState, type ReactNode } from "react";
 import AuthService from "./AuthService";
 import { AxiosError } from "axios";
-import { useNavigate } from "react-router";
+
 import { AuthContext } from "./AuthContext";
 import type { TLogin } from "./types";
-
-interface IAuthProvider {
-  children: ReactNode;
-}
+import AuthenticationError from "@/errors/UnauthorizedError";
+import { Outlet, useNavigate } from "react-router";
 
 const TOKEN_KEY = "token";
-export function AuthProvider({ children }: IAuthProvider) {
+export function AuthProvider() {
   const [user, setUser] = useState<TUser | null>(null);
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem(TOKEN_KEY) || "",
   );
 
+  const navigate = useNavigate();
   // const navigate = useNavigate();
 
-  const login = async ({ username, password }: TLogin) => {
+  const login = async (data: TLoginUser) => {
     try {
       const { user, token }: { user: TUser | null; token: string } =
-        await AuthService.login({ username, password });
-
+        await AuthService.login(data);
       if (user) {
         setUser(user);
         setAccessToken(token);
         localStorage.token = token;
-        // navigate("/");
+        navigate("/posts");
       }
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         console.log(error.response?.data);
+        throw new AuthenticationError(error.message);
       }
     }
   };
@@ -44,11 +43,10 @@ export function AuthProvider({ children }: IAuthProvider) {
   };
   return (
     <AuthContext value={{ user, accessToken, login, logout }}>
-      {children}
+      {/* {children} */}
+      <Outlet />
     </AuthContext>
-
   );
 }
 
-export default AuthProvider
-
+export default AuthProvider;

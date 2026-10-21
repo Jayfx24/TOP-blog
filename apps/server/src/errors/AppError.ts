@@ -1,13 +1,12 @@
-
-
-
-export default class AppError extends Error{
-  statusCode: number;
-  constructor(name: string, message: string, statusCode: number) {
+export default class AppError extends Error {
+  constructor(
+    message: string,
+    public statusCode: number,
+    public code: string,
+  ) {
     super(message);
-    this.statusCode = statusCode;
-    
-    this.name = name || "ServerError";
-
+    // this.statusCode = statusCode;
+    this.name = "AppError";
+    // this.code = code;
   }
 }

@@ -14,8 +14,8 @@ async function createPost(req: Request, res: Response) {
 
 async function updatePost(req: Request, res: Response) {
   const payload = {
-    id: Number(req.params?.id),
     ...req.body,
+    id: req.params?.id,
   };
   const newPost = await PostService.updatePost(payload);
   return res.status(201).json({
@@ -29,7 +29,7 @@ async function getPost(req: Request, res: Response) {
     ...post,
   });
 }
-async function getAllPosts(req: Request, res: Response) {
+async function getPublicPosts(req: Request, res: Response) {
   const lastPostId = req.query.lastPostId as string;
 
   const post = await PostService.getAllPosts(lastPostId);
@@ -72,7 +72,7 @@ const PostController = {
   createPost,
   updatePost,
   getPost,
-  getAllPosts,
+  getPublicPosts,
   getUserPost,
   getUserPosts,
   deletePost,
