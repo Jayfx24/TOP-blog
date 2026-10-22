@@ -2,9 +2,14 @@
 
 import "./App.css";
 import { Outlet } from "react-router";
+import AuthProvider from "./features/auth/AuthProvider";
 
 function App() {
-  return <Outlet />;
+  return (
+    <AuthProvider>
+      <Outlet />;
+    </AuthProvider>
+  );
 }
 
 export default App;

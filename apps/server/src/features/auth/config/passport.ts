@@ -12,7 +12,6 @@ const localConfig = {
 const local = new LocalStrategy(localConfig, async (username, pwd, done) => {
   try {
     const user = await UserService.findUserByUsername(username);
-    
 
     if (!user) {
       return done(null, false, { message: "user does not exists" });
@@ -39,8 +38,9 @@ const jwtConfig = {
 };
 
 const jwt = new JwtStrategy(jwtConfig, async (payload, done) => {
+  console.log("At jwt: ", payload);
   try {
-    const user = await UserService.findUserById(payload.id);
+    const user = await UserService.findUserById(payload.sub);
 
     if (!user) {
       return done(null, false, { message: "user does not exists" });

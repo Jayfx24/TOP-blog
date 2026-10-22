@@ -1,10 +1,16 @@
-import { type Request, type Response } from "express";
+import { type NextFunction, type Request, type Response } from "express";
 import PostService from "./post.service.js";
+import UnauthorizedError from "#errors/UnauthorizedError.js";
 
-async function createPost(req: Request, res: Response) {
+async function createPost(req: Request, res: Response, next: NextFunction) {
+
+  const authorId = req.user?.id;
+
+  if (!authorId) return next(new UnauthorizedError("Access denied"));
+
   const payload = {
     ...req.body,
-    authorId: req.user?.id,
+    authorId,
   };
   const response = await PostService.createPost(payload);
   return res.status(201).json({
@@ -42,10 +48,14 @@ async function getPublicPosts(req: Request, res: Response) {
 
 async function getUserPosts(req: Request, res: Response) {
   const userId = Number(req.user?.id);
-  const post = await PostService.getUserPosts(userId);
-  return res.json({
-    ...post,
-  });
+
+  console.log(`userId : ${userId}`)
+  const posts = await PostService.getUserPosts(userId);
+  console.log(`posts : ${posts}`)
+
+  return res.json(
+    posts,
+  );
 }
 
 async function getUserPost(req: Request, res: Response) {

@@ -93,7 +93,7 @@ export function PostTable({ posts, handlePublish, handleDelete }: PostTable) {
                 }
               </td> */}
               <td className={styles.td}>{post.title}</td>
-              <td className={styles.td}>{post.updatedAt?.toDateString()}</td>
+              <td className={styles.td}>{new Date(post.updatedAt)?.toDateString()}</td>
               <td className={styles.td}>
                 {post.published ? "active" : "not-active"}
               </td>

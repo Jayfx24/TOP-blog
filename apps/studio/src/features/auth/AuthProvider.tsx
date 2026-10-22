@@ -4,12 +4,12 @@ import AuthService from "./AuthService";
 import { AxiosError } from "axios";
 
 import { AuthContext } from "./AuthContext";
-import type { TLogin } from "./types";
+
 import AuthenticationError from "@/errors/UnauthorizedError";
-import { Outlet, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 const TOKEN_KEY = "token";
-export function AuthProvider() {
+export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<TUser | null>(null);
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem(TOKEN_KEY) || "",
@@ -26,7 +26,7 @@ export function AuthProvider() {
         setUser(user);
         setAccessToken(token);
         localStorage.token = token;
-        navigate("/posts");
+        navigate("/posts"); //TODO: Remove or change to home - for client/studio
       }
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
@@ -43,8 +43,7 @@ export function AuthProvider() {
   };
   return (
     <AuthContext value={{ user, accessToken, login, logout }}>
-      {/* {children} */}
-      <Outlet />
+      {children}
     </AuthContext>
   );
 }

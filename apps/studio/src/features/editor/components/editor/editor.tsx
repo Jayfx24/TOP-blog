@@ -1,6 +1,6 @@
 // import { Input } from "../input/input";
 
-import { ZPostCreatePayload, type PostResponsePayload } from "@blog/lib";
+// import { ZPostCreatePayload, type PostResponsePayload } from "@blog/lib";
 // import content from "@/components/tiptap-templates/simple/data/content.json";
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
 import styles from "./editor.module.css";
@@ -20,16 +20,17 @@ import { ImageUploadNode } from "@/components/tiptap-node/image-upload-node";
 import { useEditor, type Content } from "@tiptap/react";
 import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
 import StudioService from "@/StudioService";
-import { redirect } from "react-router";
+import { redirect, useNavigate } from "react-router";
+import { ZCreate } from "@/schemas/post-schema";
 // import { api } from "@/config/axios.config";
 
 // TODO: UPDATE LOGIC
 type IEditor = {
   // post : PostResponsePayload,
-  content: Content
-}
+  content: Content;
+};
 
-export function EditorForm({content}:IEditor) {
+export function EditorForm({ content }: IEditor) {
   // const [formError, setFormError] =
   //   useState<z.core.$ZodFlattenedError<ZPostCreatePayloadT> | null>(null);
 
@@ -77,16 +78,17 @@ export function EditorForm({content}:IEditor) {
     content,
   });
 
-  if (!editor) return;
+  const navigate = useNavigate();
 
-  const handleCreate = () => {};
-  const handleUpdate = () => {};
+  if (!editor) return;
+  // const handleCreate = () => {};
+  // const handleUpdate = () => {};
 
   const handlePublish = async (published: boolean = false) => {
     const $firstHeading = editor.$node("heading", { level: 1 });
     const title = $firstHeading?.textContent;
 
-    const result = ZPostCreatePayload.safeParse({
+    const result = ZCreate.safeParse({
       title,
       content: editor.getHTML(),
       published,
@@ -105,8 +107,10 @@ export function EditorForm({content}:IEditor) {
 
     const data = await StudioService.createPost(result.data);
 
-    redirect(`/${data.id}`);
+    // navigate(`api/${data.id}`);
+    navigate(`/posts`);
     console.log(result);
+    console.log(data);
 
     // call the db and send
   };

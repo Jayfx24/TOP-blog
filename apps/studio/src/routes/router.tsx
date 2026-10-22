@@ -6,11 +6,15 @@ import ProtectedRoutes from "./protectedRoutes";
 import AuthLayout from "@/layouts/Auth/AuthLayout";
 import LoginForm from "@/components/Auth/LoginForm/loginForm";
 import MainLayout from "@/layouts/MainLayout/mainLayout";
-import AuthProvider from "@/features/auth/AuthProvider";
+import StudioService from "@/StudioService";
 
+const allPostLoader = async () => {
+  return { records: await StudioService.getUserPosts() };
+};
 const router = createBrowserRouter([
   {
-    Component: AuthProvider,
+    path: "/",
+    Component: App,
     children: [
       {
         Component: AuthLayout, //use components
@@ -30,8 +34,9 @@ const router = createBrowserRouter([
               { index: true, Component: PostsPage },
               {
                 path: "posts",
+
                 children: [
-                  { index: true, Component: PostsPage },
+                  { index: true, loader: allPostLoader, Component: PostsPage },
                   { path: ":id/edit", Component: EditorPage },
                 ],
               },
