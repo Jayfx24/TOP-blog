@@ -1,7 +1,3 @@
-// interface PostsPage {
-//     children:
-// }
-
 import { PostTable } from "../components/table/post-table";
 import type { PostResponsePayload } from "@blog/lib";
 import { Button } from "@blog/ui";

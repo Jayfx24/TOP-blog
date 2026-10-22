@@ -11,6 +11,8 @@ import StudioService from "@/StudioService";
 const allPostLoader = async () => {
   return { records: await StudioService.getUserPosts() };
 };
+
+const confirmUpdate = async ()=>{}
 const router = createBrowserRouter([
   {
     path: "/",
