@@ -21,6 +21,7 @@ import {  useBlocker, useNavigate } from "react-router";
 import { ZCreate } from "@/schemas/post-schema";
 import { useCallback, useState } from "react";
 import { Model } from "@/components/Model/model";
+import { CircleAlert } from "lucide-react";
 
 // TODO: UPDATE LOGIC
 type IEditor = {
@@ -129,6 +130,7 @@ export function EditorForm({ content }: IEditor) {
           onActionText="proceed"
           onCancel={() => blocker.reset()}
           onAction={() => blocker.proceed()}
+          Icon={CircleAlert}
           open
         />
       )}
