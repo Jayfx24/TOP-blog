@@ -118,6 +118,7 @@ export function EditorForm({ content }: IEditor) {
   };
 
   return (
+    <>
     <div className={styles.base}>
       <SimpleEditor editor={editor} handlePublish={handlePublish} />
       {blocker.state === "blocked" && (
@@ -132,5 +133,6 @@ export function EditorForm({ content }: IEditor) {
         />
       )}
     </div>
+    </>
   );
 }

@@ -1,0 +1,32 @@
+.base {
+    position: fixed;
+    inset: 0;
+    /* padding: 2rem; */
+    border-radius: var(--radius-2);
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--bg-default);
+    box-shadow: var(--shadow-sm);
+    /* border: 1px solid var(--border-subtle); */
+}
+
+.base[open]::backdrop {
+    background: rgb(0 0 0 / 40%);
+}
+
+
+.actions {
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: end;
+    gap: 0.5rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 2rem;
+    text-align: left;
+}
