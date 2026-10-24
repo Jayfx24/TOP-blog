@@ -76,6 +76,7 @@ import { useCursorVisibility } from "@/hooks/use-cursor-visibility";
 
 // --- Styles ---
 import "@/components/tiptap-templates/simple/simple-editor.scss";
+import { useEditorX } from "@/features/editor/components/editor/editor-context";
 
 const SEARCH_AND_REPLACE_SCROLL_OPTIONS: ScrollIntoViewOptions = {
   block: "center",
@@ -198,15 +199,21 @@ const MobileToolbarContent = ({
 interface ISimpleEditor {
   editor: Editor;
   handlePublish: (publish: boolean) => void;
+  isDirty: boolean;
 }
 
 /**
  * save to draft btn
  * review then publish
  */
-export function SimpleEditor({ editor, handlePublish }: ISimpleEditor) {
+export function SimpleEditor({
+  editor,
+  handlePublish,
+  isDirty,
+}: ISimpleEditor) {
   const isMobile = useIsBreakpoint();
   const { height } = useWindowSize();
+  const { isUpdate, isPublished } = useEditorX();
 
   const [mobileView, setMobileView] = useState<"main" | "highlighter" | "link">(
     "main",
@@ -258,6 +265,12 @@ export function SimpleEditor({ editor, handlePublish }: ISimpleEditor) {
     openSearchAndReplace();
   }, [closeSearchAndReplace, isSearchAndReplaceOpen, openSearchAndReplace]);
 
+  const publishLabel = isUpdate
+    ? isDirty
+      ? "Save and publish changes"
+      : "Publish"
+    : "Publish";
+
   return (
     <div className="simple-editor-wrapper">
       <EditorContext.Provider value={{ editor }}>
@@ -287,18 +300,16 @@ export function SimpleEditor({ editor, handlePublish }: ISimpleEditor) {
             />
           )}
           <ToolbarGroup>
-            <Button onClick={() => handlePublish(false)}> Save to Draft</Button>
-            <Button onClick={() => handlePublish(true)}> Publish</Button>
-            {/* <input
-              type="hidden"
-              value={JSON.stringify(editor?.getJSON())}
-              name="content"
-            />
-            <input
-              type="hidden"
-              value={$firstHeading?.textContent}
-              name="content"
-            /> */}
+            <Button onClick={() => handlePublish(false)} disabled={!isDirty}>
+              Save as draft
+            </Button>
+            <Button
+              onClick={() => handlePublish(true)}
+              disabled={!isDirty && isUpdate && isPublished}
+            >
+              {" "}
+              {publishLabel}
+            </Button>
           </ToolbarGroup>
         </Toolbar>
 
@@ -319,3 +330,7 @@ export function SimpleEditor({ editor, handlePublish }: ISimpleEditor) {
     </div>
   );
 }
+/**
+ * save changes if on update and changes made
+ * if new 'save to draft and publish'
+ */

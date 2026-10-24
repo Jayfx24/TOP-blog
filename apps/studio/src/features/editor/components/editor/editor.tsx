@@ -1,4 +1,3 @@
-
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
 import styles from "./editor.module.css";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
@@ -17,20 +16,25 @@ import { ImageUploadNode } from "@/components/tiptap-node/image-upload-node";
 import { useEditor, type Content } from "@tiptap/react";
 import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
 import StudioService from "@/StudioService";
-import {  useBlocker, useNavigate } from "react-router";
-import { ZCreate } from "@/schemas/post-schema";
+import { useBlocker, useNavigate } from "react-router";
+import { ZCreate, type TCreate } from "@/schemas/post-schema";
 import { useCallback, useState } from "react";
 import { Model } from "@/components/Model/model";
 import { CircleAlert } from "lucide-react";
+import { ZPostUpdatePayload, type PostUpdatePayload } from "@blog/lib";
+import { useEditorX } from "./editor-context";
 
 // TODO: UPDATE LOGIC
 type IEditor = {
   // post : PostResponsePayload,
   content: Content;
+
+  id?: PostUpdatePayload["id"];
 };
 
-export function EditorForm({ content }: IEditor) {
+export function EditorForm({ content, id }: IEditor) {
   const [isDirty, setIsDirty] = useState(false);
+  const { isUpdate } = useEditorX();
   const blocker = useBlocker(useCallback(() => isDirty, [isDirty]));
   //  check if context matches editor current
   const editor = useEditor({
@@ -83,19 +87,60 @@ export function EditorForm({ content }: IEditor) {
   const navigate = useNavigate();
 
   if (!editor) return;
- 
+
   // const onAction = () => {};
-  // const handleUpdate = () => {};
+  // const handleUpdate = async (published: boolean = false) => {
+  //   const $firstHeading = editor.$node("heading", { level: 1 });
+  //   const title = $firstHeading?.textContent;
+
+  //   if (!title) {
+  //     // TODO: toast notifying user title is needed
+  //     return;
+  //   }
+
+  //   const result = ZPostUpdatePayload.safeParse({
+  //     id,
+  //     title,
+  //     content: editor.getHTML(),
+  //     published,
+  //   });
+
+  //   if (!result.success) {
+  //     const errMap = result.error;
+  //     // setFormError(z.flattenError(result.error));
+  //     return console.error(errMap.issues);
+  //   }
+
+  //   const data = await StudioService.updatePost(result.data);
+  //   navigate(`/posts`);
+  //   console.log(result);
+  //   console.log(data);
+  // };
 
   const handlePublish = async (published: boolean = false) => {
     const $firstHeading = editor.$node("heading", { level: 1 });
     const title = $firstHeading?.textContent;
 
-    const result = ZCreate.safeParse({
-      title,
-      content: editor.getHTML(),
-      published,
-    });
+    if (!title) {
+      // TODO: toast notifying user title is needed
+      return;
+    }
+    let result;
+
+    if (isUpdate) {
+      result = ZPostUpdatePayload.safeParse({
+        id,
+        title,
+        content: editor.getHTML(),
+        published,
+      });
+    } else {
+      result = ZCreate.safeParse({
+        title,
+        content: editor.getHTML(),
+        published,
+      });
+    }
 
     console.log($firstHeading?.textContent);
     console.log(editor.getJSON());
@@ -108,9 +153,15 @@ export function EditorForm({ content }: IEditor) {
     }
     // api.post("cr")
 
-    const data = await StudioService.createPost(result.data);
+    const data = isUpdate
+      ? await StudioService.updatePost(result.data as PostUpdatePayload)
+      : await StudioService.createPost(result.data as TCreate);
 
     // navigate(`api/${data.id}`);
+
+    if (blocker.state === "blocked") {
+      blocker.reset();
+    }
     navigate(`/posts`);
     console.log(result);
     console.log(data);
@@ -120,21 +171,25 @@ export function EditorForm({ content }: IEditor) {
 
   return (
     <>
-    <div className={styles.base}>
-      <SimpleEditor editor={editor} handlePublish={handlePublish} />
-      {blocker.state === "blocked" && (
-        <Model
-          title="Wait! You didn't save your post yet"
-          description="Proceed to discard or cancel to continue"
-          onCancelText="cancel"
-          onActionText="proceed"
-          onCancel={() => blocker.reset()}
-          onAction={() => blocker.proceed()}
-          Icon={CircleAlert}
-          open
+      <div className={styles.base}>
+        <SimpleEditor
+          editor={editor}
+          handlePublish={handlePublish}
+          isDirty={isDirty}
         />
-      )}
-    </div>
+        {blocker.state === "blocked" && (
+          <Model
+            title="Wait! You didn't save your post yet"
+            description="Proceed to discard or cancel to continue"
+            onCancelText="cancel"
+            onActionText="proceed"
+            onCancel={() => blocker.reset()}
+            onAction={() => blocker.proceed()}
+            Icon={CircleAlert}
+            open
+          />
+        )}
+      </div>
     </>
   );
 }
