@@ -26,7 +26,7 @@ async function createPost(payload: TCreate) {
 }
 
 async function updatePost(payload: PostUpdatePayload) {
-  const { data } = await api.post<PostResponsePayload>(
+  const { data } = await api.patch<PostResponsePayload>(
   `api/${payload.id}/update`,
     payload,
   );

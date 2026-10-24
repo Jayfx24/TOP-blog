@@ -18,13 +18,13 @@ import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
 import StudioService from "@/StudioService";
 import { useBlocker, useNavigate } from "react-router";
 import { ZCreate, type TCreate } from "@/schemas/post-schema";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Model } from "@/components/Model/model";
 import { CircleAlert } from "lucide-react";
 import { ZPostUpdatePayload, type PostUpdatePayload } from "@blog/lib";
 import { useEditorX } from "./editor-context";
 
-// TODO: UPDATE LOGIC
+// BUG: blocker still causes pop up upon action resolving
 type IEditor = {
   // post : PostResponsePayload,
   content: Content;
@@ -34,9 +34,15 @@ type IEditor = {
 
 export function EditorForm({ content, id }: IEditor) {
   const [isDirty, setIsDirty] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const { isUpdate } = useEditorX();
-  const blocker = useBlocker(useCallback(() => isDirty, [isDirty]));
-  //  check if context matches editor current
+
+  const blocker = useBlocker(
+    useCallback(() => isDirty && !isSubmitted, [isDirty, isSubmitted]),
+  );
+
+  const savedContentRef = useRef(content);
+
   const editor = useEditor({
     immediatelyRender: false,
     editorProps: {
@@ -80,7 +86,8 @@ export function EditorForm({ content, id }: IEditor) {
     ],
     content,
     onUpdate({ editor }) {
-      setIsDirty(editor.getHTML() !== content);
+      const dirty = editor.getHTML() !== savedContentRef.current;
+      setIsDirty(dirty);
     },
   });
 
@@ -119,7 +126,7 @@ export function EditorForm({ content, id }: IEditor) {
 
   const handlePublish = async (published: boolean = false) => {
     const $firstHeading = editor.$node("heading", { level: 1 });
-    const title = $firstHeading?.textContent;
+    const title = $firstHeading?.textContent.trim();
 
     if (!title) {
       // TODO: toast notifying user title is needed
@@ -142,32 +149,34 @@ export function EditorForm({ content, id }: IEditor) {
       });
     }
 
-    console.log($firstHeading?.textContent);
-    console.log(editor.getJSON());
-    console.log("Publishing:", published);
+   
 
     if (!result.success) {
       const errMap = result.error;
-      // setFormError(z.flattenError(result.error));
       return console.error(errMap.issues);
     }
-    // api.post("cr")
+    
 
     const data = isUpdate
       ? await StudioService.updatePost(result.data as PostUpdatePayload)
       : await StudioService.createPost(result.data as TCreate);
 
-    // navigate(`api/${data.id}`);
+    savedContentRef.current = editor.getHTML();
 
-    if (blocker.state === "blocked") {
-      blocker.reset();
-    }
+    setIsSubmitted(true);
+
+    // Review: Works but do not understand why since isSubmitted is set to true and it fails without this
     navigate(`/posts`);
-    console.log(result);
+    if (blocker.state === "blocked") {
+      blocker.proceed();
+    }
+
     console.log(data);
 
-    // call the db and send
+    
   };
+
+  console.log("block-state-2:", blocker);
 
   return (
     <>

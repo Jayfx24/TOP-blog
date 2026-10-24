@@ -21,7 +21,7 @@ async function createPost(req: Request, res: Response, next: NextFunction) {
 async function updatePost(req: Request, res: Response) {
   const payload = {
     ...req.body,
-    id: req.params?.id,
+    id: req.params?.postId,
   };
   const newPost = await PostService.updatePost(payload);
   return res.status(201).json({

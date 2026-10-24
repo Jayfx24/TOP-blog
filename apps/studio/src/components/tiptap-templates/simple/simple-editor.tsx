@@ -267,7 +267,7 @@ export function SimpleEditor({
 
   const publishLabel = isUpdate
     ? isDirty
-      ? "Save and publish changes"
+      ? "Save & publish "
       : "Publish"
     : "Publish";
 

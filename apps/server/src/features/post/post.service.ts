@@ -83,7 +83,7 @@ async function getUserPosts(authorId: Post["authorId"]) {
 }
 async function getUserPost(authorId: Post["authorId"], id: Post["id"]) {
   /**
-   * Returns single post for user
+   * Returns single post for usera
    */
   return await db.post.findUnique({
     where: {

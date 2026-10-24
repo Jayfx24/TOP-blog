@@ -10,7 +10,7 @@ export const ZPost = z.object({
 
 export type Post = z.infer<typeof ZPost>;
 
-export const ZPostCreatePayload = ZPost.omit({ id: true });
+export const ZPostCreatePayload = ZPost.omit({ id: true, authorId:true });
 export type PostCreatePayload = z.infer<typeof ZPostCreatePayload>;
 
 
