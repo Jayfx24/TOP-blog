@@ -19,7 +19,7 @@ studioRouter.patch(
 studioRouter.delete("/:userId/:postId", PostController.deletePost); //TODO: confirm user with authorizatio
 studioRouter.get("/", PostController.getUserPosts);
 
-// VIEWS
+// VIEWSk
 viewRouter.get("/:postId", PostController.getPost);
 viewRouter.get("/", PostController.getPublicPosts);
 

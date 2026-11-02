@@ -24,7 +24,7 @@ import { CircleAlert } from "lucide-react";
 import { ZPostUpdatePayload, type PostUpdatePayload } from "@blog/lib";
 import { useEditorX } from "./editor-context";
 
-// BUG: blocker still causes pop up upon action resolving
+// BUG: blocker still causes pop up upon action resolving - partially solved
 type IEditor = {
   // post : PostResponsePayload,
   content: Content;

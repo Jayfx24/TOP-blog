@@ -1,9 +1,10 @@
 import { type Request, type Response, type NextFunction } from "express";
 import UserService from "#features/user/user.service.js";
 import { genHash } from "./passwordUtils.js";
-import { generateJwt } from "./utils.js";
+import { generateAccessToken, generateRefreshToken } from "./utils.js";
 import passport from "passport";
 import { type User } from "#generated/prisma/client.js";
+import UnauthorizedError from "#errors/UnauthorizedError.js";
 
 async function login(req: Request, res: Response, next: NextFunction) {
   passport.authenticate(
@@ -11,25 +12,42 @@ async function login(req: Request, res: Response, next: NextFunction) {
     { session: false },
 
     /* eslint-disable @typescript-eslint/no-explicit-any */
-    (err: any, user: User | false, info: any) => {
+    (err: any, user: User | false) => {
       if (err) {
         return next(err);
       }
       if (!user) {
+        // throw err instead
         return res.status(401).json({
           success: false,
-          message: info ? info?.message : "Login failed",
+          message: "Login failed",
         });
       }
       /* eslint-disable @typescript-eslint/no-unused-vars */
       const { passwordHash: _, ...data } = user;
+      const payload = { sub: user.id };
 
-      const token = generateJwt(user.id);
+      const accessToken = generateAccessToken(payload);
+      const refreshToken = generateRefreshToken(payload);
 
-      return res.json({ user: data, token: token });
+      res.cookie("refresh_token", refreshToken, {
+        httpOnly: true,
+        // secure: true,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+
+      return res.json({ token: accessToken, user: data });
     },
   )(req, res, next);
 }
+
+export async function refresh(req: Request, res: Response, next: NextFunction) {
+  if (!req.user) return next(new UnauthorizedError("User not defined"));
+  const payload = { sub: req.user.id };
+  const accessToken = generateAccessToken(payload);
+  res.send({ token: accessToken });
+}
+
 async function register(req: Request, res: Response) {
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const { pwd, cPwd: _, ...body } = req.body;
@@ -38,27 +56,26 @@ async function register(req: Request, res: Response) {
 
   const user = await UserService.createUser(data);
   // generate jwt and send
-  const token = generateJwt(user.id);
+  const payload = { sub: user.id };
+
+  const token = generateAccessToken(payload);
 
   // login user
 
-  return res.json({ data: user, token });
+  return res.json({ token, user });
 }
 
-async function logout(_req: Request, _res: Response) {
-  // req.logout((err) => {
-  //   if (err) {
-  //     return next(err);
-  //   }
-  //   return res.status(400).json({
-  //     success: true,
-  //     message: "Logout success ",
-  //   });
-  // });
+export async function logout(_req: Request, res: Response) {
+  return res
+    .clearCookie("refresh_token", {
+      httpOnly: true,
+    })
+    .sendStatus(200);
 }
 
 export const AuthController = {
   login,
   register,
   logout,
+  refresh,
 };
