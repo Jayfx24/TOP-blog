@@ -27,16 +27,21 @@ async function login(req: Request, res: Response, next: NextFunction) {
       const { passwordHash: _, ...data } = user;
       const payload = { sub: user.id };
 
-      const accessToken = generateAccessToken(payload);
-      const refreshToken = generateRefreshToken(payload);
+      try {
+        const accessToken = generateAccessToken(payload);
+        const refreshToken = generateRefreshToken(payload);
 
-      res.cookie("refresh_token", refreshToken, {
-        httpOnly: true,
-        // secure: true,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      });
+        res.cookie("refresh_token", refreshToken, {
+          httpOnly: true,
+          // secure: true,
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
 
-      return res.json({ token: accessToken, user: data });
+        return res.json({ token: accessToken, user: data });
+      } catch (error) {
+        console.error(error);
+        next(error);
+      }
     },
   )(req, res, next);
 }
@@ -45,7 +50,12 @@ export async function refresh(req: Request, res: Response, next: NextFunction) {
   if (!req.user) return next(new UnauthorizedError("User not defined"));
   const payload = { sub: req.user.id };
   const accessToken = generateAccessToken(payload);
-  res.send({ token: accessToken });
+  return res.send({ token: accessToken });
+}
+
+export async function me(req: Request, res: Response, next: NextFunction) {
+  const user = req.user
+  return res.send({ user });
 }
 
 async function register(req: Request, res: Response) {
@@ -78,4 +88,5 @@ export const AuthController = {
   register,
   logout,
   refresh,
+  me,
 };

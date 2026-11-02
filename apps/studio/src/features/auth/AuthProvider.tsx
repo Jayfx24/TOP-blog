@@ -1,5 +1,5 @@
 import type { TLoginUser, TUser } from "@blog/lib";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import AuthService from "./AuthService";
 import { AxiosError } from "axios";
 
@@ -8,24 +8,41 @@ import { AuthContext } from "./AuthContext";
 import AuthenticationError from "@/errors/UnauthorizedError";
 import { useNavigate } from "react-router";
 
-const TOKEN_KEY = "token";
+const TOKEN_KEY = "access_token";
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<TUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [accessToken, setAccessToken] = useState(
     localStorage.getItem(TOKEN_KEY) || "",
   );
+
+  useEffect(() => {
+    const restoreUser = async () => {
+      const { user: currentUser } = await AuthService.getCurrentUser();
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        setUser(null);
+      }
+      return setIsLoading(false);
+    };
+    restoreUser();
+  }, [setUser]);
+  // check if user token is active else login
 
   const navigate = useNavigate();
   // const navigate = useNavigate();
 
   const login = async (data: TLoginUser) => {
     try {
+      setIsLoading(true);
       const { user, token }: { user: TUser | null; token: string } =
         await AuthService.login(data);
+
       if (user) {
         setUser(user);
         setAccessToken(token);
-        localStorage.token = token;
+        localStorage.access_token = token;
         navigate("/posts"); //TODO: Remove or change to home - for client/studio
       }
     } catch (error: unknown) {
@@ -33,16 +50,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         console.log(error.response?.data);
         throw new AuthenticationError(error.message);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await AuthService.logout();
     setAccessToken("");
     setUser(null);
+    navigate("/login");
+
     localStorage.removeItem(TOKEN_KEY);
   };
+
   return (
-    <AuthContext value={{ user, accessToken, login, logout }}>
+    <AuthContext value={{ user, accessToken, login, logout, isLoading }}>
       {children}
     </AuthContext>
   );

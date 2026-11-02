@@ -6,6 +6,7 @@ import logErrors from "#middleware/logErrors.js";
 import { randomUUID } from "node:crypto";
 import methodOverride from 'method-override';
 import errorHandler from "#middleware/errorHandler.js";
+import cookieParser from "cookie-parser";
 
 const PORT = process.env.PORT || 3000;
 const app: Express = express();
@@ -25,6 +26,7 @@ const logger = pinoHttp({
 
 app.use(express.urlencoded({ extended: true })); 
 app.use(express.json())
+app.use(cookieParser())
 app.use(methodOverride()) //use to over-ride client verbs
 
 

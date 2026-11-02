@@ -12,7 +12,19 @@ async function login({
   return data;
 }
 
+async function logout() {
+  const { data } = await api.post("auth/logout");
+  return data;
+}
+
+async function getCurrentUser() {
+  const { data } = await api.get("auth/me");
+  return data;
+}
+
 const AuthService = {
   login,
+  logout,
+  getCurrentUser,
 };
 export default AuthService;

@@ -10,7 +10,7 @@ export const authenticateJwt = (
   res: Response,
   next: NextFunction,
 ) => {
-  passport.authenticate("jwt", { session: false })(req, res, next);
+   passport.authenticate("jwt", { session: false })(req, res, next);
 };
 
 export const authenticateRefreshToken = (
@@ -18,5 +18,5 @@ export const authenticateRefreshToken = (
   res: Response,
   next: NextFunction,
 ) => {
-  passport.authenticate("jwt", { session: false })(req, res, next);
+  passport.authenticate("jwt-refresh", { session: false })(req, res, next);
 };

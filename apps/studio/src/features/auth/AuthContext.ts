@@ -7,6 +7,7 @@ interface IAuthContext {
   accessToken: string;
   login: (data: TLoginUser) => void;
   logout: () => void;
+  isLoading: boolean
 }
 
 export const AuthContext = createContext<IAuthContext>({
@@ -14,6 +15,8 @@ export const AuthContext = createContext<IAuthContext>({
   accessToken: "",
   login: () => {},
   logout: () => {},
+  isLoading: true
+
 });
 
 export const useAuth = (): IAuthContext  => {
