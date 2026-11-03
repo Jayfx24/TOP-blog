@@ -11,6 +11,7 @@ const authRouter = Router();
 
 authRouter.get("/me", authenticateJwt, AuthController.me);
 authRouter.post("/login", validateSchema(ZLogin), AuthController.login);
+authRouter.post("/logout", AuthController.logout);
 authRouter.post(
   "/register",
   validateSchema(UserRegistrationSchema),

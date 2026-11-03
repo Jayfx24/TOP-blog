@@ -10,7 +10,7 @@ export default function PublicRoutes() {
 
   //   loading
   if (isLoading){
-    return <p>Loading...</p>
+    return <p>Loading... At public</p>
   }
   if (user) {
     return <Navigate to={"/posts"} state={{ from: location }} replace />;

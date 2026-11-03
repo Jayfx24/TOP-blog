@@ -13,6 +13,7 @@ const button = cva(styles.base, {
     size: {
       default: styles.size,
       sm: styles.sm,
+      full: styles.full,
     },
   },
   defaultVariants: {

@@ -18,13 +18,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const restoreUser = async () => {
-      const { user: currentUser } = await AuthService.getCurrentUser();
-      if (currentUser) {
-        setUser(currentUser);
-      } else {
+      try {
+        const { user: currentUser } = await AuthService.getCurrentUser();
+
+        setUser(currentUser ?? null);
+      } catch (error){
+        // TODO: handle the error
+        console.log(error)
         setUser(null);
+      } finally {
+        setIsLoading(false);
+        
       }
-      return setIsLoading(false);
     };
     restoreUser();
   }, [setUser]);
@@ -56,6 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
+    // TODO: error handling logic
     await AuthService.logout();
     setAccessToken("");
     setUser(null);

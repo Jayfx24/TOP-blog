@@ -76,6 +76,7 @@ async function register(req: Request, res: Response) {
 }
 
 export async function logout(_req: Request, res: Response) {
+  // TODO: add refresh_token and access_token to blacklist table
   return res
     .clearCookie("refresh_token", {
       httpOnly: true,
