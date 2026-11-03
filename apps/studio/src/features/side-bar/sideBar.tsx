@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import styles from "./sideBar.module.css";
 import { Pen, Globe,  } from "lucide-react";
 import { Button } from "@blog/ui";
-import { useAuth } from "../auth/AuthContext";
+import { useAuth } from "@blog/features";
 
 interface ISideBar {
   avatar?: string;

@@ -1,4 +1,4 @@
-import { api } from "@/config/axios.config";
+import { api } from "../config/axios.config";
 import type { TUser } from "@blog/lib";
 
 async function login({

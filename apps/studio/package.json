@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@blog/features": "^1.0.0",
     "@blog/lib": "*",
     "@blog/ui": "*",
     "@floating-ui/react": "^0.27.20",
@@ -43,7 +44,6 @@
   },
   "devDependencies": {
     "@base-ui/react": "^1.8.0",
-    "@blog/ui": "",
     "@eslint/js": "^10.0.1",
     "@faker-js/faker": "^10.6.0",
     "@types/lodash.throttle": "^4.1.9",

@@ -1,9 +1,8 @@
 import { Button, Input } from "@blog/ui";
 import { Link } from "react-router";
 import styles from "./loginForm.module.css";
-import { useAuth } from "@/features/auth/AuthContext";
+import { useAuth } from "@blog/features";
 import { ZLoginUser, type TLoginUser } from "@blog/lib";
-
 
 export default function LoginForm() {
   const { login } = useAuth();
@@ -24,7 +23,7 @@ export default function LoginForm() {
       return console.error(result.error);
     }
     console.log("is successful: ", result);
-    console.log("sending data:",result.data)
+    console.log("sending data:", result.data);
     // send req
     await login(result.data);
   };

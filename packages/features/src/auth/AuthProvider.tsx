@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 
 import { AuthContext } from "./AuthContext";
 
-import AuthenticationError from "@/errors/UnauthorizedError";
+// import AuthenticationError from "@/errors/UnauthorizedError";
 import { useNavigate } from "react-router";
 
 const TOKEN_KEY = "access_token";
@@ -53,7 +53,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
         console.log(error.response?.data);
-        throw new AuthenticationError(error.message);
+        throw new Error(error.message);
       }
     } finally {
       setIsLoading(false);

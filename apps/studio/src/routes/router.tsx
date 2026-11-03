@@ -2,12 +2,12 @@ import App from "@/App";
 import { EditorPage } from "@/features/editor/editor-page";
 import { PostsPage } from "@/features/post/page/posts-page";
 import { createBrowserRouter } from "react-router";
-import ProtectedRoutes from "./protectedRoutes";
 import AuthLayout from "@/layouts/Auth/AuthLayout";
 import LoginForm from "@/components/Auth/LoginForm/loginForm";
 import MainLayout from "@/layouts/MainLayout/mainLayout";
 import StudioService from "@/StudioService";
-import PublicRoutes from "./publicRoutes";
+import { PublicRoutes } from "@blog/features";
+import { ProtectedRoutes } from "@blog/features";
 
 const allPostLoader = async () => {
   return { records: await StudioService.getUserPosts() };

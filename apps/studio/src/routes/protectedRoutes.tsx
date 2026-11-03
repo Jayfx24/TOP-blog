@@ -1,16 +1,16 @@
 // check if user is authenticated
 
-import { useAuth } from "@/features/auth/AuthContext";
+import { useAuth } from "@blog/features";
 import { Navigate, Outlet, useLocation } from "react-router";
 
 export default function ProtectedRoutes() {
-  const { user , isLoading} = useAuth();
+  const { user, isLoading } = useAuth();
 
   const location = useLocation();
 
   //   loading
-  if (isLoading){
-    return <p>Loading...</p>
+  if (isLoading) {
+    return <p>Loading...</p>;
   }
 
   if (!user) {

@@ -1,12 +1,11 @@
-// import { useState } from 'react'
-
 import "./App.css";
 import { Outlet } from "react-router";
-import AuthProvider from "./features/auth/AuthProvider";
+import { AuthProvider, AxiosInterceptorProvider } from "@blog/features";
 
 function App() {
   return (
     <AuthProvider>
+      <AxiosInterceptorProvider />
       <Outlet />;
     </AuthProvider>
   );
