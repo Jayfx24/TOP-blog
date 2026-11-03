@@ -13,7 +13,7 @@ export  function PublicRoutes() {
     return <p>Loading... At public</p>
   }
   if (user) {
-  console.log("public is here")
+  
 
     return <Navigate to={"/posts"} state={{ from: location }} replace />;
   }
