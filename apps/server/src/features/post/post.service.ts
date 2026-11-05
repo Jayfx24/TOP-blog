@@ -7,7 +7,7 @@ import type {
 } from "@blog/lib";
 
 async function createPost(
-  data: PostCreatePayload,
+  data: PostCreatePayload & Pick<Post, "authorId">,
 ): Promise<PostResponsePayload> {
   /**
    * Check for published - its is not optional
@@ -37,7 +37,7 @@ async function deletePost(authorId: Post["authorId"], id: Post["id"]) {
     },
   });
 }
-async function getPost(id: Post["id"]) {
+async function getPrivatePost(id: Post["id"]) {
   /**
    * Returns single post
    */
@@ -50,7 +50,27 @@ async function getPost(id: Post["id"]) {
     },
   });
 }
-async function getAllPosts(
+
+async function getPublicPost(id: Post["id"]) {
+  /**
+   * Returns single post
+   */
+  return await db.post.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      comments: true,
+      author: {
+        select: {
+          firstName: true,
+          lastName: true,
+        },
+      },
+    },
+  });
+}
+async function getPublicPosts(
   cursor?: Post["id"],
 ): Promise<PostResponsePayload[]> {
   /**
@@ -66,8 +86,17 @@ async function getAllPosts(
     orderBy: {
       createdAt: "asc",
     },
+    include: {
+      author: {
+        select: {
+          firstName: true,
+          lastName: true,
+        },
+      },
+    },
   });
 }
+
 async function getUserPosts(authorId: Post["authorId"]) {
   /**
    * Does not include comments
@@ -76,14 +105,11 @@ async function getUserPosts(authorId: Post["authorId"]) {
     where: {
       authorId,
     },
-    include: {
-      comments: true,
-    },
   });
 }
 async function getUserPost(authorId: Post["authorId"], id: Post["id"]) {
   /**
-   * Returns single post for usera
+   * Returns single post for user
    */
   return await db.post.findUnique({
     where: {
@@ -99,8 +125,9 @@ const PostService = {
   createPost,
   updatePost,
   deletePost,
-  getPost,
-  getAllPosts,
+  getPrivatePost,
+  getPublicPost,
+  getPublicPosts,
   getUserPost,
   getUserPosts,
 };

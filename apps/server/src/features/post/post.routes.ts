@@ -20,7 +20,7 @@ studioRouter.delete("/:userId/:postId", PostController.deletePost); //TODO: conf
 studioRouter.get("/", PostController.getUserPosts);
 
 // VIEWSk
-viewRouter.get("/:postId", PostController.getPost);
+viewRouter.get("/:postId", PostController.getPublicPost);
 viewRouter.get("/", PostController.getPublicPosts);
 
 // postRouter.get("/post/:userId", PostController.getPost);

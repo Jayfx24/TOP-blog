@@ -3,7 +3,6 @@ import PostService from "./post.service.js";
 import UnauthorizedError from "#errors/UnauthorizedError.js";
 
 async function createPost(req: Request, res: Response, next: NextFunction) {
-
   const authorId = req.user?.id;
 
   if (!authorId) return next(new UnauthorizedError("Access denied"));
@@ -29,8 +28,8 @@ async function updatePost(req: Request, res: Response) {
   });
 }
 
-async function getPost(req: Request, res: Response) {
-  const post = await PostService.getPost(req.params.id as string);
+async function getPublicPost(req: Request, res: Response) {
+  const post = await PostService.getPublicPost(req.params.id as string);
   return res.json({
     ...post,
   });
@@ -38,9 +37,9 @@ async function getPost(req: Request, res: Response) {
 async function getPublicPosts(req: Request, res: Response) {
   const lastPostId = req.query.lastPostId as string;
 
-  const post = await PostService.getAllPosts(lastPostId);
+  const posts = await PostService.getPublicPosts(lastPostId);
   return res.json({
-    ...post,
+    posts,
   });
 }
 
@@ -49,13 +48,11 @@ async function getPublicPosts(req: Request, res: Response) {
 async function getUserPosts(req: Request, res: Response) {
   const userId = Number(req.user?.id);
 
-  console.log(`userId : ${userId}`)
+  console.log(`userId : ${userId}`);
   const posts = await PostService.getUserPosts(userId);
-  console.log(`posts : ${posts}`)
+  console.log(`posts : ${posts}`);
 
-  return res.json(
-    posts,
-  );
+  return res.json(posts);
 }
 
 async function getUserPost(req: Request, res: Response) {
@@ -81,7 +78,7 @@ async function deletePost(req: Request, res: Response) {
 const PostController = {
   createPost,
   updatePost,
-  getPost,
+  getPublicPost,
   getPublicPosts,
   getUserPost,
   getUserPosts,
