@@ -14,6 +14,7 @@ model User {
   lastName     String
   username     String    @unique
   email        String    @unique
+  isAdmin       Boolean @default(false)
   avatarUrl    String?
   passwordHash String
   createdAt    DateTime  @default(now())
@@ -40,12 +41,13 @@ model Post {
 
 model Comment {
   id        String   @id @default(uuid())
+  name      String
   content   String
-  authorId  Int
+  authorId  Int?
   postId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  author    User     @relation(fields: [authorId], references: [id])
+  author    User?     @relation(fields: [authorId], references: [id])
   post      Post     @relation(fields: [postId], references: [id])
 
   @@map("comments")
