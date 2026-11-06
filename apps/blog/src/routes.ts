@@ -1,6 +1,9 @@
 import { createBrowserRouter } from "react-router";
 import App from "./App.tsx";
 import { RootLayout } from "./layout/root-layout/root-layout.tsx";
+import { ArticleList } from "./components/article-list/article-list.tsx";
+import { articlesLoader } from "./loaders.ts";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -8,8 +11,11 @@ export const router = createBrowserRouter([
     children: [
       {
         Component: RootLayout,
-        children: [],
+        children: [
+          { index: true, loader: articlesLoader, Component: ArticleList },
+        ],
       },
     ],
   },
 ]);
+

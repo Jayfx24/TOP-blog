@@ -1,4 +1,4 @@
-import type { PostResponsePayload, PostsWithAuthor } from "@blog/lib";
+import type {  PostsWithAuthor } from "@blog/lib";
 import { Link } from "react-router";
 import styles from "./article-card.module.css";
 import { clsx } from "clsx";

@@ -1,0 +1,191 @@
+b:root {
+  color-scheme: light dark;
+  /* Color styles */
+
+  --bg-emphasis: light-dark(var(--core--gray-200), var(--dark--bg-emphasis));
+  --bg-default: light-dark(var(--core--white), var(--dark--bg-default));
+  --bg-subtle: light-dark(var(--core--gray-100), var(--bg-subtle));
+  --bg-muted: light-dark(var(--core--gray-50), var(--dark--bg-muted));
+  --bg-inverted: light-dark(var(--core--gray-900), var(--core--gray-50));
+
+  --bg-info-muted: var(--core--blue-100);
+  --bg-success-emphasis: var(--core--green-400);
+  --bg-success-muted: var(--core--green-100);
+  --bg-attention-emphasis: var(--core--orange-400);
+  --bg-attention-muted: var(--core--orange-100);
+  --bg-error-emphasis: var(--core--red-400);
+  --bg-error-muted: var(--core--gray-50);
+
+  --bg-brand: light-dark(var(--brand-500), var(--core--stone-100));
+  --bg-brand-hover: light-dark(var(--brand-400), var(--core--stone-300));
+
+  --border-focus: light-dark(var(--core--black), var(--dark--border-focus));
+  --border-emphasis: light-dark(var(--core--gray-400), var(--dark--bg-emphasis));
+  --border-default: light-dark(var(--brand-50), var(--dark--border-default));
+  --border-subtle: light-dark(var(--brand-50), var(--dark--border-subtle));
+  --border-muted: light-dark(var(--core--gray-100), var(--dark--border-muted));
+  --border-error: var(--core--red-400);
+
+  --content-emphasis: light-dark(var(--core--gray-900), var(--dark--content-emphasis));
+  --content-default: light-dark(var(--core--gray-700), var(--dark--content-default));
+  --content-subtle: light-dark(var(--core--gray-500), var(--dark--content-emphasis));
+  --content-muted: light-dark(var(--core--gray-400), var(--dark--content-muted));
+  --content-inverted: light-dark(var(--core--gray-50), var(--dark--content-inverted));
+  --content-info: light-dark(var(--core--blue-900), var(--dark--content-info));
+  --content-success: light-dark(var(--core--green-900), var(--dark--content-success));
+  --content-attention: light-dark(var(--core--orange-900), var(--dark--content-attention));
+  --content-error: light-dark(var(--core--red-900), var(--dark--content-error));
+  --content-error-text: light-dark(var(--core--red-700), var(--core--red-200));
+
+  --dark--bg-emphasis: rgba(82, 82, 82, 1);
+  --dark--bg-default: var(--core--black);
+  --dark--bg-subtle: var(--core--stone-800);
+  --dark--bg-muted: var(--core--stone-900);
+  --dark--bg-inverted: var(--core--gray-100);
+  --dark--bg-info: var(--core--blue-900);
+  --dark--bg-success: var(--core--green-900);
+  --dark--bg-attention: var(--core--orange-900);
+  --dark--bg-error: var(--core--red-900);
+  --dark--border-focus: var(--core--white);
+  --dark--border-emphasis: var(--core--stone-500);
+  --dark--border-default: var(--core--stone-600);
+  --dark--border-subtle: rgba(56, 56, 56, 1);
+  --dark--border-muted: var(--core--stone-800);
+
+  --dark--content-emphasis: var(--core--stone-50);
+  --dark--content-default: var(--core--stone-300);
+  --dark--content-subtle: var(--core--stone-400);
+  --dark--content-muted: var(--core--stone-600);
+  --dark--content-inverted: var(--core--black);
+  --dark--content-info: var(--core--blue-100);
+  --dark--content-success: var(--core--green-100);
+  --dark--content-attention: var(--core--orange-100);
+  --dark--content-error: var(--core--red-100);
+
+  --core--white: rgba(255, 255, 255, 1);
+  --core--black: rgba(26, 26, 26, 1);
+  --core--gray-50: rgba(249, 250, 251, 1);
+  --core--gray-100: rgba(243, 244, 246, 1);
+  --core--gray-200: rgba(229, 231, 235, 1);
+  --core--gray-300: rgba(209, 213, 219, 1);
+  --core--gray-400: rgba(156, 163, 175, 1);
+  --core--gray-500: rgba(107, 114, 128, 1);
+  --core--gray-600: rgba(75, 85, 99, 1);
+  --core--gray-700: rgba(55, 65, 81, 1);
+  --core--gray-800: rgba(31, 41, 55, 1);
+  --core--gray-900: rgba(16, 16, 16, 1);
+  --brand-50: rgba(209, 213, 219, 1);
+  --brand-100: rgba(156, 163, 175, 1);
+  --brand-200: rgba(107, 114, 128, 1);
+  --brand-300: rgba(75, 85, 99, 1);
+  --brand-400: rgba(55, 65, 81, 1);
+  --brand-500: rgba(17, 24, 39, 1);
+  --brand-600: rgba(14, 20, 32, 1);
+  --brand-700: rgba(13, 18, 29, 1);
+  --brand-800: rgba(10, 14, 23, 1);
+  --brand-900: rgba(16, 16, 16, 1);
+  --core--red-50: rgba(252, 242, 242, 1);
+  --core--red-100: rgba(249, 227, 226, 1);
+  --core--red-200: rgba(246, 204, 203, 1);
+  --core--red-300: rgba(240, 169, 167, 1);
+  --core--red-400: rgba(231, 121, 117, 1);
+  --core--red-500: rgba(221, 82, 76, 1);
+  --core--red-600: rgba(202, 58, 49, 1);
+  --core--red-700: rgba(170, 46, 38, 1);
+  --core--red-800: rgba(140, 40, 34, 1);
+  --core--red-900: rgba(117, 37, 34, 1);
+  --core--orange-50: rgba(254, 247, 238, 1);
+  --core--orange-100: rgba(252, 238, 216, 1);
+  --core--orange-200: rgba(248, 216, 176, 1);
+  --core--orange-300: rgba(243, 189, 127, 1);
+  --core--orange-400: rgba(237, 151, 79, 1);
+  --core--orange-500: rgba(232, 123, 53, 1);
+  --core--orange-600: rgba(217, 98, 43, 1);
+  --core--orange-700: rgba(179, 74, 34, 1);
+  --core--orange-800: rgba(142, 59, 31, 1);
+  --core--orange-900: rgba(115, 50, 27, 1);
+  --core--green-50: rgba(235, 252, 238, 1);
+  --core--green-100: rgba(226, 251, 232, 1);
+  --core--green-200: rgba(199, 245, 211, 1);
+  --core--green-300: rgba(160, 236, 177, 1);
+  --core--green-400: rgba(119, 219, 137, 1);
+  --core--green-500: rgba(94, 194, 105, 1);
+  --core--green-600: rgba(76, 161, 84, 1);
+  --core--green-700: rgba(60, 126, 68, 1);
+  --core--green-800: rgba(48, 99, 57, 1);
+  --core--green-900: rgba(40, 82, 49, 1);
+  --core--blue-50: rgba(240, 246, 254, 1);
+  --core--blue-100: rgba(222, 233, 252, 1);
+  --core--blue-200: rgba(196, 218, 251, 1);
+  --core--blue-300: rgba(157, 196, 248, 1);
+  --core--blue-400: rgba(112, 163, 243, 1);
+  --core--blue-500: rgba(78, 128, 238, 1);
+  --core--blue-600: rgba(54, 98, 227, 1);
+  --core--blue-700: rgba(42, 77, 208, 1);
+  --core--blue-800: rgba(38, 63, 169, 1);
+  --core--blue-900: rgba(37, 57, 133, 1);
+  --core--stone-50: rgba(252, 252, 253, 1);
+  --core--stone-100: rgba(243, 244, 246, 1);
+  --core--stone-200: rgba(232, 232, 232, 1);
+  --core--stone-300: rgba(214, 214, 214, 1);
+  --core--stone-400: rgba(165, 165, 165, 1);
+  --core--stone-500: rgba(117, 117, 117, 1);
+  --core--stone-600: rgba(87, 87, 87, 1);
+  --core--stone-700: rgba(64, 64, 64, 1);
+  --core--stone-800: rgba(46, 46, 46, 1);
+  --core--stone-900: rgba(31, 31, 31, 1);
+
+  /* Text-size styles */
+
+  --text-lg-semibold: 1.13rem;
+  --text-base-regular: 1rem;
+  --text-base-medium: 1rem;
+  --text-base-semibold: 1rem;
+  --text-sm: 0.88rem;
+  --text-sm-medium: 0.88rem;
+  --text-sm-semibold: 0.88rem;
+  --text-sm-mono: 0.88rem;
+  --text-xs: 0.75rem;
+  --text-xs-medium: 0.75rem;
+  --text-xs-semibold: 0.75rem;
+  --text-xs-uppercase: 0.75rem;
+  --text-xxs-regular: 0.63rem;
+  --text-xxs-semibold: 0.63rem;
+  --text-base: 1rem;
+  --text-base-medium: 1rem;
+  --text-base-semibold: 1rem;
+  --text-sm: 0.88rem;
+  --text-sm-medium: 0.88rem;
+  --text-xs: 0.75rem;
+  --text-xs-mono: 0.63rem;
+  --text-xs-medium: 0.75rem;
+  --text-sm-medium: 0.88rem;
+  --title-1: 1.75rem;
+  --title-2: 1.5rem;
+  --title-3: 1.25rem;
+  --title-4: 1.13rem;
+
+
+  /* Effect styles */
+  --shadow-sm: 0px 0px 1px 0px rgba(31, 40, 55, 0.24), 0px 2px 2px 0px rgba(31, 40, 55, 0.04), 0px 5px 5px 0px rgba(31, 40, 55, 0.04);
+  --shadow-xs: 0px 2px 2px rgba(31, 40, 55, 0.02), 0px 5px 5px rgba(31, 40, 55, 0.02);
+  --shadow-modal: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 20px 25px rgba(0, 0, 0, 0.1);
+  --shadow-dropdown: 0px 2px 6px rgba(0, 0, 0, 0.08), 0px 2px 4px rgba(0, 0, 0, 0.08);
+  --focus-shadow: 0px 0px 0px 2px rgba(128, 128, 128, 0.3);
+  --error-focus: 0px 0px 0px 2px rgba(240, 63, 63, 0.3);
+  --outside-border: 0px 0px 0px 1px var(--border-default);
+  /* border radius*/
+  --radius-2: 8px;
+  --radius: 4px;
+
+  /* container */
+  --container-xs: 20rem;
+  --container-sm: 24rem;
+  --container-md: 28rem;
+  --container-lg: 32rem;
+  --container-xl: 36rem;
+  --container-2xl: 42rem;
+  --container-3xl: 48rem;
+  --container-4xl: 56rem;
+  --container-5xl: 64rem;
+}

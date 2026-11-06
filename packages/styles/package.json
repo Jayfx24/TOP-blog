@@ -1,0 +1,16 @@
+{
+  "name": "@blog/styles",
+  "private": "true",
+  "description": "styles for blog",
+  "type": "module",
+  "styles": "./index.css",
+  "exports": {
+    ".": {
+      "default": "./index.css",
+      "types": "./index.css"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

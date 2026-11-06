@@ -1,0 +1,57 @@
+.container {
+    padding: 2rem;
+    height: 100svh;
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+    color: var(--content-subtle);
+}
+
+.form-group {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    text-align: start;
+}
+
+.label {
+    font-size: var(--text-sm-medium);
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+
+.field {
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+    padding-inline: 1.5rem;
+}
+
+.form-header {
+    padding-inline: 1.5rem;
+    text-align: left;
+
+}
+
+.form-title {
+    font-size: var(--text-lg-semibold);
+    line-height: 1.8;
+    font-weight: 500;
+}
+
+.form-description {
+    font-size: var(--text-sm);
+    color: var(--content-muted);
+    line-height: 1.2;
+}
+
+.label {
+    font-size: var(--text-sm-medium);
+}

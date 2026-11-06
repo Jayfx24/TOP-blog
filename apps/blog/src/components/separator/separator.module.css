@@ -1,0 +1,10 @@
+.base{
+    width: 1px;
+    border: none;
+    color: var(--border-default);
+
+}
+
+.vertical {
+    transform: rotate(90deg);
+}
