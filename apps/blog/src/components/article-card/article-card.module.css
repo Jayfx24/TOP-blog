@@ -1,0 +1,54 @@
+.base{
+    padding-inline: 2rem;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    padding-block: 2rem;
+    gap: 1rem;
+    border-bottom: 1px solid ;
+    
+}
+
+
+
+
+.featured{
+    flex-direction: row;
+}
+
+
+.base:nth-child(3n){
+    background-color: blue;
+}
+
+
+.featured > * {
+    flex: 1;
+}
+
+h1 {
+    font: var(--font-lg-semibold);
+}
+
+.details{
+     display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.excerpt{
+    /* color: var( --content-subtle); */
+}
+
+.profile{
+    display: flex;
+
+
+   
+}
+
+.author > *{
+   font-size: var(--text-sm);
+}

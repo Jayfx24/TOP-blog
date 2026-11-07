@@ -1,0 +1,14 @@
+.base {
+    display: grid;
+    grid-template-columns: 15% 1fr;
+}
+.list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* gap: 3rem; */
+}
+
+
+.span {
+    grid-column: span 2;
+}

@@ -1,4 +1,4 @@
-b:root {
+:root {
   color-scheme: light dark;
   /* Color styles */
 
@@ -136,11 +136,15 @@ b:root {
   --core--stone-900: rgba(31, 31, 31, 1);
 
   /* Text-size styles */
-
+  --font-family: san-serif;
   --text-lg-semibold: 1.13rem;
+  --font-lg-semibold: 600 1.13rem var(--font-family);
+
   --text-base-regular: 1rem;
   --text-base-medium: 1rem;
   --text-base-semibold: 1rem;
+  /* font-style font-weight font-size font-family */
+  --font-base-semibold: 600 1rem var(--font-family);
   --text-sm: 0.88rem;
   --text-sm-medium: 0.88rem;
   --text-sm-semibold: 0.88rem;
