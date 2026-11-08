@@ -12,3 +12,18 @@
     font-size: var(--title-hero);
     color: var(--content-emphasis)
 }
+
+.list{
+     display: grid;
+    grid-template-columns: 15% 1fr;
+}
+
+.content{
+    padding-block-end:2rem;
+}
+
+.btnGroup{
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+}

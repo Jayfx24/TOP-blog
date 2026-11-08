@@ -13,14 +13,9 @@ export function ArticleList({articles}:ArticleListProps) {
   // get all posts
   
   return (
-    <div className="wrapper">
+    // <div className="wrapper">
       <section className={styles.base}>
-        <div className="tags">
-          <li>Games</li>
-          <li>Lifestyle</li>
-          <li>tech</li>
-        </div>
-        <section >
+       
           <ul className={styles.list}>
             {articles?.map((article, index) => (
               <li key={article.id} className={clsx(index === 0 && styles.span)}>
@@ -28,8 +23,8 @@ export function ArticleList({articles}:ArticleListProps) {
               </li>
             ))}
           </ul>
-        </section>
+       
       </section>
-    </div>
+    // </div>
   );
 }

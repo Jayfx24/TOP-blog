@@ -1,11 +1,12 @@
 .base {
-    display: grid;
-    grid-template-columns: 15% 1fr;
+    /* display: grid;
+    grid-template-columns: 15% 1fr; */
 }
 .list {
     display: grid;
     grid-template-columns: 1fr 1fr;
     row-gap: 2rem;
+    padding: 0;
 }
 
 
