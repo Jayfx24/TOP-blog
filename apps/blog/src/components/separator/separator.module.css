@@ -1,7 +1,7 @@
 .base{
     width: 100%;
     border: none;
-    background-color: var(--border-default);
+    background-color: var(--border-subtle);
     height: 1px;
 
 }

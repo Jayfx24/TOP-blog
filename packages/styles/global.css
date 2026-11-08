@@ -16,7 +16,7 @@ img{
 }
 
 .wrapper {
-    max-width: 1250px;
+   width: min(100% - 2rem, 1200px);
     padding-inline: 2rem;
     margin-inline: auto;
 }
@@ -72,4 +72,14 @@ img{
 
 .label {
     font-size: var(--text-sm-medium);
+}
+
+.rounded {
+    border-radius: 999px;
+    width: 36px;
+    height: 36px;
+}
+
+.mt-auto{
+    margin-top: auto;
 }

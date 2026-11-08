@@ -7,11 +7,13 @@ export function RootLayout() {
     <section className={styles.base}>
       <header>HEADER-BASE</header>
       {/* separator */}
-      <Separator />
+      {/* <Separator /> */}
       {/*badge and hero text */}
       {/* separator */}
 
       <Outlet />
+
+      <footer>Footer</footer>
     </section>
   );
 }

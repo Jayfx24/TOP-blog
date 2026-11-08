@@ -1,0 +1,14 @@
+.base{
+    display: flex;
+    flex-direction: column;
+    gap: 5rem
+}
+
+.hero{
+    border-block: 1px solid ;
+    padding-block: 2rem;
+}
+.title{
+    font-size: var(--title-hero);
+    color: var(--content-emphasis)
+}
