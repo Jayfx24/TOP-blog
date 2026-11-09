@@ -18,7 +18,7 @@ export function ArticleCard({ article, featured }: ArticleCardProps) {
       <div className={clsx(styles.content, featured && styles.featured)}>
         <img src={img} alt="" />
         <div className={styles.details}>
-          <Link to={article.id} className={styles.link}>
+          <Link to={`blog/${article.id}`} className={styles.link}>
             <h1 className="title">{article.title}</h1>
           </Link>
           <p className={styles.excerpt}>{excerpt}</p>

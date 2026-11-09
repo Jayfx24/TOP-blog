@@ -1,0 +1,39 @@
+
+
+.title{
+    font-size: calc(var(--title-hero) * 1.5)
+}
+
+.meta{
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--border-subtle);
+    padding-block: 2rem;
+}
+.meta p{
+    color: var(--content-subtle);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.value{
+    font: var(--font-base-semibold)
+    
+}
+
+.imgWrapper{
+    margin-inline: auto;
+    /* border: 1px solid; */
+    display: flex;
+    justify-content: center;
+    padding: 3rem 2rem;
+}
+.imgWrapper img{
+    aspect-ratio: 16/9;
+}
+
+.content{
+    max-width: 75ch;
+    /* text-align: center; */
+    margin-inline: auto;
+}

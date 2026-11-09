@@ -1,6 +1,7 @@
 import type { PostsWithAuthor } from "@blog/lib";
 import { blogService } from "./blogService";
 import { faker } from "@faker-js/faker";
+import type { LoaderFunctionArgs } from "react-router";
 
 function dummyPost(): PostsWithAuthor {
   return {
@@ -22,4 +23,12 @@ const posts = faker.helpers.multiple(dummyPost, { count: 15 });
 export async function articlesLoader() {
   // return await blogService.getPosts();
   return posts;
+}
+
+
+
+export async function detailsLoader({params}: LoaderFunctionArgs) {
+  // return await blogService.getPosts();
+  console.log(params)
+  return dummyPost();
 }
