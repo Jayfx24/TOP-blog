@@ -1,10 +1,13 @@
+@import '@/styles/_variables.scss';
+@import '@/styles/_keyframe-animations.scss';
+
 :root {
   color-scheme: light dark;
   /* Color styles */
 
   --bg-emphasis: light-dark(var(--core--gray-200), var(--dark--bg-emphasis));
   --bg-default: light-dark(var(--core--white), var(--dark--bg-default));
-  --bg-subtle: light-dark(var(--core--gray-100), var(--bg-subtle));
+  --bg-subtle: light-dark(var(--core--gray-100), var(--dark--bg-subtle));
   --bg-muted: light-dark(var(--core--gray-50), var(--dark--bg-muted));
   --bg-inverted: light-dark(var(--core--gray-900), var(--core--gray-50));
 
@@ -195,3 +198,16 @@
   --container-5xl: 64rem;
 }
 
+
+
+.tiptap{
+  padding: 0.5rem 1rem;
+  /* background-color: red; */
+  min-height: 100px;
+}
+
+div.tiptap-toolbar[data-variant=fixed]{
+  background: inherit;
+    border-radius: var(--radius-2)
+
+}

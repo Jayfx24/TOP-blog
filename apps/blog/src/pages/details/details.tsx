@@ -2,6 +2,7 @@ import type { PostsWithAuthor } from "@blog/lib";
 import { useLoaderData } from "react-router";
 import { detailsLoader } from "../../loaders";
 import styles from "./details.module.css";
+import { Comment } from "@/components/comment/comment";
 // interface DetailsProps {
 //   article: PostsWithAuthor; //should be with comment
 // }
@@ -30,7 +31,19 @@ export function Details() {
       <div className={styles.imgWrapper}><img src="https://placehold.co/1250x628" alt="" /></div>
       <div className="wrapper">
         <div className={styles.content}>{article.content}</div>
+
+        <div className="comment">
+          <div className="header">
+            <h2>Comment</h2>
+            <p>In this section you can contribute and read other readers comment on this article</p>
+          </div>
+          <div className="content">
+            <Comment />
+          </div>
+
+        </div>
       </div>
+
     </section>
   );
 }

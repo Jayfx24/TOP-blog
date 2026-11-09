@@ -1,0 +1,16 @@
+.base{
+    position: relative;
+    /* min-height: 200px; */
+    /* border: 1px solid; */
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-subtle);
+    border-radius: var(--radius-2)
+}
+
+.editor{
+    
+    height: 100%;
+    flex: 1;
+}
+
