@@ -1,8 +1,8 @@
-import type { PostsWithAuthor } from "@blog/lib";
+// import type { PostsWithAuthor } from "@blog/lib";
 import { useLoaderData } from "react-router";
 import { detailsLoader } from "../../loaders";
 import styles from "./details.module.css";
-import { Comment } from "@/components/comment/comment";
+import { CommentEditor } from "@/components/comment-editor/comment-editor";
 // interface DetailsProps {
 //   article: PostsWithAuthor; //should be with comment
 // }
@@ -38,7 +38,7 @@ export function Details() {
             <p>In this section you can contribute and read other readers comment on this article</p>
           </div>
           <div className="content">
-            <Comment />
+            <CommentEditor postId={article.id} />
           </div>
 
         </div>
