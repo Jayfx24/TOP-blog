@@ -1,11 +1,12 @@
 import { db } from "#lib/prisma.js";
+import type { TComment, TCommentInput } from "@blog/lib";
 import type {
   CommentBase,
   CommentCreateInput,
   CommentUpdateInput,
 } from "./comment.schemas.js";
 
-async function createComment(data: CommentCreateInput) {
+async function createComment(data: TCommentInput) {
   return await db.comment.create({
     data,
   });
@@ -20,15 +21,14 @@ async function updateComment({ id, ...data }: CommentUpdateInput) {
   });
 }
 
-async function deleteComment(authorId: number, id: number) {
+async function deleteComment(id: CommentUpdateInput["id"]) {
   return await db.comment.delete({
     where: {
-      authorId,
       id,
     },
   });
 }
-async function getComment(id: number): Promise<CommentBase | null> {
+async function getComment(id: TComment["id"]): Promise<TComment | null> {
   /**
    * Returns single comment
    */
@@ -38,10 +38,11 @@ async function getComment(id: number): Promise<CommentBase | null> {
     },
   });
 }
-async function getAllComments(cursor?: number): Promise<CommentBase[]> {
+async function getAllComments(cursor?: TComment["id"]): Promise<TComment[]> {
   /**
    * Does not include comments
    */
+  // REVIEW
 
   return await db.comment.findMany({
     take: 10,
@@ -54,33 +55,33 @@ async function getAllComments(cursor?: number): Promise<CommentBase[]> {
     },
   });
 }
-
-//   async function  getPostComments(cursor?: number) {
+// Individual post will induce their comment
+// async function getPostComments(
+//   postId: TComment["postId"],
+// ): Promise<TComment[]> {
 //   /**
 //    * Does not include comments
 //    */
 
 //   return await db.comment.findMany({
-//     take: 10,
-//     skip: cursor ? 1 : undefined,
-//     cursor: {
-//       id: cursor,
+//     where: {
+//       postId,
 //     },
 //     orderBy: {
 //       createdAt: "asc",
 //     },
 //   });
 // }
-async function getUserComments(authorId: number): Promise<CommentBase[]> {
-  /**
-   * Does not include comments
-   */
-  return await db.comment.findMany({
-    where: {
-      authorId,
-    },
-  });
-}
+// async function getUserComments(authorId: number): Promise<CommentBase[]> {
+//   /**
+//    * Does not include comments
+//    */
+//   return await db.comment.findMany({
+//     where: {
+//       authorId,
+//     },
+//   });
+// }
 
 const CommentService = {
   createComment,
@@ -88,7 +89,8 @@ const CommentService = {
   deleteComment,
   getComment,
   getAllComments,
-  getUserComments,
+  // getPostComments
+  // getUserComments,
 };
 
 export default CommentService;

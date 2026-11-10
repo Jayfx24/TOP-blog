@@ -21,6 +21,7 @@ studioRouter.get("/", PostController.getUserPosts);
 
 // VIEWSk
 viewRouter.get("/:postId", PostController.getPublicPost);
+viewRouter.use("/:postId",);
 viewRouter.get("/", PostController.getPublicPosts);
 
 // postRouter.get("/post/:userId", PostController.getPost);

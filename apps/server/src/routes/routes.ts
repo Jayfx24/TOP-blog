@@ -6,7 +6,8 @@ import { authenticateJwt } from "#features/auth/auth.middleware.js";
 
 const router = express.Router();
 
-router.use("/articles", authenticateJwt, viewRouter);
+router.use("/articles", viewRouter);
+// router.use("/articles", viewRouter);
 router.use("/studio", authenticateJwt, studioRouter); //validate user as proper authorization
 router.use("/auth", authRouter);
 router.get("/", (_req: Request, res: Response) => {
