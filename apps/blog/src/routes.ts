@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import App from "./App.tsx";
 import { RootLayout } from "./layout/root-layout/root-layout.tsx";
-import { articlesLoader, detailsLoader } from "./loaders.ts";
+import { articlesLoader, detailsLoader, } from "./loaders.ts";
 import { Home } from "./pages/home/home.tsx";
 import { Details } from "./pages/details/details.tsx";
 

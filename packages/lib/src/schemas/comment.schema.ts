@@ -19,7 +19,7 @@ import { isValidPosition } from "@/lib/tiptap-utils";
 
 export const ZComment = z.object({
   id: z.uuid(),
-  name: z.string().trim().min(2).max(20),
+  name: z.string().trim().min(2, 'username must be at least 2').max(20, 'username must not be at above 20'),
   content: z.string().trim(),
   postId: z.uuid(),
   createdAt: z.date(),
@@ -36,6 +36,7 @@ export const ZCommentInput = ZComment.omit({
 }).extend({
   content: z
     .string()
+    .min(10, "comment must be at least 10 character")
     .transform((val) =>
       DOMPurify.sanitize(val, { USE_PROFILES: { html: true } }),
     ),

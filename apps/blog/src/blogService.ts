@@ -1,19 +1,18 @@
-import { api } from "@blog/features";
 import type { Post, PostsWithAuthor, TCommentInput } from "@blog/lib";
+import { blogAPI } from "./config/api";
 
 const getPosts = async () => {
-  const { data } = await api.get<PostsWithAuthor[]>("/all");
+  const { data } = await blogAPI.get<PostsWithAuthor[]>("/posts");
   return data;
 };
 
 const getPost = async (id: Post["id"]) => {
-  // post with comment
-  const { data } = await api.get<PostsWithAuthor>(`/${id}`);
+  const { data } = await blogAPI.get<PostsWithAuthor>(`/posts/${id}`);
   return data;
 };
 
 const postComment = async (payload: TCommentInput) => {
-  const { data } = await api.post(`/comment}`, payload);
+  const { data } = await blogAPI.post(`/comments/new`, payload);
   return data;
 };
 

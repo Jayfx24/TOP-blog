@@ -3,17 +3,21 @@ import Editor from "../tiptap/tiptap";
 import styles from "./comment-editor.module.css";
 import { EditorContext, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useMemo, type SubmitEvent } from "react";
-import { ZCommentInput } from "@blog/lib";
+import { useMemo, useState, type SubmitEvent } from "react";
+import { ZCommentInput, type TComment } from "@blog/lib";
+import z from "zod";
+import { fromError, createErrorMap } from 'zod-validation-error';
+
 
 interface CommentProps {
-  postId: string;
+  postId: TComment["id"];
 }
 export function CommentEditor({ postId }: CommentProps) {
   const editor = useEditor({
     extensions: [StarterKit], // define your extension array
     content: "<p>Hello World!</p>", // initial content
   });
+  const [error, setError] = useState<z.core.$ZodIssue[] | null>()
   const providerValue = useMemo(() => {
     return { editor };
   }, [editor]);
@@ -34,11 +38,17 @@ export function CommentEditor({ postId }: CommentProps) {
     };
     console.log("dirty data:", data);
     const result = ZCommentInput.safeParse(data);
-
+    console.log(result)
     if (!result.success) {
-      return console.log(result.error); //show throw error and handle it graciously
+      const validationError = fromError(result.error);
+ 
+  console.log(validationError.toString());
+      // setError(result.error.issues)
+      return console.error(result.error.message); //show throw error and handle it graciously
     }
 
+
+    setError(null)
     const cleanData = result.data;
     console.log("clean data:", cleanData);
     // send to server
@@ -49,7 +59,7 @@ export function CommentEditor({ postId }: CommentProps) {
         {" "}
         <div className="">
           <label htmlFor="name">Enter Desired Username</label>
-          <Input type="text" name="name" id="name" />
+          <Input type="text" name="name" id="name" required/>
         </div>
         <div className="form-group">
           <Editor />

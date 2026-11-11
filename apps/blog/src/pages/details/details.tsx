@@ -3,12 +3,12 @@ import { useLoaderData } from "react-router";
 import { detailsLoader } from "../../loaders";
 import styles from "./details.module.css";
 import { CommentEditor } from "@/components/comment-editor/comment-editor";
-// interface DetailsProps {
-//   article: PostsWithAuthor; //should be with comment
-// }
+import { CommentCard } from "@/components/comment-card/comment-card";
+import { Separator } from "@/components/separator/separator";
 
 export function Details() {
-  const article = useLoaderData<typeof detailsLoader>();
+  const { article, comments } = useLoaderData<typeof detailsLoader>();
+
   return (
     <section>
       <div className="wrapper">
@@ -23,27 +23,43 @@ export function Details() {
           </li>
           <li className="published">
             <p>Published</p>
-            <span className={styles.value}>{article.updatedAt.toDateString()}</span>
+            <span className={styles.value}>
+              {article.updatedAt.toDateString()}
+            </span>
           </li>
         </ul>
       </div>
 
-      <div className={styles.imgWrapper}><img src="https://placehold.co/1250x628" alt="" /></div>
+      <div className={styles.imgWrapper}>
+        <img src="https://placehold.co/1250x628" alt="" />
+      </div>
       <div className="wrapper">
         <div className={styles.content}>{article.content}</div>
 
-        <div className="comment">
-          <div className="header">
-            <h2>Comment</h2>
-            <p>In this section you can contribute and read other readers comment on this article</p>
-          </div>
-          <div className="content">
+        <div className={styles.comment}>
+            <Separator />
+        
             <CommentEditor postId={article.id} />
+            <Separator />
+            <div className={styles.views}>
+              <div className={styles.header}>
+                <h2>Comments </h2>
+                <p>
+                  In this section you can contribute and read other readers
+                  comment on this article
+                </p>
+              </div>
+              <ul className={styles.commentList}>
+                {comments?.map((comment) => (
+                  <li key={comment.id} id="">
+                    <CommentCard comment={comment} />
+                  </li>
+                ))}
+              </ul>
+          
           </div>
-
         </div>
       </div>
-
     </section>
   );
 }

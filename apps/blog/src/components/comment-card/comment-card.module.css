@@ -1,0 +1,16 @@
+.base{
+    padding: 0.5rem;
+    /* border: 1px solid var(--border-subtle); */
+    border-radius: var(--radius);
+   
+
+}
+
+h1{
+    font : var(--font-base-semibold);
+    color: var(--content-emphasis)
+}
+
+p {
+    /* font-size: var(--t); */
+}
