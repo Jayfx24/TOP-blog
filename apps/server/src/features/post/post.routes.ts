@@ -3,7 +3,7 @@ import PostController from "./post.controller.js";
 import validateSchema from "#features/auth/validateSchema.js";
 import { ZPostUpdatePayload, ZPostCreatePayload } from "@blog/lib";
 const studioRouter = Router();
-const viewRouter = Router();
+const PublicPostRouter = Router();
 
 studioRouter.post(
   "/new",
@@ -19,10 +19,10 @@ studioRouter.patch(
 studioRouter.delete("/:userId/:postId", PostController.deletePost); //TODO: confirm user with authorizatio
 studioRouter.get("/", PostController.getUserPosts);
 
-// VIEWSk
-viewRouter.get("/:postId", PostController.getPublicPost);
-viewRouter.use("/:postId",);
-viewRouter.get("/", PostController.getPublicPosts);
 
-// postRouter.get("/post/:userId", PostController.getPost);
-export { studioRouter, viewRouter };
+
+// VIEWSk
+PublicPostRouter.get("/:postId", PostController.getPublicPost);
+PublicPostRouter.get("/", PostController.getPublicPosts); // TODO: Only published posts
+
+export { studioRouter, PublicPostRouter };
