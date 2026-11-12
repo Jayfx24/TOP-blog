@@ -4,9 +4,8 @@ import styles from "./comment-editor.module.css";
 import { EditorContext, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useMemo, useState, type SubmitEvent } from "react";
-import { ZCommentInput, type TComment } from "@blog/lib";
-import z from "zod";
-import { fromError, createErrorMap } from 'zod-validation-error';
+import { ZCommentInput, type TComment,  } from "@blog/lib";
+import { ZodError } from "zod";
 
 
 interface CommentProps {
@@ -17,7 +16,7 @@ export function CommentEditor({ postId }: CommentProps) {
     extensions: [StarterKit], // define your extension array
     content: "<p>Hello World!</p>", // initial content
   });
-  const [error, setError] = useState<z.core.$ZodIssue[] | null>()
+  const [error, setError] = useState<ZodError | null>();
   const providerValue = useMemo(() => {
     return { editor };
   }, [editor]);
@@ -38,17 +37,14 @@ export function CommentEditor({ postId }: CommentProps) {
     };
     console.log("dirty data:", data);
     const result = ZCommentInput.safeParse(data);
-    console.log(result)
+    console.log(result);
     if (!result.success) {
-      const validationError = fromError(result.error);
- 
-  console.log(validationError.toString());
+      
       // setError(result.error.issues)
-      return console.error(result.error.message); //show throw error and handle it graciously
+      return setError(result.error); //show throw error and handle it graciously
     }
 
-
-    setError(null)
+    setError(null);
     const cleanData = result.data;
     console.log("clean data:", cleanData);
     // send to server
@@ -57,9 +53,15 @@ export function CommentEditor({ postId }: CommentProps) {
     <EditorContext.Provider value={providerValue}>
       <form action="" className={styles.base} onSubmit={handleSubmit}>
         {" "}
+        <ul className="errors">
+          {error?.issues?.map((issue) => (
+            <li className="error-item">{issue.message?.toUpperCase()}</li>
+          ))}
+          <span></span>
+        </ul>
         <div className="">
           <label htmlFor="name">Enter Desired Username</label>
-          <Input type="text" name="name" id="name" required/>
+          <Input type="text" name="name" id="name" required />
         </div>
         <div className="form-group">
           <Editor />

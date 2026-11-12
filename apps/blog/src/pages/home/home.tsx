@@ -44,7 +44,7 @@ export function Home() {
             </p>
           </div>
           <div className={styles.list}>
-            <ul className="tags">
+            <ul className={styles.tags}>
               <li>Games</li>
               <li>Lifestyle</li>
               <li>tech</li>
@@ -64,7 +64,6 @@ export function Home() {
                 <Button
                   disabled={currentPage === totalPage}
                   variant={"minimal"}
-                  // size={}
                   onClick={() => {
                     setCurrentPage(currentPage + 1);
                   }}

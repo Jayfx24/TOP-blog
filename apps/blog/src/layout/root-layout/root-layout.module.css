@@ -4,3 +4,13 @@
     height: 100%;
     gap: 2rem;
 }
+
+.header{
+    padding-block: 1rem;
+}
+
+.footer{
+    justify-content: center;
+    padding-block: 1rem;
+
+}

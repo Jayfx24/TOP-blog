@@ -34,7 +34,7 @@ const Editor = () => {
         <Spacer />
 
         <ToolbarGroup>
-          <Button variant={"primary"} type="submit">
+          <Button variant={"primary"} size={"sm"} type="submit">
             Save
           </Button>
         </ToolbarGroup>

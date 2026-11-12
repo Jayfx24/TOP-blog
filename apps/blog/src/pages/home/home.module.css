@@ -1,29 +1,46 @@
-.base{
+.base {
     display: flex;
     flex-direction: column;
     gap: 5rem
 }
 
-.hero{
-    border-block: 1px solid ;
+.hero {
+    border-block: 1px solid;
     padding-block: 2rem;
 }
-.title{
+
+.title {
     font-size: var(--title-hero);
     color: var(--content-emphasis)
 }
 
-.list{
-     display: grid;
+.list {
+    display: grid;
     grid-template-columns: 15% 1fr;
 }
 
-.content{
-    padding-block-end:2rem;
+.content {
+    padding-block-end: 2rem;
 }
 
-.btnGroup{
+.btnGroup {
     display: flex;
     justify-content: space-between;
     padding: 2rem;
+}
+
+.tags{
+    pointer-events:none;
+    cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+    .list {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .tags{
+        display: none;
+    }
 }

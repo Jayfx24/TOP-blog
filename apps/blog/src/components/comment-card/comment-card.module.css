@@ -1,7 +1,11 @@
 .base{
-    padding: 0.5rem;
+    padding:  .75rem;
     /* border: 1px solid var(--border-subtle); */
     border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    /* gap:1rem; */
+    border: 1px solid;
    
 
 }
@@ -14,3 +18,10 @@ h1{
 p {
     /* font-size: var(--t); */
 }
+
+.date {
+    font-size: var(--text-sm);
+    color: var(--content-subtle);
+    font-style: italic;
+}
+

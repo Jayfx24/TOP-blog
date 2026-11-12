@@ -33,7 +33,7 @@
 }
 
 .content{
-    max-width: 90ch;
+    /* max-width: 90ch; */
     /* text-align: center; */
     margin-inline: auto;
 }
@@ -56,7 +56,7 @@
 .commentList {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 1rem;
     /* color: contes; */
 }
 
@@ -70,4 +70,16 @@
 
 .header p {
     color: var(--content-subtle)
+}
+
+.badge{
+    display: flex;
+    align-items: center;
+    padding-inline: 0;
+}
+
+@media (max-width: 480px) {
+    .imgWrapper{
+        padding: 1rem;
+    }
 }

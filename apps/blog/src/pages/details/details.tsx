@@ -1,18 +1,21 @@
 // import type { PostsWithAuthor } from "@blog/lib";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import { detailsLoader } from "../../loaders";
 import styles from "./details.module.css";
 import { CommentEditor } from "@/components/comment-editor/comment-editor";
 import { CommentCard } from "@/components/comment-card/comment-card";
 import { Separator } from "@/components/separator/separator";
-
+import { Button } from "@blog/ui";
+import {ChevronLeft} from  "lucide-react"
 export function Details() {
+
   const { article, comments } = useLoaderData<typeof detailsLoader>();
+  const navigate = useNavigate();
 
   return (
     <section>
       <div className="wrapper">
-        <span className={styles.badge}>Back to journal -</span>
+        <Button className={styles.badge} variant={"minimal"} onClick={() =>navigate(-1)}><ChevronLeft size={14} />Back to journal </Button>
         <h1 className={styles.title}>{article.title}</h1>
         <ul className={styles.meta}>
           <li className="author">

@@ -167,7 +167,7 @@
   --text-xs-mono: 0.63rem;
   --text-xs-medium: 0.75rem;
   --text-sm-medium: 0.88rem;
-  --title-hero: 3rem;
+  --title-hero: clamp(1.5rem, 3vw, 3rem);
   --title-1: 1.75rem;
   --title-2: 1.5rem;
   --title-3: 1.25rem;
@@ -196,6 +196,8 @@
   --container-3xl: 48rem;
   --container-4xl: 56rem;
   --container-5xl: 64rem;
+
+  --screen-size-mobile: 480px;
 }
 
 
@@ -203,11 +205,44 @@
 .tiptap{
   padding: 0.5rem 1rem;
   /* background-color: red; */
-  min-height: 100px;
+  min-height: 150px;
 }
 
 div.tiptap-toolbar[data-variant=fixed]{
-  background: inherit;
-    border-radius: var(--radius-2)
+  background: transparent;
+    border-radius: var(--radius-2);
+    bottom: 1px;
 
+}
+.flex{
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btw{
+  justify-content: space-between;
+}
+
+.a-center{
+  align-items: center;
+}
+.errors{
+  color: var(--content-error-text);
+  padding-inline-start: 1rem;
+
+}
+.error-item{
+  
+  list-style:disc;
+  text-transform: lowercase;
+}
+.error-item::first-letter{
+
+  text-transform: capitalize;
+}
+
+@media (max-width: 480px) {
+    .wrapper{
+      padding: 0;
+    }
 }
