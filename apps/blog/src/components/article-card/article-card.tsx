@@ -15,7 +15,7 @@ export function ArticleCard({ article, featured }: ArticleCardProps) {
   return (
     <article className={clsx(styles.base)}>
       <div className={clsx(styles.content, featured && styles.featured)}>
-        <img src={"https://placehold.co/400x250/png"} alt="" />
+        <img src={article.featuredUrl ?? "https://placehold.co/400x250/png"} alt="" />
         <div className={styles.details}>
           <Link to={`blog/${article.id}`} className={styles.link}>
             <h1 className="title">{article.title}</h1>

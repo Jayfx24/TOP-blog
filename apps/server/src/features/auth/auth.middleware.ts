@@ -10,6 +10,7 @@ export const authenticateJwt = (
   res: Response,
   next: NextFunction,
 ) => {
+  console.log(req.headers.authorization)
    passport.authenticate("jwt", { session: false })(req, res, next);
 };
 

@@ -7,6 +7,8 @@ export const ZPost = z.object({
   content: z.string(),
   authorId: z.number(),
   published: z.coerce.boolean(),
+  featured: z.boolean().optional(),
+  featuredUrl: z.url().normalize().optional(),
 });
 
 export type Post = z.infer<typeof ZPost>;
