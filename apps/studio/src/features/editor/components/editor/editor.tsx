@@ -34,7 +34,10 @@ type IEditor = {
   id?: PostUpdatePayload["id"];
 };
 
-const uploadToCloudinary = async (src: string, title: string) => {
+const uploadToCloudinary = async (
+  src: string,
+  title: string,
+): Promise<string> => {
   const { data: blob } = await axios.get(src, {
     responseType: "blob",
   });
@@ -55,12 +58,17 @@ const uploadToCloudinary = async (src: string, title: string) => {
 
   console.log(data);
 
-  return data.secure_url;
+  return data.secure_url as string;
 };
+
+/**
+ * TODO: feacturedUrl params and url for src on edit
+ */
 export function EditorForm({ content, id }: IEditor) {
   const [isDirty, setIsDirty] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [publish, setPublish] = useState(false);
+  const [featuredUrl, setFeaturedUrl] = useState("");
 
   const { isUpdate } = useEditorX();
 
@@ -143,9 +151,14 @@ export function EditorForm({ content, id }: IEditor) {
     if (!$images)
       throw new Error("A image must be at least one for featured image");
 
-    // upload fetaured first
+    const formData = new FormData(e.currentTarget);
+    const imageFile = formData.get("image");
 
-    const formData = new FormData(e.currentTarget)
+    if (imageFile instanceof File && imageFile.size > 0) {
+      const src = URL.createObjectURL(imageFile);
+      const link = await uploadToCloudinary(src, imageFile.name);
+      setFeaturedUrl(link);
+    }
     const processNode = async (nodes: NodePos[] | null) => {
       if (!nodes) return;
       const filtered = nodes?.filter((node) =>
@@ -170,12 +183,8 @@ export function EditorForm({ content, id }: IEditor) {
       }
     };
     await processNode($images);
-    const $img = editor.$node("image");
-    const featuredUrl = $img?.attributes.src
-    console.log($img?.attributes);
 
-    if ($img) editor.commands.deleteRange($img.range);
-
+    
     if (!title) {
       // TODO: toast notifying user title is needed
       return;
@@ -194,6 +203,7 @@ export function EditorForm({ content, id }: IEditor) {
         title,
         content: editor.getHTML(),
         published: publish,
+        featuredUrl
       });
     }
 
