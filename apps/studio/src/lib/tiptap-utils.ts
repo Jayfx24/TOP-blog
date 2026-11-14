@@ -396,10 +396,12 @@ export const handleImageUpload = async (
     onProgress?.({ progress })
   }
 
+  const url = URL.createObjectURL(file)
+
   // upload to cloud and return url
 
 
-  return" https://placehold.co/600x400"
+  return url
 }
 
 type ProtocolOptions = {

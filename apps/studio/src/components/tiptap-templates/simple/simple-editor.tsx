@@ -300,11 +300,16 @@ export function SimpleEditor({
             />
           )}
           <ToolbarGroup>
-            <Button onClick={() => handlePublish(false)} disabled={!isDirty}>
+            <Button onClick={() => handlePublish(false)}
+                           type="submit"
+
+            
+            disabled={!isDirty}>
               Save as draft
             </Button>
             <Button
               onClick={() => handlePublish(true)}
+              type="submit"
               disabled={!isDirty && isUpdate && isPublished}
             >
               {" "}
