@@ -18,13 +18,11 @@ import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
 import StudioService from "@/StudioService";
 import { useBlocker, useNavigate } from "react-router";
 import { ZCreate, type TCreate } from "@/schemas/post-schema";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Model } from "@/components/Model/model";
 import { CircleAlert } from "lucide-react";
 import { ZPostUpdatePayload, type PostUpdatePayload } from "@blog/lib";
 import { useEditorX } from "./editor-context";
-
-import { Cloudinary, CloudinaryImage } from "@cloudinary/url-gen";
 import axios, { AxiosError } from "axios";
 // BUG: blocker still causes pop up upon action resolving - partially solved
 type IEditor = {
@@ -32,6 +30,7 @@ type IEditor = {
   content: Content;
 
   id?: PostUpdatePayload["id"];
+  featuredLink?: PostUpdatePayload["featuredUrl"];
 };
 
 const uploadToCloudinary = async (
@@ -61,22 +60,44 @@ const uploadToCloudinary = async (
   return data.secure_url as string;
 };
 
+const processNode = async (nodes: NodePos[] | null) => {
+  if (!nodes) return;
+  const filtered = nodes?.filter((node) =>
+    node.attributes.src.startsWith("blob:"),
+  );
+  try {
+    await Promise.all(
+      filtered.map(
+        async (img) =>
+          (img.attributes.src = await uploadToCloudinary(
+            img.attributes.src,
+            img.attributes.title,
+          )),
+      ),
+    );
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error(error.response?.data);
+      console.error(error.request);
+    }
+    console.error(error);
+  }
+};
 /**
  * TODO: feacturedUrl params and url for src on edit
  */
-export function EditorForm({ content, id }: IEditor) {
+export function EditorForm({ content, id, featuredLink }: IEditor) {
   const [isDirty, setIsDirty] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [publish, setPublish] = useState(false);
-  const [featuredUrl, setFeaturedUrl] = useState("");
+  const [featuredUrl, setFeaturedUrl] = useState<string | null>(null);
 
   const { isUpdate } = useEditorX();
 
-  // Create a Cloudinary instance and set your cloud name.
-
-  const blocker = useBlocker(
-    useCallback(() => isDirty && !isSubmitted, [isDirty, isSubmitted]),
-  );
+  // const blocker = useBlocker(
+  //   useCallback(() => isDirty && !isSubmitted, [isDirty, isSubmitted]),
+  // );
+  const blocker = useBlocker(useCallback(() => isDirty, [isDirty]));
 
   const savedContentRef = useRef(content);
 
@@ -135,19 +156,24 @@ export function EditorForm({ content, id }: IEditor) {
       setIsDirty(dirty);
     },
   });
-
+  console.log(featuredLink);
+  useEffect(() => {
+    if (isSubmitted) {
+      if (blocker.state === "blocked") {
+        blocker.proceed();
+      }
+    }
+  }, [isSubmitted, blocker]);
   const navigate = useNavigate();
 
   if (!editor) return;
-
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const $images = editor.$nodes("image");
     const $firstHeading = editor.$node("heading", { level: 1 });
     const title = $firstHeading?.textContent.trim();
 
-    const $images = editor.$nodes("image");
-    console.log($images);
     if (!$images)
       throw new Error("A image must be at least one for featured image");
 
@@ -155,36 +181,14 @@ export function EditorForm({ content, id }: IEditor) {
     const imageFile = formData.get("image");
 
     if (imageFile instanceof File && imageFile.size > 0) {
+      // will override featuredLink if in update-mode
       const src = URL.createObjectURL(imageFile);
       const link = await uploadToCloudinary(src, imageFile.name);
       setFeaturedUrl(link);
     }
-    const processNode = async (nodes: NodePos[] | null) => {
-      if (!nodes) return;
-      const filtered = nodes?.filter((node) =>
-        node.attributes.src.startsWith("blob:"),
-      );
-      try {
-        await Promise.all(
-          filtered.map(
-            async (img) =>
-              (img.attributes.src = await uploadToCloudinary(
-                img.attributes.src,
-                img.attributes.title,
-              )),
-          ),
-        );
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          console.error(error.response?.data);
-          console.error(error.request);
-        }
-        console.error(error);
-      }
-    };
+
     await processNode($images);
 
-    
     if (!title) {
       // TODO: toast notifying user title is needed
       return;
@@ -203,7 +207,7 @@ export function EditorForm({ content, id }: IEditor) {
         title,
         content: editor.getHTML(),
         published: publish,
-        featuredUrl
+        featuredUrl,
       });
     }
 
@@ -216,37 +220,39 @@ export function EditorForm({ content, id }: IEditor) {
       ? await StudioService.updatePost(result.data as PostUpdatePayload)
       : await StudioService.createPost(result.data as TCreate);
 
+    setIsSubmitted(true);
+    // if (blocker.state === "blocked") {
+    //   blocker.proceed();
+    // }
     savedContentRef.current = editor.getHTML();
 
-    setIsSubmitted(true);
-
     // Review: Works but do not understand why since isSubmitted is set to true and it fails without this
-    navigate(`/posts`);
-    if (blocker.state === "blocked") {
-      blocker.proceed();
-    }
 
     console.log(data);
+    return navigate(`/posts`);
   };
 
   const handlePublish = (publish: boolean = false) => setPublish(publish);
-
-  console.log("block-state-2:", blocker);
 
   return (
     <form onSubmit={handleSubmit} className={styles.base}>
       <div className="form-group">
         <label htmlFor="image">Upload Image</label>
         <input type="file" name="image" id={"image"} accept="image/*" />
-        CloudinaryUploadWidget
       </div>
+      {featuredLink && (
+        <div className="">
+          <span>Current featured image</span>
+          <img src={featuredLink} alt="" className={styles.img} />
+        </div>
+      )}
       <div className={styles.editor}>
         <SimpleEditor
           editor={editor}
           handlePublish={handlePublish}
           isDirty={isDirty}
         />
-        {blocker.state === "blocked" && (
+        {blocker.state === "blocked" && !isSubmitted && (
           <Model
             title="Wait! You didn't save your post yet"
             description="Proceed to discard or cancel to continue"

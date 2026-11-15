@@ -41,15 +41,25 @@ function dummyComment(): TComment {
 const posts = faker.helpers.multiple(dummyPost, { count: 15 });
 const comments = faker.helpers.multiple(dummyComment, { count: 15 });
 
-export async function articlesLoader() {
-  // return await blogService.getPosts();
-  return posts;
+// export async function articlesLoader() {
+//   // return await blogService.getPosts();
+//   return posts;
+// }
+
+export async function articlesLoader(): Promise<PostsWithAuthor[]> {
+  return await blogService.getPosts();
 }
 
+// export async function detailsLoader({ params }: LoaderFunctionArgs) {
+//   // return await blogService.getPosts();
+//   console.log(params);
+//   return{ article:dummyPost(), comments};
+// }
+
 export async function detailsLoader({ params }: LoaderFunctionArgs) {
-  // return await blogService.getPosts();
+  console.log(params)
+  return await blogService.getPost(params.id as string);
   console.log(params);
   return{ article:dummyPost(), comments};
 }
-
 

@@ -1,5 +1,6 @@
 import z from "zod";
 import { ZUser } from "./user.schema.js";
+import { ZComment } from "./comment.schema.js";
 
 export const ZPost = z.object({
   id: z.uuid(),
@@ -32,3 +33,9 @@ const ZPostsWithAuthor = ZPostResponsePayload.extend({
   author: ZUser.pick({ firstName: true, lastName: true }),
 });
 export type PostsWithAuthor = z.infer<typeof ZPostsWithAuthor>;
+
+const ZPostsWithAuthorAndComment = ZPostsWithAuthor.extend({
+  comments: ZComment.array(),
+});
+export type PostsWithAuthorAndComment = z.infer<typeof ZPostsWithAuthorAndComment>;
+

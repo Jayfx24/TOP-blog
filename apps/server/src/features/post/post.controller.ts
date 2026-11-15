@@ -38,9 +38,9 @@ async function getPublicPosts(req: Request, res: Response) {
   const lastPostId = req.query.lastPostId as string;
 
   const posts = await PostService.getPublicPosts(lastPostId);
-  return res.json({
+  return res.json(
     posts,
-  });
+  );
 }
 
 // studio

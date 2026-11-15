@@ -16,7 +16,7 @@ export function EditorPage() {
   // EditorContext
   return (
     <EditorContext value={{ isUpdate, isPublished: post?.published ?? false }}>
-      <EditorForm content={content} id={post?.id} />
+      <EditorForm content={content} id={post?.id} featuredLink={post?.featuredUrl}/>
     </EditorContext>
   );
 }

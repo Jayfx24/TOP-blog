@@ -6,16 +6,24 @@ import { CommentEditor } from "@/components/comment-editor/comment-editor";
 import { CommentCard } from "@/components/comment-card/comment-card";
 import { Separator } from "@/components/separator/separator";
 import { Button } from "@blog/ui";
-import {ChevronLeft} from  "lucide-react"
-export function Details() {
+import { ChevronLeft } from "lucide-react";
+import { ErrorBoundary } from "react-error-boundary";
 
+export function Details() {
   const { article, comments } = useLoaderData<typeof detailsLoader>();
   const navigate = useNavigate();
 
   return (
     <section>
       <div className="wrapper">
-        <Button className={styles.badge} variant={"minimal"} onClick={() =>navigate(-1)}><ChevronLeft size={14} />Back to journal </Button>
+        <Button
+          className={styles.badge}
+          variant={"minimal"}
+          onClick={() => navigate(-1)}
+        >
+          <ChevronLeft size={14} />
+          Back to journal{" "}
+        </Button>
         <h1 className={styles.title}>{article.title}</h1>
         <ul className={styles.meta}>
           <li className="author">
@@ -40,26 +48,26 @@ export function Details() {
         <div className={styles.content}>{article.content}</div>
 
         <div className={styles.comment}>
-            <Separator />
-        
+          <Separator />
+          <ErrorBoundary fallback={<p>Could not add comment</p>}>
             <CommentEditor postId={article.id} />
-            <Separator />
-            <div className={styles.views}>
-              <div className={styles.header}>
-                <h2>Comments </h2>
-                <p>
-                  In this section you can contribute and read other readers
-                  comment on this article
-                </p>
-              </div>
-              <ul className={styles.commentList}>
-                {comments?.map((comment) => (
-                  <li key={comment.id} id="">
-                    <CommentCard comment={comment} />
-                  </li>
-                ))}
-              </ul>
-          
+          </ErrorBoundary>
+          <Separator />
+          <div className={styles.views}>
+            <div className={styles.header}>
+              <h2>Comments </h2>
+              <p>
+                In this section you can contribute and read other readers
+                comment on this article
+              </p>
+            </div>
+            <ul className={styles.commentList}>
+              {comments?.map((comment) => (
+                <li key={comment.id} id="">
+                  <CommentCard comment={comment} />
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

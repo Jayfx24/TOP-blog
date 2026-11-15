@@ -4,6 +4,7 @@ import type {
   Post,
   PostUpdatePayload,
   PostResponsePayload,
+  PostsWithAuthorAndComment,
 } from "@blog/lib";
 
 async function createPost(
@@ -51,7 +52,9 @@ async function getPrivatePost(id: Post["id"]) {
   });
 }
 
-async function getPublicPost(id: Post["id"]) {
+async function getPublicPost(
+  id: Post["id"],
+): Promise<PostsWithAuthorAndComment | null> {
   /**
    * Returns single post
    */
@@ -71,7 +74,7 @@ async function getPublicPost(id: Post["id"]) {
   });
 }
 async function getPublicPosts(
-  cursor?: Post["id"],
+  cursor?: Post["id"] | undefined,
 ): Promise<PostResponsePayload[]> {
   /**
    * Does not include comments
@@ -79,10 +82,10 @@ async function getPublicPosts(
 
   return await db.post.findMany({
     take: 10,
-    skip: cursor ? 1 : undefined,
-    cursor: {
-      id: cursor,
-    },
+    // skip: cursor ? 1 : undefined,
+    // cursor: {
+    //   id: cursor ?? undefined,
+    // },
     orderBy: {
       createdAt: "asc",
     },

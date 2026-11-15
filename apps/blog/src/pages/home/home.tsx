@@ -4,15 +4,16 @@ import { ArticleList } from "../../components/article-list/article-list";
 import styles from "./home.module.css";
 import { useEffect, useState } from "react";
 import { Button } from "@blog/ui";
+import type { PostsWithAuthor } from "@blog/lib";
 
 export function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const posts = useLoaderData<typeof articlesLoader>();
-
+  const posts: PostsWithAuthor[]  = useLoaderData<typeof articlesLoader>();
+  console.log(posts);
   const [currentPage, setCurrentPage] = useState(1);
   const pageCount = 11;
   const totalPage = Math.ceil(posts.length / pageCount);
-  const currentPosts = posts.slice(
+  const currentPosts = posts?.slice(
     (currentPage - 1) * pageCount,
     currentPage * pageCount,
   );
@@ -32,7 +33,7 @@ export function Home() {
     handlePageChange();
   }, [currentPage, setSearchParams]);
   return (
-    <section >
+    <section>
       <div className="wrapper">
         <div className={styles.base}>
           <div className={styles.hero}>

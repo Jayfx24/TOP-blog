@@ -1,13 +1,14 @@
-import type { Post, PostsWithAuthor, TCommentInput } from "@blog/lib";
+import type { Post, PostsWithAuthor, PostsWithAuthorAndComment, TCommentInput } from "@blog/lib";
 import { blogAPI } from "./config/api";
 
 const getPosts = async () => {
   const { data } = await blogAPI.get<PostsWithAuthor[]>("/posts");
+  console.log('services: ',data)
   return data;
 };
 
 const getPost = async (id: Post["id"]) => {
-  const { data } = await blogAPI.get<PostsWithAuthor>(`/posts/${id}`);
+  const { data } = await blogAPI.get<PostsWithAuthorAndComment | null>(`/posts/${id}`);
   return data;
 };
 

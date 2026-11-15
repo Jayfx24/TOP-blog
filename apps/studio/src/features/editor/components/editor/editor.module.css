@@ -8,3 +8,8 @@
 .editor{
     min-height: 100dvh;
 }
+
+.img{
+    aspect-ratio: 16/9;
+    max-width: 400px;
+}
