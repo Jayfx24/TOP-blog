@@ -102,7 +102,7 @@ export function EditorForm({ content, id, featuredLink }: IEditor) {
   const savedContentRef = useRef(content);
 
   const editor = useEditor({
-    immediatelyRender: false,
+    // immediatelyRender: false,
     editorProps: {
       attributes: {
         autocomplete: "off",
@@ -129,15 +129,15 @@ export function EditorForm({ content, id, featuredLink }: IEditor) {
           alwaysPreserveAspectRatio: true,
         },
       }),
-      HorizontalRule,
-      TextAlign.configure({ types: ["heading", "paragraph"] }),
-      TaskList,
-      TaskItem.configure({ nested: true }),
-      Highlight.configure({ multicolor: true }),
-      Typography,
-      Superscript,
-      Subscript,
-      Selection,
+      // HorizontalRule,
+      // TextAlign.configure({ types: ["heading", "paragraph"] }),
+      // TaskList,
+      // TaskItem.configure({ nested: true }),
+      // Highlight.configure({ multicolor: true }),
+      // Typography,
+      // Superscript,
+      // Subscript,
+      // Selection,
       FindAndReplace.configure({
         searchDebounceMs: 500,
         injectCSS: false,
@@ -152,7 +152,7 @@ export function EditorForm({ content, id, featuredLink }: IEditor) {
     ],
     content,
     onUpdate({ editor }) {
-      const dirty = editor.getHTML() !== savedContentRef.current;
+      const dirty = editor.getJSON() !== savedContentRef.current;
       setIsDirty(dirty);
     },
   });
@@ -183,11 +183,13 @@ export function EditorForm({ content, id, featuredLink }: IEditor) {
     if (imageFile instanceof File && imageFile.size > 0) {
       // will override featuredLink if in update-mode
       const src = URL.createObjectURL(imageFile);
-      const link = await uploadToCloudinary(src, imageFile.name);
-      setFeaturedUrl(link);
+      // const link = await uploadToCloudinary(src, imageFile.name);
+      // setFeaturedUrl(link);
+      setFeaturedUrl(src);
+      
     }
 
-    await processNode($images);
+    // await processNode($images);
 
     if (!title) {
       // TODO: toast notifying user title is needed
@@ -199,13 +201,13 @@ export function EditorForm({ content, id, featuredLink }: IEditor) {
       result = ZPostUpdatePayload.safeParse({
         id,
         title,
-        content: editor.getHTML(),
+        content: editor.getJSON(),
         published: publish,
       });
     } else {
       result = ZCreate.safeParse({
         title,
-        content: editor.getHTML(),
+        content: editor.getJSON(),
         published: publish,
         featuredUrl,
       });
@@ -224,7 +226,7 @@ export function EditorForm({ content, id, featuredLink }: IEditor) {
     // if (blocker.state === "blocked") {
     //   blocker.proceed();
     // }
-    savedContentRef.current = editor.getHTML();
+    savedContentRef.current = editor.getJSON();
 
     // Review: Works but do not understand why since isSubmitted is set to true and it fails without this
 

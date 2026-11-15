@@ -5,7 +5,7 @@ import { ZComment } from "./comment.schema.js";
 export const ZPost = z.object({
   id: z.uuid(),
   title: z.string().min(10, "Title must be at least 10 chars"),
-  content: z.string(),
+  content: z.json(),
   authorId: z.number(),
   published: z.coerce.boolean(),
   featured: z.boolean().optional(),

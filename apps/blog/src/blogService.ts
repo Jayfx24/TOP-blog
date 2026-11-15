@@ -8,7 +8,7 @@ const getPosts = async () => {
 };
 
 const getPost = async (id: Post["id"]) => {
-  const { data } = await blogAPI.get<PostsWithAuthorAndComment | null>(`/posts/${id}`);
+  const { data } = await blogAPI.get<PostsWithAuthorAndComment>(`/posts/${id}`);
   return data;
 };
 

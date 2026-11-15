@@ -29,10 +29,9 @@ async function updatePost(req: Request, res: Response) {
 }
 
 async function getPublicPost(req: Request, res: Response) {
-  const post = await PostService.getPublicPost(req.params.id as string);
-  return res.json({
-    ...post,
-  });
+  // console.log(req.params)
+  const post = await PostService.getPublicPost(req.params.postId as string);
+  return res.json(post);
 }
 async function getPublicPosts(req: Request, res: Response) {
   const lastPostId = req.query.lastPostId as string;
