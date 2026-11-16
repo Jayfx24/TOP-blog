@@ -13,7 +13,7 @@ import { Superscript } from "@tiptap/extension-superscript";
 import { FindAndReplace } from "@tiptap/extension-find-and-replace";
 import { Selection } from "@tiptap/extensions";
 import { ImageUploadNode } from "@/components/tiptap-node/image-upload-node";
-import { NodePos, useEditor, type Content } from "@tiptap/react";
+import {  useEditor, type Content } from "@tiptap/react";
 import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
 import StudioService from "@/StudioService";
 import { useBlocker, useNavigate } from "react-router";
@@ -27,63 +27,24 @@ import {
   type PostUpdatePayload,
 } from "@blog/lib";
 import { useEditorX } from "./editor-context";
-import axios, { AxiosError } from "axios";
 import { Input } from "@blog/ui";
 import clsx from "clsx";
+import { processNode, uploadToCloudinary } from "@/utils";
 // BUG: blocker still causes pop up upon action resolving - partially solved
 type IEditor = {
   post: PostResponsePayload | null;
   content: Content;
 };
 
-const uploadToCloudinary = async (
-  src: string,
-  title: string,
-): Promise<string> => {
-  const { data: blob } = await axios.get(src, {
-    responseType: "blob",
-  });
-  const formData = new FormData();
-  formData.append("file", blob, title);
-  formData.append(
-    "upload_preset",
-    import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET,
-  );
-  formData.append("asset_folder", "blog");
 
-  const cloudName = import.meta.env.VITE_CLOUDINARY_NAME;
 
-  const { data } = await axios.post(
-    `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-    formData,
-  );
-
-  console.log(data);
-
-  return data.secure_url as string;
-};
-
-const processNode = async (nodes: NodePos[] | null) => {
-  if (!nodes) return;
-  const filtered = nodes?.filter((node) =>
-    node.attributes.src.startsWith("blob:"),
-  );
-  try {
-    await Promise.all(
-      filtered.map(
-        async (img) =>
-          (img.attributes.src = await uploadToCloudinary(
-            img.attributes.src,
-            img.attributes.title,
-          )),
-      ),
-    );
-  } catch (error) {
-    if (error instanceof AxiosError) {
-      console.error(error.response?.data);
-      console.error(error.request);
-    }
-    console.error(error);
+const handleImage = async (imageFile: FormDataEntryValue | null) => {
+  if (imageFile instanceof File && imageFile.size > 0) {
+    //uncomment to upload to cloundinary
+    // will override post?.featuredUrl if in update-mode
+    const src = URL.createObjectURL(imageFile);
+    const link = await uploadToCloudinary(src, imageFile.name);
+    return link;
   }
 };
 /**
@@ -93,10 +54,8 @@ export function EditorForm({ content, post }: IEditor) {
   const [isDirty, setIsDirty] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [publish, setPublish] = useState(false);
-  const [featuredUrl, setFeaturedUrl] = useState(post?.featuredUrl);
   const [title, setTitle] = useState(post?.title ?? "");
   const [excerpt, setExcerpt] = useState(post?.excerpt ?? "");
-
 
   const { isUpdate } = useEditorX();
 
@@ -171,9 +130,7 @@ export function EditorForm({ content, post }: IEditor) {
     }
   }, [isSubmitted, blocker]);
 
-   useEffect(() => {
-    console.log(featuredUrl)
-  }, [featuredUrl]);
+
 
   const navigate = useNavigate();
 
@@ -182,34 +139,21 @@ export function EditorForm({ content, post }: IEditor) {
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-  let uploadedFeaturedUrl  ;
-
-
     const $images = editor.$nodes("image");
-  
+
     if (!$images)
       throw new Error("A image must be at least one for featured image");
 
     const formData = new FormData(e.currentTarget);
     const imageFile = formData.get("image");
-  
 
-    if (imageFile instanceof File && imageFile.size > 0) {
-      //uncomment to upload to cloundinary
-      // will override post?.featuredUrl if in update-mode
-      const src = URL.createObjectURL(imageFile);
-      const link = await uploadToCloudinary(src, imageFile.name);
-      setFeaturedUrl(link);
-      uploadedFeaturedUrl = link
-      console.log(src);
-      
-    }
+    const uploadedFeaturedUrl = await handleImage(imageFile)
+    console.log('result:',uploadedFeaturedUrl)
 
-    // await processNode($images);
+    await processNode($images);
 
-   
     let result;
-    console.log(featuredUrl);
+    console.log(uploadedFeaturedUrl);
     if (isUpdate) {
       result = ZPostUpdatePayload.safeParse({
         id: post?.id,
@@ -217,6 +161,8 @@ export function EditorForm({ content, post }: IEditor) {
         content: editor.getJSON(),
         published: publish,
         excerpt,
+        featuredUrl: uploadedFeaturedUrl,
+
       });
     } else {
       result = ZCreate.safeParse({
