@@ -21,16 +21,19 @@ import { ZCreate, type TCreate } from "@/schemas/post-schema";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Model } from "@/components/Model/model";
 import { CircleAlert } from "lucide-react";
-import { ZPostUpdatePayload, type PostUpdatePayload } from "@blog/lib";
+import {
+  ZPostUpdatePayload,
+  type PostResponsePayload,
+  type PostUpdatePayload,
+} from "@blog/lib";
 import { useEditorX } from "./editor-context";
 import axios, { AxiosError } from "axios";
+import { Input } from "@blog/ui";
+import clsx from "clsx";
 // BUG: blocker still causes pop up upon action resolving - partially solved
 type IEditor = {
-  // post : PostResponsePayload,
+  post: PostResponsePayload | null;
   content: Content;
-
-  id?: PostUpdatePayload["id"];
-  featuredLink?: PostUpdatePayload["featuredUrl"];
 };
 
 const uploadToCloudinary = async (
@@ -86,11 +89,14 @@ const processNode = async (nodes: NodePos[] | null) => {
 /**
  * TODO: feacturedUrl params and url for src on edit
  */
-export function EditorForm({ content, id, featuredLink }: IEditor) {
+export function EditorForm({ content, post }: IEditor) {
   const [isDirty, setIsDirty] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [publish, setPublish] = useState(false);
-  const [featuredUrl, setFeaturedUrl] = useState<string | null>(null);
+  const [featuredUrl, setFeaturedUrl] = useState(post?.featuredUrl);
+  const [title, setTitle] = useState(post?.title ?? "");
+  const [excerpt, setExcerpt] = useState(post?.excerpt ?? "");
+
 
   const { isUpdate } = useEditorX();
 
@@ -129,15 +135,15 @@ export function EditorForm({ content, id, featuredLink }: IEditor) {
           alwaysPreserveAspectRatio: true,
         },
       }),
-      // HorizontalRule,
-      // TextAlign.configure({ types: ["heading", "paragraph"] }),
-      // TaskList,
-      // TaskItem.configure({ nested: true }),
-      // Highlight.configure({ multicolor: true }),
-      // Typography,
-      // Superscript,
-      // Subscript,
-      // Selection,
+      HorizontalRule,
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
+      TaskList,
+      TaskItem.configure({ nested: true }),
+      Highlight.configure({ multicolor: true }),
+      Typography,
+      Superscript,
+      Subscript,
+      Selection,
       FindAndReplace.configure({
         searchDebounceMs: 500,
         injectCSS: false,
@@ -156,7 +162,7 @@ export function EditorForm({ content, id, featuredLink }: IEditor) {
       setIsDirty(dirty);
     },
   });
-  console.log(featuredLink);
+  console.log(post?.featuredUrl);
   useEffect(() => {
     if (isSubmitted) {
       if (blocker.state === "blocked") {
@@ -164,52 +170,61 @@ export function EditorForm({ content, id, featuredLink }: IEditor) {
       }
     }
   }, [isSubmitted, blocker]);
+
+   useEffect(() => {
+    console.log(featuredUrl)
+  }, [featuredUrl]);
+
   const navigate = useNavigate();
 
   if (!editor) return;
+
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const $images = editor.$nodes("image");
-    const $firstHeading = editor.$node("heading", { level: 1 });
-    const title = $firstHeading?.textContent.trim();
+  let uploadedFeaturedUrl  ;
 
+
+    const $images = editor.$nodes("image");
+  
     if (!$images)
       throw new Error("A image must be at least one for featured image");
 
     const formData = new FormData(e.currentTarget);
     const imageFile = formData.get("image");
+  
 
     if (imageFile instanceof File && imageFile.size > 0) {
-      // will override featuredLink if in update-mode
+      //uncomment to upload to cloundinary
+      // will override post?.featuredUrl if in update-mode
       const src = URL.createObjectURL(imageFile);
-      // const link = await uploadToCloudinary(src, imageFile.name);
-      // setFeaturedUrl(link);
-      setFeaturedUrl(src);
+      const link = await uploadToCloudinary(src, imageFile.name);
+      setFeaturedUrl(link);
+      uploadedFeaturedUrl = link
+      console.log(src);
       
     }
 
     // await processNode($images);
 
-    if (!title) {
-      // TODO: toast notifying user title is needed
-      return;
-    }
+   
     let result;
-
+    console.log(featuredUrl);
     if (isUpdate) {
       result = ZPostUpdatePayload.safeParse({
-        id,
+        id: post?.id,
         title,
         content: editor.getJSON(),
         published: publish,
+        excerpt,
       });
     } else {
       result = ZCreate.safeParse({
         title,
         content: editor.getJSON(),
         published: publish,
-        featuredUrl,
+        featuredUrl: uploadedFeaturedUrl,
+        excerpt,
       });
     }
 
@@ -223,12 +238,8 @@ export function EditorForm({ content, id, featuredLink }: IEditor) {
       : await StudioService.createPost(result.data as TCreate);
 
     setIsSubmitted(true);
-    // if (blocker.state === "blocked") {
-    //   blocker.proceed();
-    // }
-    savedContentRef.current = editor.getJSON();
 
-    // Review: Works but do not understand why since isSubmitted is set to true and it fails without this
+    savedContentRef.current = editor.getJSON();
 
     console.log(data);
     return navigate(`/posts`);
@@ -238,16 +249,38 @@ export function EditorForm({ content, id, featuredLink }: IEditor) {
 
   return (
     <form onSubmit={handleSubmit} className={styles.base}>
-      <div className="form-group">
-        <label htmlFor="image">Upload Image</label>
-        <input type="file" name="image" id={"image"} accept="image/*" />
-      </div>
-      {featuredLink && (
-        <div className="">
-          <span>Current featured image</span>
-          <img src={featuredLink} alt="" className={styles.img} />
+      <div className={clsx(styles.meta, "wrapper column")}>
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <Input
+            id="title"
+            name="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
         </div>
-      )}
+        <div className="form-group">
+          <label htmlFor="excerpt">excerpt</label>
+          <textarea
+            id="excerpt"
+            name="excerpt"
+            value={excerpt}
+            onChange={(e) => setExcerpt(e.target.value)}
+            required
+          ></textarea>
+        </div>
+        <div className="form-group">
+          <label htmlFor="image">Upload Image</label>
+          <input type="file" name="image" id={"image"} accept="image/*" />
+        </div>
+        {post?.featuredUrl && (
+          <div className="">
+            <span>Current featured image</span>
+            <img src={post?.featuredUrl} alt="" className={styles.img} />
+          </div>
+        )}
+      </div>
       <div className={styles.editor}>
         <SimpleEditor
           editor={editor}

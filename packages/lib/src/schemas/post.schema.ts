@@ -6,6 +6,7 @@ export const ZPost = z.object({
   id: z.uuid(),
   title: z.string().min(10, "Title must be at least 10 chars"),
   content: z.json(),
+  excerpt: z.string().min(25, "must be at least 30 chars").max(255,"must not be more than 255"),
   authorId: z.number(),
   published: z.coerce.boolean(),
   featured: z.boolean().optional(),

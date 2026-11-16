@@ -63,6 +63,7 @@ export function Details() {
       }),
     ], // define your extension array
     content: article.content as JSONContent,
+    editable: false
     // initial content
   });
 

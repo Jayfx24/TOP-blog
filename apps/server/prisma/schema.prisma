@@ -14,7 +14,7 @@ model User {
   lastName     String
   username     String    @unique
   email        String    @unique
-  isAdmin       Boolean @default(false)
+  isAdmin      Boolean   @default(false)
   avatarUrl    String?
   passwordHash String
   createdAt    DateTime  @default(now())
@@ -26,17 +26,18 @@ model User {
 }
 
 model Post {
-  id        String    @id @default(uuid())
-  title     String    @db.VarChar(255)
-  content   Json
-  authorId  Int
+  id          String    @id @default(uuid())
+  title       String    @db.VarChar(255)
+  excerpt     String    @db.VarChar(255)
+  content     Json
+  authorId    Int
   featuredUrl String?
-  featured  Boolean @default(false)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  published Boolean   @default(false)
-  comments  Comment[]
-  author    User      @relation(fields: [authorId], references: [id])
+  featured    Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  published   Boolean   @default(false)
+  comments    Comment[]
+  author      User      @relation(fields: [authorId], references: [id])
 
   @@map("posts")
 }
@@ -49,7 +50,7 @@ model Comment {
   postId    String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  author    User?     @relation(fields: [authorId], references: [id])
+  author    User?    @relation(fields: [authorId], references: [id])
   post      Post     @relation(fields: [postId], references: [id])
 
   @@map("comments")
