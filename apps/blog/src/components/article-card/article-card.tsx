@@ -2,27 +2,19 @@ import type { PostsWithAuthor } from "@blog/lib";
 import { Link } from "react-router";
 import styles from "./article-card.module.css";
 import { clsx } from "clsx";
-import { faker } from "@faker-js/faker";
-import DOMPurify from "dompurify";
-import { generateHTML, type JSONContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
+
 interface ArticleCardProps {
   article: PostsWithAuthor;
-  featured?: boolean;
+  
 }
 
-export function ArticleCard({ article, featured }: ArticleCardProps) {
-  const excerptEnd = featured ? 300 : 100;
-  // const excerpt = article.content?.slice(0, excerptEnd) + "...";
-  const excerpt = article.content as JSONContent;
-    // if (!excerpt )return
-  
+export function ArticleCard({ article }: ArticleCardProps) {
 
-  // DOMPurify.
-  // const img = faker.image.url({ width: 400, height: 250 });
+  const excerpt = article.excerpt 
+  
   return (
     <article className={clsx(styles.base)}>
-      <div className={clsx(styles.content, featured && styles.featured)}>
+      <div className={clsx(styles.content, article.featured && styles.featured)}>
         <img
           src={article.featuredUrl ?? "https://placehold.co/400x250/png"}
           alt=""
@@ -31,7 +23,7 @@ export function ArticleCard({ article, featured }: ArticleCardProps) {
           <Link to={`blog/${article.id}`} className={styles.link}>
             <h1 className="title">{article.title}</h1>
           </Link>
-          {/* <div className={styles.excerpt}>{generateHTML(excerpt,[StarterKit])}</div> */}
+          <div className={styles.excerpt}>{excerpt}</div>
           <div className={styles.profile}>
             <img className="rounded" src="https://placehold.co/20x20/png" />
             <div className={styles.author}>

@@ -11,7 +11,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { EditorContent, useEditor, type JSONContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import type { PostsWithAuthorAndComment } from "@blog/lib";
-import { useMemo } from "react";
+;
 import { Image } from "@tiptap/extension-image";
 import { TaskItem, TaskList } from "@tiptap/extension-list";
 import { TextAlign } from "@tiptap/extension-text-align";
@@ -63,7 +63,7 @@ export function Details() {
       }),
     ], // define your extension array
     content: article.content as JSONContent,
-    editable: false
+    editable: false,
     // initial content
   });
 
@@ -99,20 +99,22 @@ export function Details() {
           <li className="published">
             <p>Published</p>
             <span className={styles.value}>
-              {/* {article.updatedAt.toDateString()} */}
+               {new Date(article.updatedAt)?.toDateString()}
             </span>
           </li>
         </ul>
       </div>
 
       <div className={styles.imgWrapper}>
-        <img src="https://placehold.co/1250x628" alt="" />
+        <img
+          src={article.featuredUrl ?? "https://placehold.co/1250x628"}
+          alt=""
+        />
       </div>
       <div className="wrapper">
-        
-          <EditorContent editor={editor} readOnly={true} />
-          {/* {article.content}</div> */}
-      
+        <EditorContent editor={editor} readOnly={true} />
+        {/* {article.content}</div> */}
+
         <div className={styles.comment}>
           <Separator />
           <ErrorBoundary fallback={<p>Could not add comment</p>}>

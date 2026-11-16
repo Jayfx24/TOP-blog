@@ -25,7 +25,6 @@
 
 
 
-
 li:nth-child(2n) article {
     /* background-color: blue; */
     color: var();
@@ -35,6 +34,7 @@ li:nth-child(2n) article {
 
 .featured>* {
     flex: 1;
+    min-width: 0;
 }
 
 h1 {
@@ -62,7 +62,7 @@ h1 {
 
 .profile {
     display: flex;
-    margin-top: auto;
+    /* margin-top: auto; */
     align-items: center;
     gap: .5rem;
 

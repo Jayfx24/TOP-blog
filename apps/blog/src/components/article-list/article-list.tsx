@@ -15,9 +15,9 @@ export function ArticleList({ articles }: ArticleListProps) {
     // <div className="wrapper">
     <section className={styles.base}>
       <ul className={styles.list}>
-        {articles?.map((article, index) => (
-          <li key={article.id} className={clsx(index === 0 && styles.span)}>
-            <ArticleCard article={article} featured={index === 0} />
+        {articles?.map((article) => (
+          <li key={article.id} className={clsx(article.featured && styles.span)}>
+            <ArticleCard article={article}  />
           </li>
         ))}
       </ul>
