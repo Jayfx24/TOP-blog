@@ -8,7 +8,7 @@ import methodOverride from "method-override";
 import errorHandler from "#middleware/errorHandler.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import helmet from "helmet";
+// import helmet from "helmet";
 
 const PORT = process.env.PORT || 3000;
 const app: Express = express();
@@ -32,7 +32,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(methodOverride()); //use to over-ride client verbs
 app.disable('x-powered-by');
-app.use(helmet());
+// app.use(helmet());
 
 app.use(logger);
 app.use(router);
