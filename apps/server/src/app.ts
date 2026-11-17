@@ -46,3 +46,6 @@ app.listen(PORT, (err) => {
 
 app.use(logErrors);
 app.use(errorHandler);
+
+
+export default app;
