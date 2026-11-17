@@ -8,8 +8,7 @@ import type { PostsWithAuthor } from "@blog/lib";
 
 export function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const posts: PostsWithAuthor[]  = useLoaderData<typeof articlesLoader>();
-  console.log(posts);
+  const posts: PostsWithAuthor[] = useLoaderData<typeof articlesLoader>();
   const [currentPage, setCurrentPage] = useState(1);
   const pageCount = 11;
   const totalPage = Math.ceil(posts.length / pageCount);
@@ -53,24 +52,28 @@ export function Home() {
             <div className={styles.content}>
               <ArticleList articles={currentPosts} />
               <div className={styles.btnGroup}>
-                <Button
-                  disabled={currentPage <= 1}
-                  variant={"minimal"}
-                  onClick={() => {
-                    setCurrentPage(currentPage - 1);
-                  }}
-                >
-                  Previous
-                </Button>
-                <Button
-                  disabled={currentPage === totalPage}
-                  variant={"minimal"}
-                  onClick={() => {
-                    setCurrentPage(currentPage + 1);
-                  }}
-                >
-                  Next
-                </Button>
+                {currentPage > 1 && (
+                  <Button
+                    disabled={currentPage <= 1}
+                    variant={"minimal"}
+                    onClick={() => {
+                      setCurrentPage(currentPage - 1);
+                    }}
+                  >
+                    Previous
+                  </Button>
+                )}
+                {totalPage > 1 && (
+                  <Button
+                    disabled={currentPage === totalPage}
+                    variant={"minimal"}
+                    onClick={() => {
+                      setCurrentPage(currentPage + 1);
+                    }}
+                  >
+                    Next
+                  </Button>
+                )}
               </div>
             </div>
           </div>

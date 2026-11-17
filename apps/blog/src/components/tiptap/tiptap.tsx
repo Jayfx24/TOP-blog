@@ -22,7 +22,7 @@ const Editor = () => {
             editor={editor}
             type="bold"
             hideWhenUnavailable={true}
-            onToggled={() => console.log("Mark toggled!")}
+            // onToggled={() => }
           />
 
           <MarkButton type="italic" />

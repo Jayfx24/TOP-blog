@@ -1,6 +1,6 @@
 import { useLocation } from "react-router";
 import { EditorForm } from "./components/editor/editor";
-import defaultContent from "@/components/tiptap-templates/simple/data/content.json";
+// import defaultContent from "@/components/tiptap-templates/simple/data/content.json";
 import type { Content } from "@tiptap/core";
 import type { PostResponsePayload } from "@blog/lib";
 import { EditorContext } from "./components/editor/editor-context";
@@ -12,7 +12,7 @@ export function EditorPage() {
 
   const isUpdate = !!post?.id;
 
-  const content: Content = (post?.content as Content) ?? defaultContent;
+  const content: Content = (post?.content as Content) ?? {};
   // EditorContext
   return (
     <EditorContext value={{ isUpdate, isPublished: post?.published ?? false }}>

@@ -58,6 +58,8 @@ async function getPublicPost(
   /**
    * Returns single post
    */
+// @ts-expect-error Prisma and zod JSON TYPE compatiblity 
+
   return await db.post.findUnique({
     where: {
       id,
@@ -79,13 +81,14 @@ async function getPublicPosts(
   /**
    * Does not include comments
    */
-
+// @ts-expect-error Prisma and zod JSON TYPE compatibility 
   return await db.post.findMany({
     take: 10,
     // skip: cursor ? 1 : undefined,
     // cursor: {
     //   id: cursor ?? undefined,
     // },
+
     orderBy: {
       createdAt: "asc",
     },
@@ -97,6 +100,9 @@ async function getPublicPosts(
         },
       },
     },
+    where:{
+      published: true
+    }
   });
 }
 

@@ -1,9 +1,10 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import App from "./App.tsx";
 import { RootLayout } from "./layout/root-layout/root-layout.tsx";
 import { articlesLoader, detailsLoader, } from "./loaders.ts";
 import { Home } from "./pages/home/home.tsx";
 import { Details } from "./pages/details/details.tsx";
+
 
 export const router = createBrowserRouter([
   {
@@ -19,5 +20,8 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {path: "*", element: `<h1>Page not found </h1>`},
+    
+
 ]);
 

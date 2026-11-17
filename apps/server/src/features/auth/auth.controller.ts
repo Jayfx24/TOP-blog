@@ -54,11 +54,11 @@ export async function refresh(req: Request, res: Response, next: NextFunction) {
 }
 
 export async function me(req: Request, res: Response, next: NextFunction) {
-  const user = req.user
+  const user = req.user;
   return res.send({ user });
 }
 
-async function register(req: Request, res: Response) {
+async function register(req: Request, res: Response, next: NextFunction) {
   /* eslint-disable @typescript-eslint/no-unused-vars */
   const { pwd, cPwd: _, ...body } = req.body;
   const passwordHash = await genHash(pwd);
@@ -68,11 +68,22 @@ async function register(req: Request, res: Response) {
   // generate jwt and send
   const payload = { sub: user.id };
 
-  const token = generateAccessToken(payload);
+  try {
+    const accessToken = generateAccessToken(payload);
+    const refreshToken = generateRefreshToken(payload);
 
+    res.cookie("refresh_token", refreshToken, {
+      httpOnly: true,
+      // secure: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    return res.json({ token: accessToken, user: data });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
   // login user
-
-  return res.json({ token, user });
 }
 
 export async function logout(_req: Request, res: Response) {

@@ -4,9 +4,10 @@ import styles from "./comment-editor.module.css";
 import { EditorContext, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useMemo, useState, type SubmitEvent } from "react";
-import { ZCommentInput, type TComment,  } from "@blog/lib";
+import { ZCommentInput, type TComment } from "@blog/lib";
 import { ZodError } from "zod";
-
+import { blogService } from "@/blogService";
+import { useRevalidator } from "react-router";
 
 interface CommentProps {
   postId: TComment["id"];
@@ -17,6 +18,10 @@ export function CommentEditor({ postId }: CommentProps) {
     content: "<p>Hello World!</p>", // initial content
   });
   const [error, setError] = useState<ZodError | null>();
+  const [username, setUsername] = useState("");
+  // const [userComment, setUserComment] = useState('');
+  const revalidator = useRevalidator();
+
   const providerValue = useMemo(() => {
     return { editor };
   }, [editor]);
@@ -25,29 +30,38 @@ export function CommentEditor({ postId }: CommentProps) {
     return null;
   }
 
-  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     // validate input
-    const formData = new FormData(e.currentTarget);
+    // const formData = new FormData(e.currentTarget);
 
     const data = {
-      name: formData.get("name"),
-      content: editor.getHTML(),
+      name: username,
+      content: editor.getText(),
       postId,
     };
-    console.log("dirty data:", data);
+
     const result = ZCommentInput.safeParse(data);
-    console.log(result);
+
     if (!result.success) {
-      
       // setError(result.error.issues)
       return setError(result.error); //show throw error and handle it graciously
     }
 
     setError(null);
     const cleanData = result.data;
-    console.log("clean data:", cleanData);
+
     // send to server
+
+    const comment = await blogService.postComment(cleanData);
+
+    if (comment) {
+      // revalidate to reload loaders and clear form fields
+      revalidator.revalidate();
+      e.currentTarget.reset();
+      editor.chain().focus().clearContent().run();
+      setUsername("");
+    }
   };
   return (
     <EditorContext.Provider value={providerValue}>
@@ -61,7 +75,14 @@ export function CommentEditor({ postId }: CommentProps) {
         </ul>
         <div className="">
           <label htmlFor="name">Enter Desired Username</label>
-          <Input type="text" name="name" id="name" required />
+          <Input
+            type="text"
+            name="name"
+            id="name"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
         </div>
         <div className="form-group">
           <Editor />

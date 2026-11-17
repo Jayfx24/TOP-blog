@@ -28,7 +28,7 @@
 li:nth-child(2n) article {
     /* background-color: blue; */
     color: var();
-    border-right: 1px solid;
+    /* border-right: 1px solid; */
 }
 
 
@@ -36,7 +36,6 @@ li:nth-child(2n) article {
     flex: 1;
     min-width: 0;
 }
-
 h1 {
     font: var(--font-lg-semibold);
 }

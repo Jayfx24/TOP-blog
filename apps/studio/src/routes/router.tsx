@@ -8,6 +8,7 @@ import MainLayout from "@/layouts/MainLayout/mainLayout";
 import StudioService from "@/StudioService";
 import { PublicRoutes } from "@blog/features";
 import { ProtectedRoutes } from "@blog/features";
+import RegisterForm from "@/components/Auth/RegisterForm/registerForm";
 
 const allPostLoader = async () => {
   return { records: await StudioService.getUserPosts() };
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
             Component: AuthLayout,
             children: [
               { path: "login", Component: LoginForm },
-              { path: "register", element: "Register" },
+              { path: "register", Component: RegisterForm },
             ],
           },
         ],

@@ -23,7 +23,7 @@ import { FindAndReplace } from "@tiptap/extension-find-and-replace";
 import { Selection } from "@tiptap/extensions";
 import HorizontalRule from "@tiptap/extension-horizontal-rule";
 
-export function Details() {
+export function Details() { 
   const article: PostsWithAuthorAndComment =
     useLoaderData<typeof detailsLoader>();
   const navigate = useNavigate();
@@ -75,7 +75,8 @@ export function Details() {
     return null;
   }
 
-  console.log(article);
+  
+  ;
 
   return (
     <section>
@@ -130,6 +131,7 @@ export function Details() {
               </p>
             </div>
             <ul className={styles.commentList}>
+              {/*  */}
               {article.comments?.map((comment) => (
                 <li key={comment.id} id="">
                   <CommentCard comment={comment} />

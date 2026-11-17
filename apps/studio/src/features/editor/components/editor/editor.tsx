@@ -11,9 +11,9 @@ import { Highlight } from "@tiptap/extension-highlight";
 import { Subscript } from "@tiptap/extension-subscript";
 import { Superscript } from "@tiptap/extension-superscript";
 import { FindAndReplace } from "@tiptap/extension-find-and-replace";
-import { Selection } from "@tiptap/extensions";
+import { Placeholder, Selection } from "@tiptap/extensions";
 import { ImageUploadNode } from "@/components/tiptap-node/image-upload-node";
-import {  useEditor, type Content } from "@tiptap/react";
+import { useEditor, type Content } from "@tiptap/react";
 import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
 import StudioService from "@/StudioService";
 import { useBlocker, useNavigate } from "react-router";
@@ -35,8 +35,6 @@ type IEditor = {
   post: PostResponsePayload | null;
   content: Content;
 };
-
-
 
 const handleImage = async (imageFile: FormDataEntryValue | null) => {
   if (imageFile instanceof File && imageFile.size > 0) {
@@ -103,6 +101,9 @@ export function EditorForm({ content, post }: IEditor) {
       Superscript,
       Subscript,
       Selection,
+      Placeholder.configure({
+        placeholder: "Write something …",
+      }),
       FindAndReplace.configure({
         searchDebounceMs: 500,
         injectCSS: false,
@@ -121,7 +122,7 @@ export function EditorForm({ content, post }: IEditor) {
       setIsDirty(dirty);
     },
   });
-  console.log(post?.featuredUrl);
+  
   useEffect(() => {
     if (isSubmitted) {
       if (blocker.state === "blocked") {
@@ -129,8 +130,6 @@ export function EditorForm({ content, post }: IEditor) {
       }
     }
   }, [isSubmitted, blocker]);
-
-
 
   const navigate = useNavigate();
 
@@ -147,13 +146,13 @@ export function EditorForm({ content, post }: IEditor) {
     const formData = new FormData(e.currentTarget);
     const imageFile = formData.get("image");
 
-    const uploadedFeaturedUrl = await handleImage(imageFile)
-    console.log('result:',uploadedFeaturedUrl)
+    const uploadedFeaturedUrl = await handleImage(imageFile);
+    
 
     await processNode($images);
 
     let result;
-    console.log(uploadedFeaturedUrl);
+   ;
     if (isUpdate) {
       result = ZPostUpdatePayload.safeParse({
         id: post?.id,
@@ -162,7 +161,6 @@ export function EditorForm({ content, post }: IEditor) {
         published: publish,
         excerpt,
         featuredUrl: uploadedFeaturedUrl,
-
       });
     } else {
       result = ZCreate.safeParse({

@@ -7,9 +7,12 @@ import { Book } from "lucide-react";
 export function RootLayout() {
   return (
     <section className={styles.base}>
-      <header className={clsx("wrapper flex a-center", styles.header)}>
+      <header className={clsx(" flex a-center", styles.header)}>
+        <div className="wrapper flex a-center">
+
         <Book />
         Urs
+        </div>
       </header>
       {/* separator */}
       {/* <Separator /> */}
@@ -18,7 +21,7 @@ export function RootLayout() {
 
       <Outlet />
 
-      <footer className={clsx("wrapper flex a-center", styles.footer)}>
+      <footer className={clsx(" flex a-center", styles.footer)}>
         <a href="">@Jay24</a>
       </footer>
     </section>

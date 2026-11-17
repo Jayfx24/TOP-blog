@@ -18,3 +18,13 @@
     }
 
 /* } */
+
+
+@media (max-width: 480px) {
+    .list {
+      
+    grid-template-columns: 1fr 
+
+    }
+
+}

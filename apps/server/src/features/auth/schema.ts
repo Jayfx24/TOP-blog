@@ -15,6 +15,7 @@ export const UserRegistrationSchema = z
     avatarUrl: z.string().optional(),
     pwd: z.string().min(5),
     cPwd: z.string(),
+    isAdmin: z.coerce.boolean().default(false),
   })
   .refine((data) => data.pwd === data.cPwd, {
     error: "Passwords don't match",

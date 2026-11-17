@@ -7,9 +7,12 @@
 
 .header{
     padding-block: 1rem;
+    background-color: var(--bg-muted);
+
 }
 
 .footer{
+    background-color: var(--bg-muted);
     justify-content: center;
     padding-block: 1rem;
 

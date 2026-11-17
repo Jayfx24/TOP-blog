@@ -56,7 +56,7 @@ export default function LoginForm() {
       </div>
       <div className="field">
         <span>
-          Don't have an account? <Link to={"auth/register"}> Sign up</Link>
+          Don't have an account? <Link to={"/register"}> Sign up</Link>
         </span>
       </div>
     </form>

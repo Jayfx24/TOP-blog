@@ -1,4 +1,8 @@
-import type { PostsWithAuthor, PostsWithAuthorAndComment, TComment } from "@blog/lib";
+import type {
+  PostsWithAuthor,
+  PostsWithAuthorAndComment,
+  TComment,
+} from "@blog/lib";
 import { blogService } from "./blogService";
 import { faker } from "@faker-js/faker";
 import type { LoaderFunctionArgs } from "react-router";
@@ -52,14 +56,14 @@ export async function articlesLoader(): Promise<PostsWithAuthor[]> {
 
 // export async function detailsLoader({ params }: LoaderFunctionArgs) {
 //   // return await blogService.getPosts();
-//   console.log(params);
+//   ;
 //   return{ article:dummyPost(), comments};
 // }
 
-export async function detailsLoader({ params }: LoaderFunctionArgs): Promise <PostsWithAuthorAndComment> {
-  console.log(params)
+export async function detailsLoader({
+  params,
+}: LoaderFunctionArgs): Promise<PostsWithAuthorAndComment> {
   return await blogService.getPost(params.id);
-  // console.log(params);
+  // ;
   // return{ article:dummyPost(), comments};
 }
-

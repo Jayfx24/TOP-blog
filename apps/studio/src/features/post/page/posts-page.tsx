@@ -1,30 +1,18 @@
 import { PostTable } from "../components/table/post-table";
 import type { PostResponsePayload } from "@blog/lib";
 import { Button } from "@blog/ui";
-import { faker } from "@faker-js/faker";
+
 import { useState } from "react";
 import styles from "./post-page.module.css";
 import clsx from "clsx";
 import StudioService from "@/StudioService";
 import { useLoaderData } from "react-router";
 
-const tempPosts: Array<PostResponsePayload> = Array.from(
-  { length: 100 },
-  (_, _index) => ({
-    id: crypto.randomUUID(),
-    title: faker.book.title(),
-    content: "<h1>Hello</h1>",
-    authorId: 3,
-    published: false,
-    createdAt: faker.date.past({ years: 1 }),
-    updatedAt: faker.date.recent(),
-  }),
-);
 
 export function PostsPage() {
   const { records } = useLoaderData();
   const [posts, setPosts] = useState<PostResponsePayload[]>(
-    records ?? tempPosts,
+    records ,
   );
   const [currentPage, setCurrentPage] = useState(1);
   const pageCount = 10;
@@ -61,7 +49,7 @@ export function PostsPage() {
         handleDelete={handleDelete}
       />
       <div className={styles.btnGroup}>
-        <Button
+      { currentPage > 1 &&  <Button
           disabled={currentPage <= 1}
           variant={"minimal"}
           onClick={() => {
@@ -69,9 +57,9 @@ export function PostsPage() {
           }}
         >
           Previous
-        </Button>
+        </Button>}
 
-        <Button
+       {totalPage > 1 && <Button
           disabled={currentPage === totalPage}
           variant={"minimal"}
           // size={}
@@ -80,7 +68,7 @@ export function PostsPage() {
           }}
         >
           Next
-        </Button>
+        </Button>}
       </div>
     </div>
   );
