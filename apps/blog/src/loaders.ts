@@ -23,27 +23,20 @@ function dummyPost(): PostsWithAuthor {
   };
 }
 
-// export const ZComment = z.object({
-//   id: z.uuid(),
-//   name: z.string().trim().min(2).max(20),
-//   content: z.string().trim(),
-//   postId: z.uuid(),
-//   createdAt: z.date(),
-//   updatedAt: z.date(),
-// });
 
-function dummyComment(): TComment {
-  return {
-    id: faker.string.uuid(),
-    name: faker.person.fullName(),
-    content: faker.lorem.paragraphs(),
-    postId: faker.string.uuid(),
-    createdAt: faker.date.recent({ days: 10 }),
-    updatedAt: faker.date.recent({ days: 3 }),
-  };
-}
-const posts = faker.helpers.multiple(dummyPost, { count: 15 });
-const comments = faker.helpers.multiple(dummyComment, { count: 15 });
+
+// function dummyComment(): TComment {
+//   return {
+//     id: faker.string.uuid(),
+//     name: faker.person.fullName(),
+//     content: faker.lorem.paragraphs(),
+//     postId: faker.string.uuid(),
+//     createdAt: faker.date.recent({ days: 10 }),
+//     updatedAt: faker.date.recent({ days: 3 }),
+//   };
+// }
+// const posts = faker.helpers.multiple(dummyPost, { count: 15 });
+// const comments = faker.helpers.multiple(dummyComment, { count: 15 });
 
 // export async function articlesLoader() {
 //   // return await blogService.getPosts();

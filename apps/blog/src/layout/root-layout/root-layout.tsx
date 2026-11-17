@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+import { Link, Outlet } from "react-router";
 import styles from "./root-layout.module.css";
 import clsx from "clsx";
 import { Book } from "lucide-react";
@@ -8,11 +8,12 @@ export function RootLayout() {
   return (
     <section className={styles.base}>
       <header className={clsx(" flex a-center", styles.header)}>
-        <div className="wrapper flex a-center">
-
-        <Book />
-        Urs
-        </div>
+        <Link to={"/"}>
+          <div className="wrapper flex a-center">
+            <Book />
+            Urs
+          </div>
+        </Link>
       </header>
       {/* separator */}
       {/* <Separator /> */}

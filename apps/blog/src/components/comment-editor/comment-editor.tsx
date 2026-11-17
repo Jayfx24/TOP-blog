@@ -8,14 +8,20 @@ import { ZCommentInput, type TComment } from "@blog/lib";
 import { ZodError } from "zod";
 import { blogService } from "@/blogService";
 import { useRevalidator } from "react-router";
+import { Placeholder } from "@tiptap/extensions";
 
 interface CommentProps {
   postId: TComment["id"];
 }
 export function CommentEditor({ postId }: CommentProps) {
   const editor = useEditor({
-    extensions: [StarterKit], // define your extension array
-    content: "<p>Hello World!</p>", // initial content
+    extensions: [
+      StarterKit,
+      Placeholder.configure({
+        placeholder: "Write something …",
+      }),
+    ], // define your extension array
+    // content: "<p>Hello World!</p>", // initial content
   });
   const [error, setError] = useState<ZodError | null>();
   const [username, setUsername] = useState("");
@@ -58,7 +64,7 @@ export function CommentEditor({ postId }: CommentProps) {
     if (comment) {
       // revalidate to reload loaders and clear form fields
       revalidator.revalidate();
-      e.currentTarget.reset();
+
       editor.chain().focus().clearContent().run();
       setUsername("");
     }
@@ -81,6 +87,7 @@ export function CommentEditor({ postId }: CommentProps) {
             id="name"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            placeholder="min 3 characters"
             required
           />
         </div>
