@@ -7,7 +7,7 @@ import { Button } from "@blog/ui";
 import type { PostsWithAuthor } from "@blog/lib";
 
 export function Home() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [_, setSearchParams] = useSearchParams();
   const posts: PostsWithAuthor[] = useLoaderData<typeof articlesLoader>();
   const [currentPage, setCurrentPage] = useState(1);
   const pageCount = 11;
