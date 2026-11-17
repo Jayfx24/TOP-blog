@@ -1,6 +1,5 @@
 import { z } from "zod";
 import DOMPurify from "dompurify";
-import { isValidPosition } from "@/lib/tiptap-utils";
 
 // const clean = DOMPurify.sanitize('<b>hello there</b>');
 // model Comment {
