@@ -19,6 +19,8 @@
     // Recommended Options
     // "rewriteRelativeImportExtensions": true,
     // "erasableSyntaxOnly": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "strict": true,
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
