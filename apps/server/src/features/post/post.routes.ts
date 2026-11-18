@@ -1,6 +1,6 @@
 import { Router } from "express";
 import PostController from "./post.controller.js";
-import validateSchema from "#features/auth/validateSchema.js";
+import validateSchema from "../../features/auth/validateSchema.js";
 import { ZPostUpdatePayload, ZPostCreatePayload } from "@blog/lib";
 const studioRouter = Router();
 const PublicPostRouter = Router();

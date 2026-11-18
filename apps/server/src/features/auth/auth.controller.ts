@@ -1,5 +1,5 @@
 import { type Request, type Response, type NextFunction } from "express";
-import UserService from "#features/user/user.service.js";
+import UserService from "../../features/user/user.service.js";
 import { genHash } from "./passwordUtils.js";
 import { generateAccessToken, generateRefreshToken } from "./utils.js";
 import passport from "passport";

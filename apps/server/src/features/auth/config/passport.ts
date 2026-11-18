@@ -1,13 +1,13 @@
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import { isValidPwd } from "#features/auth/passwordUtils.js";
+import { isValidPwd } from "../../../features/auth/passwordUtils.js";
 import {
   Strategy as JwtStrategy,
   ExtractJwt,
   type VerifiedCallback,
   type StrategyOptions,
 } from "passport-jwt";
-import UserService from "#features/user/user.service.js";
+import UserService from "../../../features/user/user.service.js";
 import { rfTokenExtractor } from "../auth.middleware.js";
 import type { JWTPayload } from "../type.js";
 
