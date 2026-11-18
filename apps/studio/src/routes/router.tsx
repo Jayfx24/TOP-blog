@@ -1,7 +1,7 @@
 import App from "@/App";
 import { EditorPage } from "@/features/editor/editor-page";
 import { PostsPage } from "@/features/post/page/posts-page";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import AuthLayout from "@/layouts/Auth/AuthLayout";
 import LoginForm from "@/components/Auth/LoginForm/loginForm";
 import MainLayout from "@/layouts/MainLayout/mainLayout";
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
       {
         Component: PublicRoutes,
         children: [
-          // { index: true, element: <Navigate to="/login" replace /> },
+          { index: true, element: <Navigate to="/login" replace /> },
           {
             Component: AuthLayout,
             children: [

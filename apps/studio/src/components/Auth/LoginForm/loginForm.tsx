@@ -36,7 +36,7 @@ export default function LoginForm() {
         </p>
       </div>
 
-      <div className="form-group">
+      <div className="form-groups">
         <div className="field">
           <label className={"label"} htmlFor="username">
             Username

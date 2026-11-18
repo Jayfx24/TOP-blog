@@ -34,6 +34,14 @@ img{
     text-align: start;
 }
 
+.form-groups{
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    /* text-align: start; */
+}
+
+
 .column{
      display: flex;
   flex-direction: column;
