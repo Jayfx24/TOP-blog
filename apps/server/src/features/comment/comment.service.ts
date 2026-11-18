@@ -1,8 +1,6 @@
 import { db } from "#lib/prisma.js";
 import type { TComment, TCommentInput } from "@blog/lib";
 import type {
-  CommentBase,
-  CommentCreateInput,
   CommentUpdateInput,
 } from "./comment.schemas.js";
 

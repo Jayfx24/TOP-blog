@@ -53,7 +53,7 @@ export async function refresh(req: Request, res: Response, next: NextFunction) {
   return res.send({ token: accessToken });
 }
 
-export async function me(req: Request, res: Response, next: NextFunction) {
+export async function me(req: Request, res: Response, _next: NextFunction) {
   const user = req.user;
   return res.send({ user });
 }
@@ -81,7 +81,7 @@ async function register(req: Request, res: Response, next: NextFunction) {
     return res.json({ token: accessToken, user: data });
   } catch (error) {
     console.error(error);
-    next(error);
+    return next(error);
   }
   // login user
 }

@@ -58,10 +58,10 @@ async function getPublicPost(
   /**
    * Returns single post
    */
-// @ts-expect-error Prisma and zod JSON TYPE compatiblity 
-
+  // @ts-expect-error - Prisma and zod JSON TYPE compatiblity 
   return await db.post.findUnique({
     where: {
+      
       id,
     },
     include: {
@@ -76,12 +76,12 @@ async function getPublicPost(
   });
 }
 async function getPublicPosts(
-  cursor?: Post["id"] | undefined,
+  _cursor?: Post["id"] | undefined,
 ): Promise<PostResponsePayload[]> {
   /**
    * Does not include comments
    */
-// @ts-expect-error Prisma and zod JSON TYPE compatibility 
+// @ts-expect-error - Prisma and zod JSON TYPE compatibility 
   return await db.post.findMany({
     take: 10,
     // skip: cursor ? 1 : undefined,

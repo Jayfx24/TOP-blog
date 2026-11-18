@@ -7,7 +7,7 @@ export default function validateSchema<T extends z.ZodType>(schema: T) {
   z.config({
     customError: createErrorMap(),
   });
-  return async (req: Request, res: Response, next: NextFunction) => {
+  return async (req: Request, _res: Response, next: NextFunction) => {
     try {
       console.log("initial req:", req.body);
       const result = await schema.parseAsync(req.body);
