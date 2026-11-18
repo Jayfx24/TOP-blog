@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@blog/features": "^1.0.0",
+    "@blog/features": "*",
     "@blog/lib": "*",
     "@blog/styles": "*",
     "@blog/ui": "*",
