@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:studio": "npm run build -w @blog/lib && npm run build -w @blog/ui && npm run build -w studio"
   },
   "dependencies": {
     "@tiptap/starter-kit": "^3.31.3",
