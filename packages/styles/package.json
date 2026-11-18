@@ -1,6 +1,6 @@
 {
   "name": "@blog/styles",
-  "private": "true",
+  "private": true,
   "description": "styles for blog",
   "type": "module",
   "styles": "./index.css",
