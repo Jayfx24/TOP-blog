@@ -14,25 +14,32 @@ const PORT = process.env.PORT || 3000;
 const app: Express = express();
 const logger = pinoHttp({
   transport:
-  process.env.NODE_ENV === "development" ? {
-    target: "pino-pretty",
+    process.env.NODE_ENV === "development"
+      ? {
+          target: "pino-pretty",
 
-    options: {
-      colorize: true,
-    },
-  }: undefined,
+          options: {
+            colorize: true,
+          },
+        }
+      : undefined,
   quietReqLogger: true,
   genReqId(req) {
     return req.headers["x-request-id"] || randomUUID();
   },
 });
 
-app.use(cors());
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") ?? [];
+app.use(
+  cors({
+    origin: allowedOrigins,
+  }),
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(methodOverride()); //use to over-ride client verbs
-app.disable('x-powered-by');
+app.disable("x-powered-by");
 // app.use(helmet());
 
 app.use(logger);
@@ -47,6 +54,5 @@ app.listen(PORT, (err) => {
 
 app.use(logErrors);
 app.use(errorHandler);
-
 
 export default app;
