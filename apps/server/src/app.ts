@@ -33,6 +33,7 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") ?? [];
 app.use(
   cors({
     origin: allowedOrigins,
+    credentials: true
   }),
 );
 app.use(express.urlencoded({ extended: true }));
