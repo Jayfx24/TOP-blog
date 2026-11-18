@@ -13,13 +13,14 @@ import cors from "cors";
 const PORT = process.env.PORT || 3000;
 const app: Express = express();
 const logger = pinoHttp({
-  transport: {
+  transport:
+  process.env.NODE_ENV === "development" ? {
     target: "pino-pretty",
 
     options: {
       colorize: true,
     },
-  },
+  }: undefined,
   quietReqLogger: true,
   genReqId(req) {
     return req.headers["x-request-id"] || randomUUID();
