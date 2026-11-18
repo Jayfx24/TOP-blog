@@ -6,18 +6,21 @@
   "private": true,
   "exports": {
     ".": {
-      "types": "./dist/index.ts",
-      "import": "./dist/index.ts"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.d.ts"
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.ts",
-  "types": "./dist/index.ts",
+  "main": "./dist/index.d.ts",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && copyfiles -u 1 \"src/**/*.css\" dist",
     "start": "tsc && node dist/index.js"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1"
   }
 }
