@@ -13,7 +13,7 @@ export function ArticleList({ articles }: ArticleListProps) {
 
   return (
     // <div className="wrapper">
-    <section className={styles.base}>
+    <section >
       <ul className={styles.list}>
         {articles?.map((article) => (
           <li key={article.id} className={clsx(article.featured && styles.span)}>
