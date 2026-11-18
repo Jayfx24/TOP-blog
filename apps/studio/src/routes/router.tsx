@@ -17,12 +17,12 @@ const allPostLoader = async () => {
 // const confirmUpdate = async () => {};
 const router = createBrowserRouter([
   {
-    path: "/",
     Component: App,
     children: [
       {
         Component: PublicRoutes,
         children: [
+          // { index: true, element: <Navigate to="/login" replace /> },
           {
             Component: AuthLayout,
             children: [
