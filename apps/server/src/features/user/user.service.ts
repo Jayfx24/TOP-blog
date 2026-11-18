@@ -1,4 +1,4 @@
-import { db } from "#lib/prisma.js";
+import { db } from "../../lib/prisma.js";
 import { type UserCreateInput } from "#generated/prisma/models.js";
 
 
