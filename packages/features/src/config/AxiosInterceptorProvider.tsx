@@ -1,4 +1,4 @@
-import { useAxiosInterceptors } from "./useAxiosInterceptors";
+import { useAxiosInterceptors } from "./useAxiosInterceptors.js";
 
 export  function AxiosInterceptorProvider() {
   useAxiosInterceptors();

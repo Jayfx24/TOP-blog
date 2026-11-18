@@ -1,4 +1,5 @@
 {
+  "name": "my-blog",
   "private": true,
   "description": "",
   "type": "module",
@@ -7,7 +8,8 @@
     "packages/*"
   ],
   "scripts": {
-    "build:studio": "npm run build -w @blog/lib && npm run build -w @blog/ui && npm run build -w studio"
+    "build:blog": "npm run build -w @blog/lib && npm run build -w @blog/ui && npm run build -w blog",
+    "build:studio": "npm run build -w @blog/lib && npm run build -w @blog/ui && npm run build -w @blog/features && npm run build -w studio"
   },
   "dependencies": {
     "@tiptap/starter-kit": "^3.31.3",
