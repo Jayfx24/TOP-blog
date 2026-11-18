@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "build:blog": "npm run build -w @blog/lib && npm run build -w @blog/ui && npm run build -w blog",
-    "build:studio": "npm run build -w @blog/lib && npm run build -w @blog/ui && npm run build -w @blog/features && npm run build -w studio"
+    "build:studio": "npm run build -w @blog/lib && npm run build -w @blog/ui && npm run build -w @blog/features && npm run build -w studio",
+    "build:server": "npm run build -w @blog/lib && npm run build -w server"
   },
   "dependencies": {
     "@tiptap/starter-kit": "^3.31.3",
