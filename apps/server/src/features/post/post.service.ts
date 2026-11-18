@@ -13,7 +13,10 @@ async function createPost(
   /**
    * Check for published - its is not optional
    */
+  // @ts-expect-error - Prisma and zod JSON TYPE compatiblity 
+
   return await db.post.create({
+  // @ts-expect-error - Prisma and zod JSON TYPE compatiblity 
     data,
   });
 }
@@ -22,10 +25,12 @@ async function updatePost({
   id,
   ...data
 }: PostUpdatePayload): Promise<PostResponsePayload> {
+  // @ts-expect-error - Prisma and zod JSON TYPE compatiblity 
   return await db.post.update({
     where: {
       id,
     },
+  // @ts-expect-error - Prisma and zod JSON TYPE compatiblity 
     data,
   });
 }
