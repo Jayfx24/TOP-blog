@@ -1,7 +1,7 @@
 import express, { type Express } from "express";
 import { pinoHttp } from "pino-http";
 import "dotenv/config";
-import router from "#routes/routes.js";
+import router from "./routes/routes.js";
 import logErrors from "#middleware/logErrors.js";
 import { randomUUID } from "node:crypto";
 import methodOverride from "method-override";

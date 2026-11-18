@@ -1,6 +1,6 @@
 import express, { type Request, type Response } from "express";
-import authRouter from "#features/auth/auth.routes.js";
-import { authenticateJwt } from "#features/auth/auth.middleware.js";
+import authRouter from "../features/auth/auth.routes.js";
+import { authenticateJwt } from "../features/auth/auth.middleware.js";
 import { publicRouter } from "./public.routes.js";
 import { privateRouter } from "./private.routes.js";
 
