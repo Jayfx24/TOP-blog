@@ -41,7 +41,7 @@ export function SideBar({ avatar, fullName }: ISideBar) {
       <div className={styles.list}>
         <ul>
           {sideBarNav.map(({ label, icon, path }) => (
-            <li >
+            <li key={label} >
               <Link to={path} className={styles.item}>
                 {icon}
                 <span className={styles.label}>{label}</span>

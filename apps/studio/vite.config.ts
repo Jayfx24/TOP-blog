@@ -20,11 +20,17 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api": {
+      "/studio": {
         target: "http://localhost:3000",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, "studio"),
+        // rewrite: (path) => path.replace(/^\/api/, "studio"),
       },
+
+      //  "/auth": {
+      //   target: "http://localhost:3000",
+      //   changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/api/, "studio"),
+      // },
       
     },
   },

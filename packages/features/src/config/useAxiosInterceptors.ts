@@ -57,7 +57,7 @@ export const useAxiosInterceptors = () => {
 
           try {
             const { data } = await axios.post(
-              "/auth/refresh",
+              `${axiosInstance.defaults.baseURL}/auth/refresh`,
               {},
               { withCredentials: true },
             );
@@ -73,9 +73,9 @@ export const useAxiosInterceptors = () => {
             console.error(rfError);
             processQueue(rfError as Error, null);
             localStorage.removeItem("access_token");
-          
+
             navigate("/login", { replace: true });
-           
+
             return Promise.reject(rfError);
           } finally {
             isRefreshing = false;

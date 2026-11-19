@@ -29,15 +29,15 @@ const logger = pinoHttp({
   },
 });
 
-// const _allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") ?? [];
-// app.use(
-//   cors({
-//     origin: allowedOrigins,
-//     credentials: true
-//   }),
-// );
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") ?? [];
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true
+  }),
+);
 
-app.use(cors())
+// app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
