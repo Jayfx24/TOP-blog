@@ -11,7 +11,7 @@ export function RootLayout() {
         <Link to={"/"}>
           <div className="wrapper flex a-center">
             <Book />
-            Urs
+            <span>7sees</span>
           </div>
         </Link>
       </header>
