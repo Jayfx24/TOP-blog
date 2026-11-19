@@ -73,7 +73,7 @@ export function PostTable({ posts, handlePublish, handleDelete }: PostTable) {
           </tr>
         </thead>
         <tbody>
-          {posts.map((post) => (
+          {posts?.map((post) => (
             <tr key={post.id}>
               {/* <td className={styles.td}>
                 {

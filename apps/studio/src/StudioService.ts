@@ -6,22 +6,22 @@ import type { TCreate } from "./schemas/post-schema";
 const studioAPI = api
 
 async function getUserPosts() {
-  const { data } = await studioAPI.get<PostResponsePayload[]>("api/posts"); //?
+  const { data } = await studioAPI.get<PostResponsePayload[]>("studio/posts"); //?
   return data;
 }
 
 async function getPost(id: PostResponsePayload["id"]) {
-  const { data } = await studioAPI.get<PostResponsePayload>(`api/posts/${id}`);
+  const { data } = await studioAPI.get<PostResponsePayload>(`studio/posts/${id}`);
   return data;
 }
 async function createPost(payload: TCreate) {
-  const { data } = await studioAPI.post<PostResponsePayload>("api/posts/new", payload);
+  const { data } = await studioAPI.post<PostResponsePayload>("studio/posts/new", payload);
   return data;
 }
 
 async function updatePost(payload: PostUpdatePayload) {
   const { data } = await studioAPI.patch<PostResponsePayload>(
-    `api/posts/${payload.id}/update`,
+    `studio/posts/${payload.id}/update`,
     payload,
   );
   return data;
@@ -29,7 +29,7 @@ async function updatePost(payload: PostUpdatePayload) {
 
 async function deletePost(id: PostResponsePayload["id"]) {
   const { data } = await studioAPI.delete<PostResponsePayload>(
-    `api/posts/${id}/delete`,
+    `studio/posts/${id}/delete`,
   );
   return data;
 }

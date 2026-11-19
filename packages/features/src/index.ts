@@ -1,10 +1,9 @@
+
 export * from "./config/axios.config.js";
+// export { configureAPI } from "./config/axios.config.js";
 export * from "./config/AxiosInterceptorProvider";
-// 
-export * from "./auth/AuthProvider"
-export * from "./auth/AuthContext"
-export * from "./auth/protectedRoutes"
-export * from "./auth/publicRoutes"
-
-
-
+//
+export * from "./auth/AuthProvider";
+export * from "./auth/AuthContext";
+export * from "./auth/protectedRoutes";
+export * from "./auth/publicRoutes";

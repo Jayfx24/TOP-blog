@@ -1,10 +1,7 @@
-
-
 import { useEffect } from "react";
 import { api as axiosInstance } from "./axios.config.js";
 import { useNavigate } from "react-router";
-import axios from "axios";
-
+import axios, { isAxiosError } from "axios";
 
 type FailedRequest = {
   resolve: (token: string | null) => void;
@@ -24,9 +21,8 @@ const processQueue = (error: Error | null, token = null) => {
 let failedQueue: FailedRequest[] = [];
 let isRefreshing = false;
 
-export  const useAxiosInterceptors = () => {
+export const useAxiosInterceptors = () => {
   const navigate = useNavigate();
-  
 
   useEffect(() => {
     const requestInterceptor = axiosInstance.interceptors.request.use(
@@ -43,7 +39,6 @@ export  const useAxiosInterceptors = () => {
       (response) => response,
       async (error) => {
         const originalRequest = error.config;
-       
 
         if (error.response?.status === 401 && !originalRequest._retry) {
           if (isRefreshing) {
@@ -78,14 +73,21 @@ export  const useAxiosInterceptors = () => {
             console.error(rfError);
             processQueue(rfError as Error, null);
             localStorage.removeItem("access_token");
-            // refreshLogout()
-            navigate("/login",{replace:true})
-            // window.location.href = '/login';
+          
+            navigate("/login", { replace: true });
+           
             return Promise.reject(rfError);
           } finally {
             isRefreshing = false;
           }
         }
+
+        // if (isAxiosError(error)) {
+        //   if (error.code === "ECONNABORTED" || error.code === "ETIMEDOUT") {
+        //     console.error("API request timed out:", error.config?.url);
+        //   }
+        // }
+        // return Promise.reject(error);
       },
     );
 
